@@ -415,6 +415,18 @@ start_run <- function(cfg, scenario = NULL, codeCheck = TRUE, lock_model = TRUE,
     cat("NPI/NDC recalculation successful!\n")
   }
 
+  land_calib_file <- "modules/39_landconversion/input/f39_calib.csv"
+
+  if(cfg$calib_sensitivity_landconversion_cost){
+    # calculate sensitivity of land prediction to calibration factors
+    cat("Starting land conversion calibration factor sensitivity calculation!\n")
+    source("scripts/calibration/landconversion_cost.R")
+    calibrate_magpie_sensitivity(calib_file = land_calib_file,
+                                 logoption = 3,
+                                 histData = cfg$cost_calib_hist_data)
+    cat("Land conversion calibration factor sensitivity calculated!\n")
+  }
+
   # Yield calibration
 
   # check for inconsistent settings
@@ -457,11 +469,11 @@ start_run <- function(cfg, scenario = NULL, codeCheck = TRUE, lock_model = TRUE,
     cat("Yield calibration factor calculated!\n")
   }
 
-  land_calib_file <- "modules/39_landconversion/input/f39_calib.csv"
   if(cfg$recalibrate_landconversion_cost=="ifneeded") {
     # recalibrate if file does not exist
     if(!file.exists(land_calib_file)) cfg$recalibrate_landconversion_cost <- TRUE else cfg$recalibrate_landconversion_cost <- FALSE
   }
+
   if(cfg$recalibrate_landconversion_cost){
     #if(cfg$gms$landconversion!="devstate") stop("Land conversion cost calibration works only with realization devstate")
     cat("Starting land conversion cost calibration factor calculation!\n")

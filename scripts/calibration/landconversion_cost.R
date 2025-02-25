@@ -34,6 +34,23 @@ calibration_run <- function(putfolder, calib_magpie_name, logoption = 3, s_use_g
 }
 
 # get ratio between modelled area and reference area
+get_areacalib <- function(gdx_file) {
+  require(magclass)
+  require(magpie4)
+  require(gdx2)
+  data <- readGDX(gdx_file, "pm_land_start")[, , c("crop", "past")]
+  data <- dimSums(data, dim = 1.2)
+  magpie <- land(gdx_file)[, , c("crop", "past")]
+  if (nregions(magpie) != nregions(data) || !all(getCells(magpie) %in% getCells(data))) {
+    stop("Regions in MAgPIE do not agree with regions in reference calibration area data set!")
+  }
+  out <- magpie / data
+  out[out == 0] <- 1
+  out[is.na(out)] <- 1
+  return(magpiesort(out))
+}
+
+# get ratio between modelled area and reference area
 
 getCalibFactor <- function(gdx_file, mode = "cost", calib_accuracy = 0.05, lowpass_filter = 1, histData = "FAO", cost_min = 0.2) {
   require(magclass)
@@ -255,6 +272,36 @@ update_calib <- function(gdx_file, calib_accuracy = 0.01, lowpass_filter = 1, ca
 
 
 
+calibrate_magpie_sensitivity <- function(calib_magpie_name = "magpie_calib",
+                                         calib_file = "modules/39_landconversion/input/f39_calib.csv",
+                                         putfolder = "land_conversion_cost_calib_run",
+                                         logoption = 3,
+                                         histData = "FAO") {
+  require(magclass)
+  if (file.exists(calib_file)) file.rename(calib_file, paste0(calib_file, ".bak"))
+  files <- list.files(path="land_conversion_sensitivity/input", pattern="*.csv", full.names=TRUE, recursive=FALSE)
+  for (file in files) {
+    cat("analyzing", file, "\n")
+    if (file.exists(calib_file)) file.remove(calib_file)
+    file.copy(file, calib_file)
+    calibration_run(putfolder = putfolder, calib_magpie_name = calib_magpie_name, logoption = logoption, s_use_gdx = 0)
+    magpie_data <- get_areacalib(paste0(putfolder, "/fulldata.gdx"))
+    saveRDS(magpie_data, file = stringr::str_replace(stringr::str_replace(file, "/input", "/output"), ".csv", ".rds"))
+    # file.copy(paste0(putfolder, "/fulldata.gdx"), stringr::str_replace(stringr::str_replace(file, "/input", "/output"), ".csv", ".gdx"))
+    if (file.exists(stringr::str_replace(stringr::str_replace(file, "/input", "/output"), ".csv", ".rds"))) {
+      cat("Successfully calculated data for", file)
+    } else {
+      cat("Failed to calculate data for", file)
+    }
+  }
+  if (file.exists(calib_file)) file.remove(calib_file)
+  if (file.exists("land_conversion_sensitivity/input/f39_calib.bak")) copy("land_conversion_sensitivity/input/f39_calib.bak", calib_file)
+
+  # delete calib_magpie_gms in the main folder
+  unlink(paste0(calib_magpie_name, ".*"))
+  unlink("fulldata.gdx")
+  cat("\nLand conversion cost calibration finished\n")
+}
 
 calibrate_magpie <- function(n_maxcalib = 20,
                              restart = FALSE,
