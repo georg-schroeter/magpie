@@ -4,7 +4,7 @@ for (region in list("CAZ", "CHA", "EUR", "IND", "JPN", "LAM", "MEA", "NEU", "OAS
 cat(region, " ")
   for (factor in list (0.5,0.625,0.8,1.25,1.6,2.0)) {
     data[[3]] <- 1
-    data[[4]] <- 1
+    data[[4]] <- 0
     
     if (region == "all") {
       matches <- (data[[3]] > 0)
@@ -13,8 +13,9 @@ cat(region, " ")
     }
     
     data[[3]][matches] <- factor
-    data[[4]][matches] <- factor
-    file_name <- paste0("input/test000_", region, "_", factor, ".csv")
+    # data[[4]][matches] <- 0
+    file_name <- paste0("input/test001_", region, "_", factor, ".csv")
     write.csv(data,file_name,row.names=FALSE)
   }
 }
+cat("\n")
