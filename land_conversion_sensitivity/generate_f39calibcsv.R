@@ -1,4 +1,4 @@
-data <- read.csv("input/test000_reference.csv", sep=",", comment.char="*", dec=".")
+data <- read.csv("input/test001_reference.csv", sep=",", comment.char="*", dec=".")
 
 for (region in list("CAZ", "CHA", "EUR", "IND", "JPN", "LAM", "MEA", "NEU", "OAS", "REF", "SSA", "USA", "all")) {
 cat(region, " ")
