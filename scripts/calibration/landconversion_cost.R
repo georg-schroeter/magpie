@@ -303,8 +303,8 @@ calibrate_magpie_sensitivity <- function(calib_magpie_name = "magpie_calib",
     if (file.exists(calib_file)) file.remove(calib_file)
     file.copy(file, calib_file)
     calibration_run(putfolder = putfolder, calib_magpie_name = calib_magpie_name, logoption = logoption, s_use_gdx = 0)
-    magpie_data <- get_areacalib(paste0(putfolder, "/fulldata.gdx"), histData = "MAgPIEown")
-    saveRDS(magpie_data, file = stringr::str_replace(stringr::str_replace(file, "/input", "/output"), ".csv", "_magpieown.rds"))
+    magpie_data <- get_areacalib(paste0(putfolder, "/fulldata.gdx"), histData = "FAO")
+    saveRDS(magpie_data, file = stringr::str_replace(stringr::str_replace(file, "/input", "/output"), ".csv", "_fao.rds"))
     # file.copy(paste0(putfolder, "/fulldata.gdx"), stringr::str_replace(stringr::str_replace(file, "/input", "/output"), ".csv", ".gdx"))
     if (file.exists(stringr::str_replace(stringr::str_replace(file, "/input", "/output"), ".csv", ".rds"))) {
       cat("Successfully calculated data for", file)
