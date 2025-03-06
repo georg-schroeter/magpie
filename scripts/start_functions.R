@@ -417,7 +417,7 @@ start_run <- function(cfg, scenario = NULL, codeCheck = TRUE, lock_model = TRUE,
 
   land_calib_file <- "modules/39_landconversion/input/f39_calib.csv"
 
-  if(cfg$calib_sensitivity_landconversion_cost){
+  if(cfg$calibrate_sensitivity_landconversion_cost){
     # calculate sensitivity of land prediction to calibration factors
     cat("Starting land conversion calibration factor sensitivity calculation!\n")
     source("scripts/calibration/landconversion_cost.R")
