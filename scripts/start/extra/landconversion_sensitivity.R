@@ -14,6 +14,6 @@ source("scripts/start_functions.R")
 
 #start MAgPIE run
 source("config/default.cfg")
-cfg$calib_sensitivity_landconversion_cost <- TRUE
+cfg$calibrate_sensitivity_landconversion_cost <- TRUE
 start_run(cfg,codeCheck=FALSE)
 
