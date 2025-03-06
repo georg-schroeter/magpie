@@ -23,7 +23,7 @@ cat(region, " ")
     # data[[3]][matches] <- factor
     data[[4]][matches] <- factor
     file_name <- paste0("input/test002_", region, "_", factor, ".csv")
-    write.csv(data,file_name,row.names=FALSE)
+    write.csv(data,file_name,row.names=FALSE, fileEncoding = "UTF-8")
   }
 }
 cat("\n")

@@ -9,18 +9,23 @@
 # description: calculate first step of landconversion cost calibration for all csv files in land_conversion_sensitivity/input.
 # --------------------------------------------------------
 
-# Load start_run(cfg) function which is needed to start MAgPIE runs
-source("scripts/start_functions.R")
-
-#start MAgPIE run
-# source("config/default.cfg")
-
 if (file.exists("modules/39_landconversion/input/f39_calib.bak")) file.remove("modules/39_landconversion/input/f39_calib.bak")
 if (file.exists("modules/39_landconversion/input/f39_calib.csv")) file.rename("modules/39_landconversion/input/f39_calib.csv", "modules/39_landconversion/input/f39_calib.bak")
 
-file.copy("land_conversion_sensitivity/input/test000_reference.csv", "modules/39_landconversion/input/f39_calib.csv")
+files <- list.files(path="land_conversion_sensitivity/input_longterm", pattern="*.csv", full.names=TRUE, recursive=FALSE)
+for (file in files) {
+  if (file.exists("modules/39_landconversion/input/f39_calib.csv")) file.remove("modules/39_landconversion/input/f39_calib.csv")
+  file.copy(file, "modules/39_landconversion/input/f39_calib.csv")
 
-start_run(cfg="default.cfg")
+  # Load start_run(cfg) function which is needed to start MAgPIE runs
+  source("scripts/start_functions.R")
+
+  #start MAgPIE run
+  # source("config/default.cfg")
+
+  start_run(cfg="default.cfg")
+  
+}
 
 if (file.exists("modules/39_landconversion/input/f39_calib.csv")) file.remove("modules/39_landconversion/input/f39_calib.csv")
 if (file.exists("modules/39_landconversion/input/f39_calib.bak")) file.rename("modules/39_landconversion/input/f39_calib.bak", "modules/39_landconversion/input/f39_calib.csv")
