@@ -4,7 +4,7 @@
 * origin: scripts/calibration/landconversion_cost.R (path relative to model main directory)
 * Calibration settings: calib_accuracy= 0.01 lowpass_filter= 0 cost_max= 2.5 cost_min= 0.2 n_maxcalib= 20 best_calib= FALSE histData= FAO
 * creation date: Tue Feb 18 15:19:04 2025
-dummy,dummy,cost,reward
+year,reg,cost,reward
 y1995,CAZ,1,0
 y1995,CHA,1,0
 y1995,EUR,1,0

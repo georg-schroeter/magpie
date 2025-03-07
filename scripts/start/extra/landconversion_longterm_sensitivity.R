@@ -8,6 +8,8 @@
 # --------------------------------------------------------
 # description: calculate first step of landconversion cost calibration for all csv files in land_conversion_sensitivity/input.
 # --------------------------------------------------------
+require("stringr")
+
 
 if (file.exists("modules/39_landconversion/input/f39_calib.bak")) file.remove("modules/39_landconversion/input/f39_calib.bak")
 if (file.exists("modules/39_landconversion/input/f39_calib.csv")) file.rename("modules/39_landconversion/input/f39_calib.csv", "modules/39_landconversion/input/f39_calib.bak")
@@ -23,7 +25,13 @@ for (file in files) {
   #start MAgPIE run
   # source("config/default.cfg")
 
-  start_run(cfg="default.cfg")
+  source("config/default.cfg")
+  
+  cfg$title <- str_replace(paste0("calib_sens", str_extract(file, "_[^/]*$")), ".csv", "")
+  
+  cfg$results_folder <- start_run(cfg=cfg)
+  
+  file.copy(file, paste0(cfg$results_folder, "/"))
   
 }
 
