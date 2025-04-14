@@ -6,8 +6,7 @@
 # |  Contact: magpie@pik-potsdam.de
 
 # ------------------------------------------------
-# description: start run with Forestry (Endogenous)
-# position: 6
+# description: start run with tc_stock, but no bell curve
 # ------------------------------------------------
 
 
@@ -18,11 +17,6 @@ source("scripts/start_functions.R")
 
 #start MAgPIE run
 source("config/default.cfg")
-#cfg$results_folder <- "output/:title:"
-
-cfg <- setScenario(cfg,c("SSP2","NPI","ForestryEndo"))
-#cfg <- setScenario(cfg,c("SSP2","NPI","ForestryExo"))
-#cfg <- setScenario(cfg,c("SSP2","NPI","ForestryOff"))
 
 cfg$gms$tc <- "endo_jan25_tc_stock"
 
