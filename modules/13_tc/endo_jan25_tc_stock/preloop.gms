@@ -15,6 +15,13 @@ loop(t,
  );
 );
 
-pcm_tau(h,"crop")        = fm_tau1995(h);
-pcm_tau(h,"pastr")       = f13_pastr_tau_hist("y1995",h);
-pc13_tcguess(h,tautype)  = f13_tcguess(h);
+
+pcm_tau(h,"crop")          = fm_tau1995(h);
+pcm_tau(h,"pastr")         = f13_pastr_tau_hist("y1995",h);
+pc13_tcguess(h,tautype)    = f13_tcguess(h);
+
+p13_rd_stock(t_all, i,"pastr")   = 0;
+v13_rd_stock.l(i, "pastr")   = 0;
+v13_rd_investment.l(i, "pastr")   = 0;
+
+p13_rd_stock(t_all, i, tautype) = p13_rd_stock_without_investements(t_all, i, tautype);
