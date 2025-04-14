@@ -50,13 +50,13 @@ $setglobal c13_tccost  medium
 
 table f13_tc_factor(t_all,scen13) Regression factor (USD17MER per ha)
 $ondelim
-$include "./modules/13_tc/input/f13_tc_factor_jan25_v3.cs3"
+$include "./modules/13_tc/input/f13_tc_factor.cs3"
 $offdelim
 ;
 
 table f13_tc_exponent(t_all,scen13) Regression exponent (1)
 $ondelim
-$include "./modules/13_tc/input/f13_tc_exponent_jan25_v3.cs3"
+$include "./modules/13_tc/input/f13_tc_exponent.cs3"
 $offdelim
 ;
 

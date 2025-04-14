@@ -41,15 +41,15 @@
 
 
 *####################### R SECTION START (PHASES) ##############################
-$Ifi "%phase%" == "sets" $include "./modules/13_tc/endo_jan25_v5_withdepreciationrate_bell_wiouConstraint_y5/sets.gms"
-$Ifi "%phase%" == "declarations" $include "./modules/13_tc/endo_jan25_v5_withdepreciationrate_bell_wiouConstraint_y5/declarations.gms"
-$Ifi "%phase%" == "input" $include "./modules/13_tc/endo_jan25_v5_withdepreciationrate_bell_wiouConstraint_y5/input.gms"
-$Ifi "%phase%" == "equations" $include "./modules/13_tc/endo_jan25_v5_withdepreciationrate_bell_wiouConstraint_y5/equations.gms"
-$Ifi "%phase%" == "scaling" $include "./modules/13_tc/endo_jan25_v5_withdepreciationrate_bell_wiouConstraint_y5/scaling.gms"
-$Ifi "%phase%" == "preloop" $include "./modules/13_tc/endo_jan25_v5_withdepreciationrate_bell_wiouConstraint_y5/preloop.gms"
-$Ifi "%phase%" == "presolve" $include "./modules/13_tc/endo_jan25_v5_withdepreciationrate_bell_wiouConstraint_y5/presolve.gms"
-$Ifi "%phase%" == "postsolve" $include "./modules/13_tc/endo_jan25_v5_withdepreciationrate_bell_wiouConstraint_y5/postsolve.gms"
-$Ifi "%phase%" == "nl_fix" $include "./modules/13_tc/endo_jan25_v5_withdepreciationrate_bell_wiouConstraint_y5/nl_fix.gms"
-$Ifi "%phase%" == "nl_release" $include "./modules/13_tc/endo_jan25_v5_withdepreciationrate_bell_wiouConstraint_y5/nl_release.gms"
-$Ifi "%phase%" == "nl_relax" $include "./modules/13_tc/endo_jan25_v5_withdepreciationrate_bell_wiouConstraint_y5/nl_relax.gms"
+$Ifi "%phase%" == "sets" $include "./modules/13_tc/endo_jan25_tc_stock/sets.gms"
+$Ifi "%phase%" == "declarations" $include "./modules/13_tc/endo_jan25_tc_stock/declarations.gms"
+$Ifi "%phase%" == "input" $include "./modules/13_tc/endo_jan25_tc_stock/input.gms"
+$Ifi "%phase%" == "equations" $include "./modules/13_tc/endo_jan25_tc_stock/equations.gms"
+$Ifi "%phase%" == "scaling" $include "./modules/13_tc/endo_jan25_tc_stock/scaling.gms"
+$Ifi "%phase%" == "preloop" $include "./modules/13_tc/endo_jan25_tc_stock/preloop.gms"
+$Ifi "%phase%" == "presolve" $include "./modules/13_tc/endo_jan25_tc_stock/presolve.gms"
+$Ifi "%phase%" == "postsolve" $include "./modules/13_tc/endo_jan25_tc_stock/postsolve.gms"
+$Ifi "%phase%" == "nl_fix" $include "./modules/13_tc/endo_jan25_tc_stock/nl_fix.gms"
+$Ifi "%phase%" == "nl_release" $include "./modules/13_tc/endo_jan25_tc_stock/nl_release.gms"
+$Ifi "%phase%" == "nl_relax" $include "./modules/13_tc/endo_jan25_tc_stock/nl_relax.gms"
 *######################## R SECTION END (PHASES) ###############################

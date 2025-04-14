@@ -8,8 +8,7 @@
 *' @equations
 q13_rd_stock_crop(i2)..
 v13_rd_stock(i2, "crop") =e= sum(ct, pc13_land(i2, "crop") * i13_tc_factor(ct) *
-                             sum(supreg(h2,i2), vm_tau(h2,"crop"))**i13_tc_exponent(ct))
-                                * i13_tc_exponent;
+                             sum(supreg(h2,i2), vm_tau(h2,"crop"))**i13_tc_exponent(ct)) * i13_tc_exponent(tc);
 
 
 
