@@ -13,10 +13,6 @@ positive variable
  v13_tech_cost(i, tautype)           Annuitized costs of TC (mio. USD17MER per yr)
 ;
 
-scalars
-  s13_yeardiff                       Year diff between steps (1)
-;
-
 equations
  q13_tech_cost(i, tautype)            Total annuitized costs for TC (mio. USD17MER)
  q13_rd_stock_crop(i)                 R&D stock to drive TC for crops in curent time step (mio. USD17MER per yr)
@@ -33,6 +29,9 @@ parameters
  i13_tc_factor(t)                     Regression factor of R&D capital (USD17MER per ha)
 ;
 
+scalars
+  s13_yeardiff                       Number of 5-year time intervalls between time steps (1)
+;
 *#################### R SECTION START (OUTPUT DECLARATIONS) ####################
 parameters
  ov_tau(t,h,tautype,type)             Agricultural land use intensity tau (1)

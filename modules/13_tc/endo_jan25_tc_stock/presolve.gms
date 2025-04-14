@@ -5,8 +5,6 @@
 *** |  MAgPIE License Exception, version 1.0 (see LICENSE file).
 *** |  Contact: magpie@pik-potsdam.de
 
-s13_yeardiff = m_yeardiff(t);
-
 pc13_land(i,"crop") = sum(cell(i,j),pcm_land(j,"crop"));
 
 if (sum(sameas(t_past,t),1) = 1 AND s13_ignore_tau_historical = 0,
@@ -43,3 +41,4 @@ if(m_year(t) > sm_fix_SSP2 AND s13_max_gdp_shr <> Inf,
 
 
 vm_tau.l(h, "pastr") = f13_pastr_tau_hist("y1995",h);
+s13_yeardiff = m_yeardiff(t);
