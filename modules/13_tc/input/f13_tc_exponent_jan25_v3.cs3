@@ -1,0 +1,38 @@
+*description: exponent for tc regression
+*unit: -
+*note: data taken from Dietrich J P, Schmitz C, Lotze-Campen H, Popp A and Mueller C 2014 Forecasting technological change in agriculture - An endogenous implementation in a global land use model Technological Forecasting and Social Change 81 236-49
+*origin: tc_cost_regression.R in http://subversion/svn/magpie/tools/tc
+*creation: Tue Apr 28 11:22:22 2015
+dummy,low,medium,high
+y1995,2.13,2.13,2.13
+y2000,2.13,2.13,2.13
+y2005,2.13,2.13,2.13
+y2010,2.13,2.13,2.13
+y2015,0.8775,2.13,1.4825
+y2020,0.575,2.13,1.785
+y2025,0.2725,2.13,2.0875
+y2030,-0.03,2.13,2.39
+y2035,-0.03,2.13,2.39
+y2040,-0.03,2.13,2.39
+y2045,-0.03,2.13,2.39
+y2050,-0.03,2.13,2.39
+y2055,-0.03,2.13,2.39
+y2060,-0.03,2.13,2.39
+y2065,-0.03,2.13,2.39
+y2070,-0.03,2.13,2.39
+y2075,-0.03,2.13,2.39
+y2080,-0.03,2.13,2.39
+y2085,-0.03,2.13,2.39
+y2090,-0.03,2.13,2.39
+y2095,-0.03,2.13,2.39
+y2100,-0.03,2.13,2.39
+y2105,-0.03,2.13,2.39
+y2110,-0.03,2.13,2.39
+y2115,-0.03,2.13,2.39
+y2120,-0.03,2.13,2.39
+y2125,-0.03,2.13,2.39
+y2130,-0.03,2.13,2.39
+y2135,-0.03,2.13,2.39
+y2140,-0.03,2.13,2.39
+y2145,-0.03,2.13,2.39
+y2150,-0.03,2.13,2.39
