@@ -36,7 +36,7 @@ $offdelim
 
 table f13_bell_curve(t_all, t_all) Bell curve for R&D investment (1)
 $ondelim
-$include "./modules/13_tc/input/f13_bell_curve_inf.cs3"
+$include "./modules/13_tc/input/f13_bell_curve.cs3"
 $offdelim
 ;
 
