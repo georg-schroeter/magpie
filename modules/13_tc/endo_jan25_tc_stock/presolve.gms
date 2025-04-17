@@ -39,6 +39,10 @@ if(m_year(t) > sm_fix_SSP2 AND s13_max_gdp_shr <> Inf,
 
 );
 
+* fix initial investment to 0
+if(ord(t) = 1,
+   v13_rd_investment.fx(i2, tautype) = 0;
+);
 
 vm_tau.l(h, "pastr") = f13_pastr_tau_hist("y1995",h);
 s13_yeardiff = m_yeardiff(t);
