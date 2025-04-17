@@ -11,7 +11,7 @@ if (sum(sameas(t_past,t),1) = 1 AND s13_ignore_tau_historical = 0,
   vm_tau.lo(h,"pastr") =   f13_pastr_tau_hist(t,h);
   vm_tau.lo(h,"crop") =    f13_tau_historical(t,h);
 else
-  vm_tau.lo(h, tautype) =    pcm_tau(h, tautype);
+  * vm_tau.lo(h, tautype) =    pcm_tau(h, tautype);
 );
 
 *  vm_tau.up(h,tautype) =  2 * pcm_tau(h,tautype);

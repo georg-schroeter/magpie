@@ -6,7 +6,7 @@
 # |  Contact: magpie@pik-potsdam.de
 
 # ------------------------------------------------
-# description: start run with tc_stock, but no bell curve
+# description: start run with tc_stock
 # ------------------------------------------------
 
 
