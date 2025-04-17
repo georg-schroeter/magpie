@@ -147,27 +147,6 @@ $title magpie
 *'  * Always try to access model outputs through the corresponding magpie package instead of accessing them directly with readGDX. It cannot be guaranteed that your script will work in the future if you do otherwise (as only the corresponding magpie package will be continuously adapted to changes in the GAMS code).
 
 *##################### R SECTION START (VERSION INFO) ##########################
-* 
-* Used data set: rev4.117_h12_magpie.tgz
-* md5sum: ca5eee589e6422199cf67e6f72122573
-* Repository: https://rse.pik-potsdam.de/data/magpie/public
-* 
-* Used data set: rev4.117_h12_fd712c0b_cellularmagpie_c200_MRI-ESM2-0-ssp370_lpjml-8e6c5eb1.tgz
-* md5sum: 777e853539276d63e3a3bea977e7b330
-* Repository: https://rse.pik-potsdam.de/data/magpie/public
-* 
-* Used data set: rev4.117_h12_validation.tgz
-* md5sum: 90882b57d0184bf34b0a2aed432c5f54
-* Repository: https://rse.pik-potsdam.de/data/magpie/public
-* 
-* Used data set: additional_data_rev4.62.tgz
-* md5sum: NA
-* Repository: https://rse.pik-potsdam.de/data/magpie/public
-* 
-* Used data set: calibration_H12_FAO_13Mar25.tgz
-* md5sum: 8ed8aaebec91ddfb9d1ffca379306283
-* Repository: https://rse.pik-potsdam.de/data/magpie/public
-* 
 * Low resolution: c200
 * High resolution: 0.5
 * 
@@ -178,27 +157,6 @@ $title magpie
 *    14   23   10    7    4   26   21    9   16   23   32   15
 * 
 * Regionscode: 62eff8f7
-* 
-* Regions data revision: 4.117
-* 
-* lpj2magpie settings:
-* * LPJmL data: MRI-ESM2-0:ssp370
-* * Revision: 4.117
-* 
-* aggregation settings:
-* * Input resolution: 0.5
-* * Output resolution: c200
-* * Regionscode: 62eff8f7
-* * Number of clusters per region:
-*   CAZ  CHA  EUR  IND  JPN  LAM  MEA  NEU  OAS  REF  SSA  USA
-*    14   23   10    7    4   26   21    9   16   23   32   15
-* * Call: withCallingHandlers(expr, message = messageHandler, warning = warningHandler,     error = errorHandler)
-* 
-* Warning message:
-* package 'gms' was built under R version 4.4.3
-* 
-* Last modification (input data): Wed Mar 19 07:58:05 2025
-* 
 *###################### R SECTION END (VERSION INFO) ###########################
 
 $offupper
@@ -269,7 +227,7 @@ $setglobal transport  gtap_nov12
 $setglobal area_equipped_for_irrigation  endo_apr13
 $setglobal water_demand  all_sectors_aug13
 $setglobal water_availability  total_water_aug13
-$setglobal biodiversity  bii_target_apr24
+$setglobal biodiversity  bii_target
 $setglobal climate  static
 
 $setglobal nr_soil_budget  macceff_aug22
