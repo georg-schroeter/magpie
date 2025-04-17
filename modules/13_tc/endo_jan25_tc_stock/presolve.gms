@@ -11,7 +11,7 @@ if (sum(sameas(t_past,t),1) = 1 AND s13_ignore_tau_historical = 0,
   vm_tau.lo(h,"pastr") =   f13_pastr_tau_hist(t,h);
   vm_tau.lo(h,"crop") =    f13_tau_historical(t,h);
 else
-  * vm_tau.lo(h, tautype) =    pcm_tau(h, tautype);
+  vm_tau.lo(h, tautype) = 0;
 );
 
 *  vm_tau.up(h,tautype) =  2 * pcm_tau(h,tautype);
@@ -41,7 +41,7 @@ if(m_year(t) > sm_fix_SSP2 AND s13_max_gdp_shr <> Inf,
 
 * fix initial investment to 0
 if(ord(t) = 1,
-   v13_rd_investment.fx(i2, tautype) = 0;
+   v13_rd_investment.lo(i2, tautype) = 0;
 );
 
 vm_tau.l(h, "pastr") = f13_pastr_tau_hist("y1995",h);
