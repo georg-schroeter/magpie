@@ -5,7 +5,7 @@
 *** |  MAgPIE License Exception, version 1.0 (see LICENSE file).
 *** |  Contact: magpie@pik-potsdam.de
 
-pc13_land(i,"crop") = sum(cell(i,j),pcm_land(j,"crop"));
+pc13_land(i,"crop") = sum(cell(i,j),pm_land_start(j,"crop"));
 
 if (sum(sameas(t_past,t),1) = 1 AND s13_ignore_tau_historical = 0,
   vm_tau.lo(h,"pastr") =   f13_pastr_tau_hist(t,h);
