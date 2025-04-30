@@ -23,7 +23,7 @@ equations
 parameters
  pcm_tau(h, tautype)                  Tau factor of the previous time step (1)
  pc13_land(i, tautype)                Crop land area per region (mio ha)
- p13_rd_stock(t_all, i, tautype)             R&D stock to drive TC for crops and pasture of the previous time step (USD17MER)
+ p13_rd_stock_per_area(t_all, i, tautype)  R&D stock to drive TC for crops and pasture of the previous time step (USD17MER per ha)
  pc13_tcguess(h, tautype)             Guess for annual tc rates in the next time step (1)
  i13_tc_exponent(t)                   Regression exponent (1)
  i13_tc_factor(t)                     Regression factor of R&D capital (USD17MER per ha)

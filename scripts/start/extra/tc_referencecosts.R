@@ -27,9 +27,9 @@ for (file in files) {
 
   source("config/default.cfg")
   
-  cfg$gms$tc <- "endo_jan25_tc_stock"
+  cfg$gms$tc <- "endo_jan25_tc_per_area"
 
-  cfg$title <- str_replace(paste0("tc_stock_bell", str_extract(file, "_[^/]*$")), ".csv", "")
+  cfg$title <- str_replace(paste0("tc_per_area_bell_new_2.4_3000", str_extract(file, "_[^/]*$")), ".csv", "")
   
   
   cfg$results_folder <- start_run(cfg=cfg)
