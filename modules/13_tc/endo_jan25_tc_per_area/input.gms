@@ -30,7 +30,7 @@ $offdelim
 
 table p13_rd_stock_without_investements(t_all, i, tautype) R&D stock without investment (1)
 $ondelim
-$include "./modules/13_tc/input/f13_rd_per_area_new_2.4_3000.csv"
+$include "./modules/13_tc/input/f13_rd_per_area_new_2.4_2000.csv"
 $offdelim
 ;
 

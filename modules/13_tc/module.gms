@@ -23,7 +23,7 @@
 
 *###################### R SECTION START (MODULETYPES) ##########################
 $Ifi "%tc%" == "endo_jan22" $include "./modules/13_tc/endo_jan22/realization.gms"
-$Ifi "%tc%" == "endo_jan25_tc_stock" $include "./modules/13_tc/endo_jan25_tc_stock/realization.gms"
 $Ifi "%tc%" == "endo_jan25_tc_per_area" $include "./modules/13_tc/endo_jan25_tc_per_area/realization.gms"
+$Ifi "%tc%" == "endo_jan25_tc_stock" $include "./modules/13_tc/endo_jan25_tc_stock/realization.gms"
 $Ifi "%tc%" == "exo" $include "./modules/13_tc/exo/realization.gms"
 *###################### R SECTION END (MODULETYPES) ############################
