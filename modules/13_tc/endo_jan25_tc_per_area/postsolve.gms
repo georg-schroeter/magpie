@@ -13,8 +13,8 @@ if((ord(t)>1),
 
 pcm_tau(h, tautype) = vm_tau.l(h, tautype);
 
-p13_rd_stock(t_all, i2, "crop") =  p13_rd_stock(t_all, i2, "crop")  +
-                                   v13_rd_investment.l(i2, "crop")
+p13_rd_stock_per_area(t_all, i2, "crop") =  p13_rd_stock_per_area(t_all, i2, "crop")  +
+                                   v13_rd_investment.l(i2, "crop") / pc13_land(i2, "crop")
                                    * f13_bell_curve(t, t_all) * m_yeardiff(t);
 
 
