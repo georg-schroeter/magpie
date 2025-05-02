@@ -8,7 +8,7 @@
 positive variable
  vm_tau(h,tautype)                   Agricultural land use intensity tau (1)
  vm_tech_cost(i)                     Total Annuitized costs of TC (mio. USD17MER per yr)
- v13_rd_stock_per_area(i,tautype)    R&D stock to drive TC for crops and pasture in curent time step (mio. USD17MER per yr)
+ v13_rd_stock_per_area(i,tautype)    R&D stock to drive TC for crops and pasture in curent time step (mio. USD17MER per ha)
  v13_rd_investment(i, tautype)       R&D investment to drive TC for crops and pasture in curent time step (mio. USD17MER per yr)
  v13_tech_cost(i, tautype)           Annuitized costs of TC (mio. USD17MER per yr)
 ;
