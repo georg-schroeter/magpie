@@ -40,3 +40,5 @@ if(m_year(t) > sm_fix_SSP2 AND s13_max_gdp_shr <> Inf,
   vm_tech_cost.l(i) = vm_tech_cost.up(i);
 
 );
+
+vm_rd_stock_per_area.fx(i,"crop") = 0;

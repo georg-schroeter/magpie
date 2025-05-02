@@ -9,6 +9,7 @@ positive variable
  vm_tau(h,tautype)                   Agricultural land use intensity tau (1)
  vm_tech_cost(i)                     Total Annuitized costs of TC (mio. USD17MER per yr)
  v13_rd_stock(i,tautype)             R&D stock to drive TC for crops and pasture in curent time step (mio. USD17MER per yr)
+ vm_rd_stock_per_area(i,tautype)    R&D stock to drive TC for crops and pasture in curent time step (mio. USD17MER per ha)
  v13_rd_investment(i, tautype)      R&D investment to drive TC for crops and pasture in curent time step (mio. USD17MER per yr)
  v13_tech_cost(i, tautype)           Annuitized costs of TC (mio. USD17MER per yr)
 ;
@@ -34,14 +35,15 @@ scalars
 ;
 *#################### R SECTION START (OUTPUT DECLARATIONS) ####################
 parameters
- ov_tau(t,h,tautype,type)             Agricultural land use intensity tau (1)
- ov_tech_cost(t,i,type)               Total Annuitized costs of TC (mio. USD17MER per yr)
- ov13_rd_stock(t,i,tautype,type)      R&D stock to drive TC for crops and pasture in curent time step (mio. USD17MER per yr)
- ov13_rd_investment(t,i,tautype,type) R&D investment to drive TC for crops and pasture in curent time step (mio. USD17MER per yr)
- ov13_tech_cost(t,i,tautype,type)     Annuitized costs of TC (mio. USD17MER per yr)
- oq13_tech_cost(t,i,tautype,type)     Total annuitized costs for TC (mio. USD17MER)
- oq13_rd_stock_crop(t,i,type)         R&D stock to drive TC for crops in curent time step (mio. USD17MER per yr)
- oq13_tech_cost_sum(t,i,type)         Total Total annuitized costs for TC (mio. USD17MER per yr)
- oq13_rd_investment_crop(t,i,type)    R&D investment to drive TC for crops in curent time step (mio. USD17MER per yr)
+ ov_tau(t,h,tautype,type)               Agricultural land use intensity tau (1)
+ ov_tech_cost(t,i,type)                 Total Annuitized costs of TC (mio. USD17MER per yr)
+ ov13_rd_stock(t,i,tautype,type)        R&D stock to drive TC for crops and pasture in curent time step (mio. USD17MER per yr)
+ ov_rd_stock_per_area(t,i,tautype,type) R&D stock to drive TC for crops and pasture in curent time step (mio. USD17MER per ha)
+ ov13_rd_investment(t,i,tautype,type)   R&D investment to drive TC for crops and pasture in curent time step (mio. USD17MER per yr)
+ ov13_tech_cost(t,i,tautype,type)       Annuitized costs of TC (mio. USD17MER per yr)
+ oq13_tech_cost(t,i,tautype,type)       Total annuitized costs for TC (mio. USD17MER)
+ oq13_rd_stock_crop(t,i,type)           R&D stock to drive TC for crops in curent time step (mio. USD17MER per yr)
+ oq13_tech_cost_sum(t,i,type)           Total Total annuitized costs for TC (mio. USD17MER per yr)
+ oq13_rd_investment_crop(t,i,type)      R&D investment to drive TC for crops in curent time step (mio. USD17MER per yr)
 ;
 *##################### R SECTION END (OUTPUT DECLARATIONS) #####################

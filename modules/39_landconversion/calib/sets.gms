@@ -8,4 +8,8 @@
 sets
   type39 Cost type
     / cost, reward /
+    
+  land_nocrop39(land) Land pools without crop
+    / past, forestry, primforest, secdforest, urban, other /
+
 ;

@@ -8,6 +8,7 @@
 positive variable
  vm_tau(h,tautype)                   Agricultural land use intensity tau (1)
  vm_tech_cost(i)                     Total Annuitized costs of TC (mio. USD17MER per yr)
+ vm_rd_stock_per_area(i,tautype)    R&D stock to drive TC for crops and pasture in curent time step (mio. USD17MER per ha)
  v13_cost_tc(i,tautype)              Technical change costs per region (mio. USD17MER)
  v13_tech_cost(i,tautype)            Annuitized costs of TC for crops and pasture (mio. USD17MER per yr)
 ;
@@ -28,12 +29,13 @@ parameters
 
 *#################### R SECTION START (OUTPUT DECLARATIONS) ####################
 parameters
- ov_tau(t,h,tautype,type)         Agricultural land use intensity tau (1)
- ov_tech_cost(t,i,type)           Total Annuitized costs of TC (mio. USD17MER per yr)
- ov13_cost_tc(t,i,tautype,type)   Technical change costs per region (mio. USD17MER)
- ov13_tech_cost(t,i,tautype,type) Annuitized costs of TC for crops and pasture (mio. USD17MER per yr)
- oq13_tech_cost(t,i,tautype,type) Total annuitized costs for TC (mio. USD17MER)
- oq13_cost_tc(t,i,tautype,type)   Costs for TC (mio. USD17MER per yr)
- oq13_tech_cost_sum(t,i,type)     Total Total annuitized costs for TC (mio. USD17MER per yr)
+ ov_tau(t,h,tautype,type)               Agricultural land use intensity tau (1)
+ ov_tech_cost(t,i,type)                 Total Annuitized costs of TC (mio. USD17MER per yr)
+ ov_rd_stock_per_area(t,i,tautype,type) R&D stock to drive TC for crops and pasture in curent time step (mio. USD17MER per ha)
+ ov13_cost_tc(t,i,tautype,type)         Technical change costs per region (mio. USD17MER)
+ ov13_tech_cost(t,i,tautype,type)       Annuitized costs of TC for crops and pasture (mio. USD17MER per yr)
+ oq13_tech_cost(t,i,tautype,type)       Total annuitized costs for TC (mio. USD17MER)
+ oq13_cost_tc(t,i,tautype,type)         Costs for TC (mio. USD17MER per yr)
+ oq13_tech_cost_sum(t,i,type)           Total Total annuitized costs for TC (mio. USD17MER per yr)
 ;
 *##################### R SECTION END (OUTPUT DECLARATIONS) #####################

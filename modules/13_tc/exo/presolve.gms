@@ -25,3 +25,5 @@ p13_tech_cost(i,tautype) = (sum(supreg(h,i),vm_tau.l(h,tautype)/pcm_tau(h,tautyp
                                * pm_interest(t,i)/(1+pm_interest(t,i));
 
 vm_tech_cost.fx(i) = sum(tautype, p13_tech_cost(i,tautype));
+
+vm_rd_stock_per_area.fx(i,"crop") = 0;

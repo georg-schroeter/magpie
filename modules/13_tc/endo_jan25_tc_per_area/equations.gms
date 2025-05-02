@@ -7,13 +7,13 @@
 
 *' @equations
 q13_rd_stock_crop(i2)..
-v13_rd_stock_per_area(i2, "crop") =e= sum(ct, i13_tc_factor(ct) *
+vm_rd_stock_per_area(i2, "crop") =e= sum(ct, i13_tc_factor(ct) *
                              sum(supreg(h2,i2), vm_tau(h2,"crop"))**i13_tc_exponent(ct));
 
 
 
 q13_rd_investment_crop(i2)..
-pc13_land(i2, "crop") * v13_rd_stock_per_area(i2, "crop") =e= pc13_land(i2, "crop") * sum(ct, p13_rd_stock_per_area(ct, i2, "crop")) +
+pc13_land(i2, "crop") * vm_rd_stock_per_area(i2, "crop") =e= pc13_land(i2, "crop") * sum(ct, p13_rd_stock_per_area(ct, i2, "crop")) +
                                     v13_rd_investment(i2, "crop") * s13_yeardiff * sum(ct, f13_bell_curve(ct, ct));
 
 

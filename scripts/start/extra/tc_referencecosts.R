@@ -29,7 +29,7 @@ for (file in files) {
   
   cfg$gms$tc <- "endo_jan25_tc_per_area"
 
-  cfg$title <- str_replace(paste0("tc_per_area_bell_new_2.4_2000", str_extract(file, "_[^/]*$")), ".csv", "")
+  cfg$title <- str_replace(paste0("tc_per_area_conversion_2.4_2000", str_extract(file, "_[^/]*$")), ".csv", "")
   
   
   cfg$results_folder <- start_run(cfg=cfg)

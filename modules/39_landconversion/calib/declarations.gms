@@ -6,7 +6,8 @@
 *** |  Contact: magpie@pik-potsdam.de
 
 equations
- q39_cost_landcon(j,land)         Calculation of cellular landconversion costs (mio. USD17MER per yr)
+ q39_cost_landcon_crop(j)         Calculation of cellular landconversion costs (mio. USD17MER per yr)
+ q39_cost_landcon(j,land_nocrop39)         Calculation of cellular landconversion costs (mio. USD17MER per yr)
 ;
 
 variables
@@ -21,7 +22,8 @@ parameters
 
 *#################### R SECTION START (OUTPUT DECLARATIONS) ####################
 parameters
- ov_cost_landcon(t,j,land,type)   Costs for land expansion and reduction (mio. USD17MER per yr)
- oq39_cost_landcon(t,j,land,type) Calculation of cellular landconversion costs (mio. USD17MER per yr)
+ ov_cost_landcon(t,j,land,type)            Costs for land expansion and reduction (mio. USD17MER per yr)
+ oq39_cost_landcon_crop(t,j,type)          Calculation of cellular landconversion costs (mio. USD17MER per yr)
+ oq39_cost_landcon(t,j,land_nocrop39,type) Calculation of cellular landconversion costs (mio. USD17MER per yr)
 ;
 *##################### R SECTION END (OUTPUT DECLARATIONS) #####################

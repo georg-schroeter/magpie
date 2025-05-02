@@ -6,12 +6,16 @@
 *** |  Contact: magpie@pik-potsdam.de
 
 *#################### R SECTION START (OUTPUT DEFINITIONS) #####################
- ov_cost_landcon(t,j,land,"marginal")   = vm_cost_landcon.m(j,land);
- oq39_cost_landcon(t,j,land,"marginal") = q39_cost_landcon.m(j,land);
- ov_cost_landcon(t,j,land,"level")      = vm_cost_landcon.l(j,land);
- oq39_cost_landcon(t,j,land,"level")    = q39_cost_landcon.l(j,land);
- ov_cost_landcon(t,j,land,"upper")      = vm_cost_landcon.up(j,land);
- oq39_cost_landcon(t,j,land,"upper")    = q39_cost_landcon.up(j,land);
- ov_cost_landcon(t,j,land,"lower")      = vm_cost_landcon.lo(j,land);
- oq39_cost_landcon(t,j,land,"lower")    = q39_cost_landcon.lo(j,land);
+ ov_cost_landcon(t,j,land,"marginal")            = vm_cost_landcon.m(j,land);
+ oq39_cost_landcon_crop(t,j,"marginal")          = q39_cost_landcon_crop.m(j);
+ oq39_cost_landcon(t,j,land_nocrop39,"marginal") = q39_cost_landcon.m(j,land_nocrop39);
+ ov_cost_landcon(t,j,land,"level")               = vm_cost_landcon.l(j,land);
+ oq39_cost_landcon_crop(t,j,"level")             = q39_cost_landcon_crop.l(j);
+ oq39_cost_landcon(t,j,land_nocrop39,"level")    = q39_cost_landcon.l(j,land_nocrop39);
+ ov_cost_landcon(t,j,land,"upper")               = vm_cost_landcon.up(j,land);
+ oq39_cost_landcon_crop(t,j,"upper")             = q39_cost_landcon_crop.up(j);
+ oq39_cost_landcon(t,j,land_nocrop39,"upper")    = q39_cost_landcon.up(j,land_nocrop39);
+ ov_cost_landcon(t,j,land,"lower")               = vm_cost_landcon.lo(j,land);
+ oq39_cost_landcon_crop(t,j,"lower")             = q39_cost_landcon_crop.lo(j);
+ oq39_cost_landcon(t,j,land_nocrop39,"lower")    = q39_cost_landcon.lo(j,land_nocrop39);
 *##################### R SECTION END (OUTPUT DEFINITIONS) ######################

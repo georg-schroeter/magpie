@@ -8,6 +8,7 @@
 positive variable
  vm_tau(h,tautype)           Agricultural land use intensity tau (1)
  vm_tech_cost(i)             Costs of TC (mio. USD17MER per yr)
+ vm_rd_stock_per_area(i,tautype)    R&D stock to drive TC for crops and pasture in curent time step (mio. USD17MER per ha)
 ;
 
 parameters
@@ -21,7 +22,8 @@ parameters
 
 *#################### R SECTION START (OUTPUT DECLARATIONS) ####################
 parameters
- ov_tau(t,h,tautype,type) Agricultural land use intensity tau (1)
- ov_tech_cost(t,i,type)   Costs of TC (mio. USD17MER per yr)
+ ov_tau(t,h,tautype,type)               Agricultural land use intensity tau (1)
+ ov_tech_cost(t,i,type)                 Costs of TC (mio. USD17MER per yr)
+ ov_rd_stock_per_area(t,i,tautype,type) R&D stock to drive TC for crops and pasture in curent time step (mio. USD17MER per ha)
 ;
 *##################### R SECTION END (OUTPUT DECLARATIONS) #####################

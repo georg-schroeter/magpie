@@ -46,3 +46,6 @@ if(ord(t) = 1,
 
 vm_tau.l(h, "pastr") = f13_pastr_tau_hist("y1995",h);
 s13_yeardiff = m_yeardiff(t);
+
+vm_rd_stock_per_area.fx(i,"crop") = 0;
+ 
