@@ -6,7 +6,7 @@
 *** |  Contact: magpie@pik-potsdam.de
 
 positive variables
- vm_cost_urban(j)			Technical adjustment cost test
+ vm_cost_urban(j)			Technical adjustment cost
 ;
 
 equations
