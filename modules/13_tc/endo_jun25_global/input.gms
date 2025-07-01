@@ -40,12 +40,6 @@ $include "./modules/13_tc/input/f13_bell_curve.cs3"
 $offdelim
 ;
 
-table f13_interest_panel(t_all, t_all) Interest rate panel for R&D investment (1)
-$ondelim
-$include "./modules/13_tc/input/f13_interest_panel.cs3"
-$offdelim
-;
-
 $setglobal c13_tccost  medium
 
 table f13_tc_factor(t_all,scen13) Regression factor (USD17MER per ha)

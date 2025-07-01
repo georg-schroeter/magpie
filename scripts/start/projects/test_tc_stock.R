@@ -6,7 +6,7 @@
 # |  Contact: magpie@pik-potsdam.de
 
 # ----------------------------------------------------------
-# description: Test new rotational constraint scenarios
+# description: Test new TC formula with global contribution
 # ----------------------------------------------------------
 
 

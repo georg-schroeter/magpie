@@ -6,7 +6,7 @@
 *** |  Contact: magpie@pik-potsdam.de
 
 pc13_land(i,"crop") = sum(cell(i,j),pcm_land(j,"crop"));
-p13_rd_stock_per_area_global("crop") = sum((i, ct), p13_rd_stock_per_area(ct, i, "crop") * pc13_land(i,"crop")) / sum(i, pc13_land(i,"crop"));
+pc13_rd_stock_per_area_global("crop") = sum((i, ct), p13_rd_stock_per_area(ct, i, "crop") * pc13_land(i,"crop")) / sum(i, pc13_land(i,"crop"));
 
 if (sum(sameas(t_past,t),1) = 1 AND s13_ignore_tau_historical = 0,
   vm_tau.lo(h,"pastr") =   f13_pastr_tau_hist(t,h);
