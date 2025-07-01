@@ -16,12 +16,12 @@
 *' @limitations Data availability for land conversion costs is very limited.
 
 *####################### R SECTION START (PHASES) ##############################
-$Ifi "%phase%" == "sets" $include "./modules/39_landconversion/calib/sets.gms"
-$Ifi "%phase%" == "declarations" $include "./modules/39_landconversion/calib/declarations.gms"
-$Ifi "%phase%" == "input" $include "./modules/39_landconversion/calib/input.gms"
-$Ifi "%phase%" == "equations" $include "./modules/39_landconversion/calib/equations.gms"
-$Ifi "%phase%" == "scaling" $include "./modules/39_landconversion/calib/scaling.gms"
-$Ifi "%phase%" == "preloop" $include "./modules/39_landconversion/calib/preloop.gms"
-$Ifi "%phase%" == "presolve" $include "./modules/39_landconversion/calib/presolve.gms"
-$Ifi "%phase%" == "postsolve" $include "./modules/39_landconversion/calib/postsolve.gms"
+$Ifi "%phase%" == "sets" $include "./modules/39_landconversion/calib_tc_cost/sets.gms"
+$Ifi "%phase%" == "declarations" $include "./modules/39_landconversion/calib_tc_cost/declarations.gms"
+$Ifi "%phase%" == "input" $include "./modules/39_landconversion/calib_tc_cost/input.gms"
+$Ifi "%phase%" == "equations" $include "./modules/39_landconversion/calib_tc_cost/equations.gms"
+$Ifi "%phase%" == "scaling" $include "./modules/39_landconversion/calib_tc_cost/scaling.gms"
+$Ifi "%phase%" == "preloop" $include "./modules/39_landconversion/calib_tc_cost/preloop.gms"
+$Ifi "%phase%" == "presolve" $include "./modules/39_landconversion/calib_tc_cost/presolve.gms"
+$Ifi "%phase%" == "postsolve" $include "./modules/39_landconversion/calib_tc_cost/postsolve.gms"
 *######################## R SECTION END (PHASES) ###############################

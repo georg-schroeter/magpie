@@ -19,4 +19,5 @@
 
 *###################### R SECTION START (MODULETYPES) ##########################
 $Ifi "%landconversion%" == "calib" $include "./modules/39_landconversion/calib/realization.gms"
+$Ifi "%landconversion%" == "calib_tc_cost" $include "./modules/39_landconversion/calib_tc_cost/realization.gms"
 *###################### R SECTION END (MODULETYPES) ############################
