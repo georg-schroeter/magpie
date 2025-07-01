@@ -1,0 +1,2 @@
+name,type,reason
+vm_rd_stock_per_area,input,not needed
