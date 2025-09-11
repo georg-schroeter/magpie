@@ -45,6 +45,11 @@ positive variables
  v29_fallow_missing(j)              Missing fallow land towards target (mio. ha)
 ;
 
+variables
+ v29_sub_a(j)                       Substitute a
+ v29_sub_b(j)                       Substitute b
+;
+
 equations
  q29_cropland(j)                   Total cropland calculation (mio. ha)
  q29_avl_cropland(j)               Available cropland constraint (mio. ha)
@@ -62,6 +67,8 @@ equations
  q29_cost_treecover_est(j)         Establishment cost for cropland tree cover (mio. USD17MER per yr)
  q29_cost_treecover_recur(j)       Recurring cost for cropland tree cover (mio. USD17MER per yr)
  q29_treecover_est(j,ac)           Cropland treecover establishment (mio. ha)
+ q29_sub_a(j)                      Substitute a
+ q29_sub_b(j)                      Substitute b
 ;
 
 *#################### R SECTION START (OUTPUT DECLARATIONS) ####################
@@ -74,6 +81,8 @@ parameters
  ov29_cost_treecover_recur(t,j,type)      Recurring cost for cropland tree cover (mio. USD17MER per yr)
  ov_fallow(t,j,type)                      Fallow land is temporarily fallow cropland (mio. ha)
  ov29_fallow_missing(t,j,type)            Missing fallow land towards target (mio. ha)
+ ov29_sub_a(t,j,type)                     Substitute a
+ ov29_sub_b(t,j,type)                     Substitute b
  oq29_cropland(t,j,type)                  Total cropland calculation (mio. ha)
  oq29_avl_cropland(t,j,type)              Available cropland constraint (mio. ha)
  oq29_cost_cropland(t,j,type)             Costs and benefits related to agroforestry (mio. USD17MER per yr)
@@ -90,6 +99,8 @@ parameters
  oq29_cost_treecover_est(t,j,type)        Establishment cost for cropland tree cover (mio. USD17MER per yr)
  oq29_cost_treecover_recur(t,j,type)      Recurring cost for cropland tree cover (mio. USD17MER per yr)
  oq29_treecover_est(t,j,ac,type)          Cropland treecover establishment (mio. ha)
+ oq29_sub_a(t,j,type)                     Substitute a
+ oq29_sub_b(t,j,type)                     Substitute b
 ;
 *##################### R SECTION END (OUTPUT DECLARATIONS) #####################
 

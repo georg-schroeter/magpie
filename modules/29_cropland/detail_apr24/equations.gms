@@ -9,7 +9,13 @@
 *' Total cropland is calculated as the sum of croparea, fallow land and tree cover area.
 
  q29_cropland(j2)  ..
-   vm_land(j2,"crop") =e= sum((kcr,w), vm_area(j2,kcr,w)) + vm_fallow(j2) + sum(ac, v29_treecover(j2,ac));
+   vm_land(j2,"crop") =e= v29_sub_a(j2) + vm_fallow(j2) + v29_sub_b(j2);
+
+q29_sub_a(j2) ..
+  v29_sub_a(j2) =e= sum((kcr,w), vm_area(j2,kcr,w));
+
+q29_sub_b(j2) ..
+  v29_sub_b(j2) =e= sum(ac, v29_treecover(j2,ac));
 
 *' We assume that crop production can only take place on suitable cropland area.
 *' We use a suitability index (SI) map from @zabel_global_2014 to exclude areas
