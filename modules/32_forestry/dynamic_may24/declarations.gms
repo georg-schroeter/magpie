@@ -80,6 +80,7 @@ positive variables
 
 variables
  vm_cdr_aff(j,ac,aff_effect)                        Expected bgc (CDR) and local bph effects of afforestation depending on planning horizon (mio. tC)
+ v32_sub_a(j)                                       Substitute a
 ;
 
 equations
@@ -114,6 +115,7 @@ equations
  q32_land_reduction_forestry(j,type32)             Forestry land reduction (mio. ha)
  q32_land_replant(j)                               Harvested and replanted area in timber plantations (mio. ha)
  q32_co2p_aff_limit(j)                             Annual upper limit for re-afforestation (mio. ha per yr)
+ q32_sub_a(j)                                       Substitute a
 ;
 
 
