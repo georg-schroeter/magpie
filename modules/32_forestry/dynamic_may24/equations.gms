@@ -69,7 +69,7 @@ sum(ac_est, v32_land(j2,"aff",ac_est)) =l= sum(ac, v32_land(j2,"aff",ac)) - sum(
   =e=
   v32_sub_a(j2) * sum(cell(i2,j2), min(1, sum(ct, p32_future_to_current_demand_ratio(ct,i2))))$s32_establishment_dynamic;
 
-  q33_sub_a(j2) ..
+ q32_sub_a(j2) ..
   v32_sub_a(j2) =e= sum(ac_sub, v32_hvarea_forestry(j2,ac_sub));
 
 

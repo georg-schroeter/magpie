@@ -139,6 +139,7 @@ parameters
  ov32_land_replant(t,j,type)                   Harvested and replanted area in timber plantations (mio. ha)
  ov32_ndc_area_missing(t,j,type)               Technical variable reflecting missing area towards the NPI NDC re-afforestation target (mio. ha)
  ov_cdr_aff(t,j,ac,aff_effect,type)            Expected bgc (CDR) and local bph effects of afforestation depending on planning horizon (mio. tC)
+ ov32_sub_a(t,j,type)                          Substitute a
  oq32_cost_total(t,i,type)                     Total forestry costs constraint (mio. USD)
  oq32_land(t,j,type)                           Land constraint (mio. ha)
  oq32_land_type32(t,j,type32,type)             Land constraint (mio. ha)
@@ -170,5 +171,6 @@ parameters
  oq32_land_reduction_forestry(t,j,type32,type) Forestry land reduction (mio. ha)
  oq32_land_replant(t,j,type)                   Harvested and replanted area in timber plantations (mio. ha)
  oq32_co2p_aff_limit(t,j,type)                 Annual upper limit for re-afforestation (mio. ha per yr)
+ oq32_sub_a(t,j,type)                          Substitute a
 ;
 *##################### R SECTION END (OUTPUT DECLARATIONS) #####################
