@@ -68,8 +68,6 @@ equations
  q35_natveg_conservation(j)                              Total natural vegetation conservation constraint (mio. ha)
  q35_secdforest_restoration(j)                           Secondary forest restoration constraint (mio. ha)
  q35_other_restoration(j)                                Other land restoration constraint (mio. ha)
- q35_sub_a(i)             Substitute a
- q35_sub_b(i)             Substitute b
 ;
 
 positive variables
@@ -89,11 +87,6 @@ positive variables
   vm_natforest_reduction(j)                              Natural forest reduction (mio. ha)
 ;
 
-variables
- v35_sub_a(i)             Substitute a
- v35_sub_b(i)             Substitute b
-;
-
 
 *#################### R SECTION START (OUTPUT DECLARATIONS) ####################
 parameters
@@ -111,8 +104,6 @@ parameters
  ov_prod_natveg(t,j,land_natveg,kforestry,type)      Production of woody biomass from natural vegetation (mio. tDM per yr)
  ov_cost_hvarea_natveg(t,i,type)                     Cost of harvesting natural vegetation (mio. USD17MER)
  ov_natforest_reduction(t,j,type)                    Natural forest reduction (mio. ha)
- ov35_sub_a(t,i,type)                                Substitute a
- ov35_sub_b(t,i,type)                                Substitute b
  oq35_land_secdforest(t,j,type)                      Secdforest land pool calculation (mio. ha)
  oq35_land_other(t,j,type)                           Other land pool calculation (mio. ha)
  oq35_carbon_primforest(t,j,ag_pools,stockType,type) Primforest carbon stock calculation (mio tC)
@@ -145,7 +136,5 @@ parameters
  oq35_natveg_conservation(t,j,type)                  Total natural vegetation conservation constraint (mio. ha)
  oq35_secdforest_restoration(t,j,type)               Secondary forest restoration constraint (mio. ha)
  oq35_other_restoration(t,j,type)                    Other land restoration constraint (mio. ha)
- oq35_sub_a(t,i,type)                                Substitute a
- oq35_sub_b(t,i,type)                                Substitute b
 ;
 *##################### R SECTION END (OUTPUT DECLARATIONS) #####################
