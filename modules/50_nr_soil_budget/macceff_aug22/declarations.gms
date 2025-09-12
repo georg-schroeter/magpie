@@ -20,6 +20,13 @@ positive variables
  v50_nr_deposition(i,land)        Atmospheric deposition (Tg N per yr)
 ;
 
+variables
+ v50_sub_a(i)                   Substitute a
+ v50_sub_b(i)                   Substitute b
+ v50_sub_c(i)                   Substitute c
+ v50_sub_d(i)                   Substitute d
+;
+
 equations
  q50_nr_cost_fert(i)           Fertilizer costs (mio. USD17MER per yr)
  q50_nr_bal_crp(i)             Cropland nutrient inputs have to equal withdrawals and losses (Tg N per yr)
@@ -31,6 +38,10 @@ equations
  q50_nr_withdrawals_pasture(i) Nitrogen withdrawals from pastures (Tg N per yr)
  q50_nr_surplus_pasture(i)     Nitrogen surplus on pastures (Tg N per yr)
  q50_nr_deposition(i,land)     Atmospheric deposition (Tg N per yr)
+ q50_sub_a(i)                   Substitute a
+ q50_sub_b(i)                   Substitute b
+ q50_sub_c(i)                   Substitute c
+ q50_sub_d(i)                   Substitute d
 ;
 
 parameters
@@ -59,6 +70,10 @@ parameters
  ov50_nr_withdrawals_pasture(t,i,type)  Withdrawals of Nr from pasture soils (Tg N per yr)
  ov50_nr_surplus_pasture(t,i,type)      Total Nr surplus on pasture soils (Tg N per yr)
  ov50_nr_deposition(t,i,land,type)      Atmospheric deposition (Tg N per yr)
+ ov50_sub_a(t,i,type)                   Substitute a
+ ov50_sub_b(t,i,type)                   Substitute b
+ ov50_sub_c(t,i,type)                   Substitute c
+ ov50_sub_d(t,i,type)                   Substitute d
  oq50_nr_cost_fert(t,i,type)            Fertilizer costs (mio. USD17MER per yr)
  oq50_nr_bal_crp(t,i,type)              Cropland nutrient inputs have to equal withdrawals and losses (Tg N per yr)
  oq50_nr_withdrawals(t,i,kcr,type)      Calculating nr withdrawals (Tg N per yr)
@@ -69,5 +84,9 @@ parameters
  oq50_nr_withdrawals_pasture(t,i,type)  Nitrogen withdrawals from pastures (Tg N per yr)
  oq50_nr_surplus_pasture(t,i,type)      Nitrogen surplus on pastures (Tg N per yr)
  oq50_nr_deposition(t,i,land,type)      Atmospheric deposition (Tg N per yr)
+ oq50_sub_a(t,i,type)                   Substitute a
+ oq50_sub_b(t,i,type)                   Substitute b
+ oq50_sub_c(t,i,type)                   Substitute c
+ oq50_sub_d(t,i,type)                   Substitute d
 ;
 *##################### R SECTION END (OUTPUT DECLARATIONS) #####################
