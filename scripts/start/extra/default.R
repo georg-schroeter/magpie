@@ -14,6 +14,6 @@
 source("scripts/start_functions.R")
 source("config/default.cfg")
 
-cfg$title <- "runtime_exp_008_v29,v30,v32,v38,v42"
+cfg$title <- "runtime_exp_009_v29,v30,v32,v38"
 #start MAgPIE run
 start_run(cfg=cfg)
