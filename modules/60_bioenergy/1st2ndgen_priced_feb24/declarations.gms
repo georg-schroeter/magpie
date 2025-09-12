@@ -24,6 +24,8 @@ positive variables
 
 variables
   vm_bioenergy_utility(i)                   Utility as negative costs for producing bioenergy (USD17MER per yr)
+  v60_sub_a(i)                              Substitute a
+  v60_sub_b(i)                              Substitute b
 ;
 
 equations
@@ -32,6 +34,8 @@ equations
  q60_bioenergy_reg(i)                      Regional 2nd generation dedicated bioenergy demand (mio. GJ per yr)
  q60_res_2ndgenBE(i)                       Regional residue demand for 2nd generation bioenergy (mio. GJ per yr)
  q60_bioenergy_incentive(i)                Incentive to produce bioenergy (mio. USD17MER per yr)
+ q60_sub_a(i)                              Substitute a
+ q60_sub_b(i)                              Substitute b
 ;
 
 *#################### R SECTION START (OUTPUT DECLARATIONS) ####################
@@ -40,10 +44,14 @@ parameters
  ov60_2ndgen_bioenergy_dem_dedicated(t,i,kall,type) Bioenergy demand which can come from different regions (mio. GJ per yr)
  ov60_2ndgen_bioenergy_dem_residues(t,i,kall,type)  Bioenergy demand which can come from different product types (mio. GJ per yr)
  ov_bioenergy_utility(t,i,type)                     Utility as negative costs for producing bioenergy (USD17MER per yr)
+ ov60_sub_a(t,i,type)                               Substitute a
+ ov60_sub_b(t,i,type)                               Substitute b
  oq60_bioenergy(t,i,kall,type)                      Global total bioenergy demand (mio. GJ per yr)
  oq60_bioenergy_glo(t,type)                         Global 2nd generation dedicated bioenergy demand (mio. GJ per yr)
  oq60_bioenergy_reg(t,i,type)                       Regional 2nd generation dedicated bioenergy demand (mio. GJ per yr)
  oq60_res_2ndgenBE(t,i,type)                        Regional residue demand for 2nd generation bioenergy (mio. GJ per yr)
  oq60_bioenergy_incentive(t,i,type)                 Incentive to produce bioenergy (mio. USD17MER per yr)
+ oq60_sub_a(t,i,type)                               Substitute a
+ oq60_sub_b(t,i,type)                               Substitute b
 ;
 *##################### R SECTION END (OUTPUT DECLARATIONS) #####################
