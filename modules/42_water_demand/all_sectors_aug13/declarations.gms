@@ -23,6 +23,7 @@ parameters
 equations
  q42_water_demand(wat_dem,j)           Water withdrawals of different sectors (mio. m^3 per yr)
  q42_water_cost(i)                     Total cost of pumping irrigation water (USD17MER per yr)
+ q42_sub_a(j)                        Substitute a
 ;
 
 positive variables
@@ -31,12 +32,18 @@ positive variables
   vm_water_cost(i)                   Cost of irrigation water (USD17MER per m^3)
 ;
 
+variables
+ v42_sub_a(j)                        Substitute a
+;
+
 *#################### R SECTION START (OUTPUT DECLARATIONS) ####################
 parameters
  ov_watdem(t,wat_dem,j,type)         Amount of water needed in different sectors (mio. m^3 per yr)
  ov42_irrig_eff(t,j,type)            Irrigation efficiency (1)
  ov_water_cost(t,i,type)             Cost of irrigation water (USD17MER per m^3)
+ ov42_sub_a(t,j,type)                Substitute a
  oq42_water_demand(t,wat_dem,j,type) Water withdrawals of different sectors (mio. m^3 per yr)
  oq42_water_cost(t,i,type)           Total cost of pumping irrigation water (USD17MER per yr)
+ oq42_sub_a(t,j,type)                Substitute a
 ;
 *##################### R SECTION END (OUTPUT DECLARATIONS) #####################
