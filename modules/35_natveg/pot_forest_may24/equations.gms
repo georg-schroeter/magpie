@@ -134,10 +134,10 @@ q35_cost_hvarea(i2)..
                     ;
 
 q35_sub_a(i2) ..
- v35_sub_a(i2) =e= sum((ct,cell(i2,j2),ac_sub), v35_hvarea_secdforest(j2,ac_sub))
+ v35_sub_a(i2) =e= sum((ct,cell(i2,j2),ac_sub), v35_hvarea_secdforest(j2,ac_sub));
 
 q35_sub_b(i2) ..
- v35_sub_b(i2) =e= sum((ct,cell(i2,j2),othertype35,ac_sub), v35_hvarea_other(j2,othertype35,ac_sub))
+ v35_sub_b(i2) =e= sum((ct,cell(i2,j2),othertype35,ac_sub), v35_hvarea_other(j2,othertype35,ac_sub));
 
 ** Secondary forest
 *' Woody biomass production from secondary forests is calculated by multiplying the
