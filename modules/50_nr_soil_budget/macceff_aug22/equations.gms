@@ -22,26 +22,14 @@
 q50_nr_inputs(i2) ..
                 v50_nr_inputs(i2) =e=
                 vm_res_recycling(i2,"nr")
-                  + v50_sub_a(i2)
-                  + v50_sub_b(i2)
+                  + sum((cell(i2,j2),kcr,w), vm_area(j2,kcr,w) * f50_nr_fix_area(kcr))
+                  + sum(cell(i2,j2),vm_fallow(j2) * f50_nr_fix_area("tece"))
                   + vm_manure_recycling(i2,"nr")
-                  + v50_sub_c(i2)
+                  + sum(kli, vm_manure(i2, kli, "stubble_grazing","nr"))
                   + vm_nr_inorg_fert_reg(i2,"crop")
-                  + v50_sub_d(i2)
+                  + sum(cell(i2,j2),vm_nr_som_fertilizer(j2))
                   + sum(ct,f50_nitrogen_balanceflow(ct,i2))
                   + v50_nr_deposition(i2,"crop");
-
-q50_sub_a(i2) ..
- v50_sub_a(i2) =e= sum((cell(i2,j2),kcr,w), vm_area(j2,kcr,w) * f50_nr_fix_area(kcr));
-
-q50_sub_b(i2) ..
- v50_sub_b(i2) =e= sum(cell(i2,j2),vm_fallow(j2) * f50_nr_fix_area("tece"));
-
-q50_sub_c(i2) ..
- v50_sub_c(i2) =e= sum(kli, vm_manure(i2, kli, "stubble_grazing","nr"));
-
-q50_sub_d(i2) ..
- v50_sub_d(i2) =e= sum(cell(i2,j2),vm_nr_som_fertilizer(j2));
 
 *' withdrawals from cropland consist of nitrogen in the harvested crop plus nitrogen in residues (above and below ground)
 *' minus the part of nitrogen which is fixed within the crop, minus nitrogen inflow from seeds.

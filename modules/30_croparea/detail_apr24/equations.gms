@@ -35,15 +35,11 @@
 
   q30_rotation_max(j2,rotamax_red30)$(i30_implementation = 1) ..
     sum((rota_kcr30(rotamax_red30,kcr),w), vm_area(j2,kcr,w)) =l=
-      v30_sub_a(j2) * sum(ct,i30_rotation_rules(ct,rotamax_red30));
+      sum((kcr,w),vm_area(j2,kcr,w)) * sum(ct,i30_rotation_rules(ct,rotamax_red30));
 
   q30_rotation_min(j2,rotamin_red30)$(i30_implementation = 1) ..
     sum((rota_kcr30(rotamin_red30,kcr),w), vm_area(j2,kcr,w)) =g=
-      v30_sub_a(j2) * sum(ct,i30_rotation_rules(ct,rotamin_red30));
-
-  q30_sub_a(j2) ..
-  v30_sub_a(j2) =e= sum((kcr,w),vm_area(j2,kcr,w));
-
+      sum((kcr,w),vm_area(j2,kcr,w)) * sum(ct,i30_rotation_rules(ct,rotamin_red30));
 
 * 'Penalty-based rotational constraints (i30_implementation = 0):
 
@@ -63,7 +59,7 @@
   q30_rotation_max2(j2,rotamax_red30)$(i30_implementation = 0) ..
     v30_penalty(j2,rotamax_red30) =g=
       sum((rota_kcr30(rotamax_red30,kcr),w),vm_area(j2,kcr,w))
-      - v30_sub_a(j2) * sum(ct,i30_rotation_rules(ct,rotamax_red30));
+      - sum((kcr,w),vm_area(j2,kcr,w)) * sum(ct,i30_rotation_rules(ct,rotamax_red30));
 
 
 *' Minimum constraints apply penalties when a certain mimimum
@@ -72,7 +68,7 @@
 
   q30_rotation_min2(j2,rotamin_red30)$(i30_implementation = 0) ..
     v30_penalty(j2,rotamin_red30) =g=
-      v30_sub_a(j2) * sum(ct,i30_rotation_rules(ct,rotamin_red30))
+      sum((kcr,w),vm_area(j2,kcr,w)) * sum(ct,i30_rotation_rules(ct,rotamin_red30))
       - sum((rota_kcr30(rotamin_red30,kcr),w), vm_area(j2,kcr,w));
 
 
@@ -90,7 +86,7 @@
 
   q30_carbon(j2,ag_pools) ..
     vm_carbon_stock_croparea(j2,ag_pools) =e=
-      v30_sub_a(j2) * sum(ct, fm_carbon_density(ct,j2,"crop",ag_pools));
+      sum((kcr,w), vm_area(j2,kcr,w)) * sum(ct, fm_carbon_density(ct,j2,"crop",ag_pools));
 
 
 *' The biodiversity value for cropland is calculated separately for annual and perennial crops:
@@ -108,4 +104,4 @@
 *' regional cropland area is calculated for the cropland growth constraint
  q30_crop_reg(i2) .. v30_crop_area(i2)
    =e=
-   sum((cell(i2,j2)), v30_sub_a(j2));
+   sum((cell(i2,j2), kcr, w), vm_area(j2,kcr,w));
