@@ -10,12 +10,17 @@ equations
  q38_cost_prod_capital(i)          Regional capital input costs for crop production (mio USD17MER)
  q38_investment_immobile(j,kcr)    Cellular immobile investments into farm capital  (mio USD17MER)
  q38_investment_mobile(j)          Cellular mobile investments into farm capital    (mio USD17MER)
+ q38_sub_a(i)      Substitute a
 ;
 
 positive variables
  vm_cost_prod_crop(i,factors)          Regional factor costs of capital and labor for crop production  (mio USD17MER  per yr)
  v38_investment_immobile(j,kcr)        Investment costs in immobile farm capital (mio USD17MER per yr)
  v38_investment_mobile(j)              Investment costs in mobile farm capital (mio USD17MER per yr)
+;
+
+variables
+ v38_sub_a(i)      Substitute a
 ;
 
 parameters
@@ -39,9 +44,11 @@ parameters
  ov_cost_prod_crop(t,i,factors,type)    Regional factor costs of capital and labor for crop production  (mio USD17MER  per yr)
  ov38_investment_immobile(t,j,kcr,type) Investment costs in immobile farm capital (mio USD17MER per yr)
  ov38_investment_mobile(t,j,type)       Investment costs in mobile farm capital (mio USD17MER per yr)
+ ov38_sub_a(t,i,type)                   Substitute a
  oq38_cost_prod_labor(t,i,type)         Regional labor input costs for crop production (mio USD17MER)
  oq38_cost_prod_capital(t,i,type)       Regional capital input costs for crop production (mio USD17MER)
  oq38_investment_immobile(t,j,kcr,type) Cellular immobile investments into farm capital  (mio USD17MER)
  oq38_investment_mobile(t,j,type)       Cellular mobile investments into farm capital    (mio USD17MER)
+ oq38_sub_a(t,i,type)                   Substitute a
 ;
 *##################### R SECTION END (OUTPUT DECLARATIONS) #####################

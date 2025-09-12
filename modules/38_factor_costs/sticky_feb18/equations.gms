@@ -18,11 +18,13 @@ q38_cost_prod_labor(i2).. vm_cost_prod_crop(i2,"labor")
 
 *' Investment costs: Investment are the summation of investment in mobile and immobile capital. The costs are annuitized,
 *' and corrected to make sure that the annual depreciation of the current time-step is accounted for.
-q38_cost_prod_capital(i2).. vm_cost_prod_crop(i2,"capital")=e=(sum((cell(i2,j2),kcr),v38_investment_immobile(j2,kcr))
+q38_cost_prod_capital(i2).. vm_cost_prod_crop(i2,"capital")=e=(v38_sub_a(i2)
                                     + sum((cell(i2,j2)),v38_investment_mobile(j2)))
                                     * sum(ct, (pm_interest(ct, i2) + s38_depreciation_rate) / (1+pm_interest(ct,i2)))
                                     ;
 
+q38_sub_a(i2) ..
+ v38_sub_a(i2) =e= sum((cell(i2,j2),kcr),v38_investment_immobile(j2,kcr));
 
 *' Each cropping activity requires a certain capital stock that depends on the
 *' production. The following equations make sure that new land expansion is equipped
