@@ -74,10 +74,13 @@
  q51_emissionbal_man_past(i2,n_pollutants_direct) ..
                  vm_emissions_reg(i2,"man_past",n_pollutants_direct)
                  =e=
-                 sum((awms_prp,kli),
-                     vm_manure(i2, kli, awms_prp, "nr")
-                     * f51_ef3_prp(i2,n_pollutants_direct,kli))
+                 v51_sub_a(i2,n_pollutants_direct)
                  / (1-s51_nue_pasture_base) * (1-vm_nr_eff_pasture(i2));
+
+ q51_sub_a(i2,n_pollutants_direct) ..
+  v51_sub_a(i2,n_pollutants_direct) =e= sum((awms_prp,kli),
+                     vm_manure(i2, kli, awms_prp, "nr")
+                     * f51_ef3_prp(i2,n_pollutants_direct,kli));
 
 *' Indirect emissions from NH3, NOx and NO3:
  q51_emissions_indirect_n2o(i2,emis_source_n51) ..
