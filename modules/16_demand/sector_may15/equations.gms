@@ -69,7 +69,8 @@ q16_supply_pasture(i2) ..  vm_supply(i2,"pasture") =e=
 q16_waste_demand(i2,kall) ..
                  v16_dem_waste(i2,kall) =e=
                  vm_supply(i2,kall) * sum(ct,f16_waste_shr(ct,i2,kall))
-                 + sum(kpr,vm_secondary_overproduction(i2,kall,kpr));
+                 + sum(kpr,vm_secondary_overproduction(i2,kall,kpr))
+                 + v16_excess_waste(i2,kall);
 
 *' Seed demand is calculated as the regional aggregated production of all
 *' commodities multiplied by the corresponding seed share.

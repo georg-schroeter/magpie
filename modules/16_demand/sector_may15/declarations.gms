@@ -11,6 +11,7 @@ positive variables
 vm_supply(i,kall)                 Regional demand (mio. tDM per yr)
 v16_dem_waste(i,kall)             Demand for waste (mio. tDM per yr)
 vm_dem_seed(i,kall)               Demand for seed (mio. tDM per yr)
+v16_excess_waste(i,kall)          Excess waste without actual demand (mio. tDM per yr)
 ;
 
 equations
@@ -29,6 +30,7 @@ parameters
  ov_supply(t,i,kall,type)                 Regional demand (mio. tDM per yr)
  ov16_dem_waste(t,i,kall,type)            Demand for waste (mio. tDM per yr)
  ov_dem_seed(t,i,kall,type)               Demand for seed (mio. tDM per yr)
+ ov16_excess_waste(t,i,kall,type)         Excess waste without actual demand (mio. tDM per yr)
  oq16_supply_crops(t,i,kcr,type)          Supply balance of crops (mio. tDM per yr)
  oq16_supply_livestock(t,i,kap,type)      Supply balance of livestock (mio. tDM per yr)
  oq16_supply_secondary(t,i,ksd,type)      Supply balance of secondary products (mio. tDM per yr)

@@ -15,7 +15,7 @@
 *' balanced out by the variable `vm_feed_balanceflow`.
 
 q70_feed(i2,kap,kall) ..
- vm_dem_feed(i2,kap,kall) =g= vm_prod_reg(i2,kap)
+ vm_dem_feed(i2,kap,kall) =e= vm_prod_reg(i2,kap)
      *sum(ct,im_feed_baskets(ct,i2,kap,kall))
      +sum(ct,vm_feed_balanceflow(i2,kap,kall));
 
