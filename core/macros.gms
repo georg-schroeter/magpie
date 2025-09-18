@@ -19,6 +19,9 @@ $macro m_growth_vegc(S,A,k,m,ac) S + (A-S)*(1-exp(-k*(ac*5)))**m;
 
 $macro m_growth_litc_soilc(start,end,ac) (start + (end - start) * 1/20 * ac*5)$(ac <= 20/5) + end$(ac > 20/5);
 
+* macro for continuous max
+$macro m_softmax(x,y,d) (0.5 * (x + y + sqrt(sqr(x-y) + sqr(d))));
+
 * annuity factor (annuity) for converting the present value (P) of an investment to a repeating annual payment (A): A = P/annuity
 * ordinary annuity: cash flow at the end of the period (currently only used for carbon emissions costs as they can become negative (~reward) in case of afforestation)
 * https://en.wikipedia.org/wiki/Time_value_of_money (row 4; find A given P)
