@@ -7,7 +7,7 @@
 
 *' @equations
 
- q11_cost_glo .. vm_cost_glo =e= sum(i2, v11_cost_reg(i2));
+ q11_cost_glo .. vm_cost_glo =e= sum(i2, v11_cost_reg(i2)) - sum((i2, kall), vm_excess_waste(i2, kall)) * 1e-7;
 
 *' The global costs of production are represented by the sum of regional
 *' production costs of different production activities.

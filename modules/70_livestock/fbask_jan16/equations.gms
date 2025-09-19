@@ -15,7 +15,9 @@
 *' balanced out by the variable `vm_feed_balanceflow`.
 
 q70_feed(i2,kap,kall) ..
- vm_dem_feed(i2,kap,kall) =e= m_softmax(0,vm_prod_reg(i2,kap)*sum(ct,im_feed_baskets(ct,i2,kap,kall))+sum(ct,vm_feed_balanceflow(i2,kap,kall)),1e-4);
+ vm_dem_feed(i2,kap,kall) =g= vm_prod_reg(i2,kap)
+     *sum(ct,im_feed_baskets(ct,i2,kap,kall))
+     +sum(ct,vm_feed_balanceflow(i2,kap,kall));
 
 *' Feed balance flows from feed sources that reduce the demand for grazed biomass
 *' like scavenging are for future time steps assumed to depend on pasture feed demand:

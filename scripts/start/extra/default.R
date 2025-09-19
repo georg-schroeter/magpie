@@ -14,6 +14,6 @@
 source("scripts/start_functions.R")
 source("config/default.cfg")
 
-cfg$title <- "demandfix"
+cfg$title <- "demandfix_staubsauger_1e-7"
 #start MAgPIE run
 start_run(cfg=cfg)

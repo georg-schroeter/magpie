@@ -9,7 +9,7 @@
  ov_supply(t,i,kall,"marginal")                 = vm_supply.m(i,kall);
  ov16_dem_waste(t,i,kall,"marginal")            = v16_dem_waste.m(i,kall);
  ov_dem_seed(t,i,kall,"marginal")               = vm_dem_seed.m(i,kall);
- ov16_excess_waste(t,i,kall,"marginal")         = v16_excess_waste.m(i,kall);
+ ov_excess_waste(t,i,kall,"marginal")           = vm_excess_waste.m(i,kall);
  oq16_supply_crops(t,i,kcr,"marginal")          = q16_supply_crops.m(i,kcr);
  oq16_supply_livestock(t,i,kap,"marginal")      = q16_supply_livestock.m(i,kap);
  oq16_supply_secondary(t,i,ksd,"marginal")      = q16_supply_secondary.m(i,ksd);
@@ -21,7 +21,7 @@
  ov_supply(t,i,kall,"level")                    = vm_supply.l(i,kall);
  ov16_dem_waste(t,i,kall,"level")               = v16_dem_waste.l(i,kall);
  ov_dem_seed(t,i,kall,"level")                  = vm_dem_seed.l(i,kall);
- ov16_excess_waste(t,i,kall,"level")            = v16_excess_waste.l(i,kall);
+ ov_excess_waste(t,i,kall,"level")              = vm_excess_waste.l(i,kall);
  oq16_supply_crops(t,i,kcr,"level")             = q16_supply_crops.l(i,kcr);
  oq16_supply_livestock(t,i,kap,"level")         = q16_supply_livestock.l(i,kap);
  oq16_supply_secondary(t,i,ksd,"level")         = q16_supply_secondary.l(i,ksd);
@@ -33,7 +33,7 @@
  ov_supply(t,i,kall,"upper")                    = vm_supply.up(i,kall);
  ov16_dem_waste(t,i,kall,"upper")               = v16_dem_waste.up(i,kall);
  ov_dem_seed(t,i,kall,"upper")                  = vm_dem_seed.up(i,kall);
- ov16_excess_waste(t,i,kall,"upper")            = v16_excess_waste.up(i,kall);
+ ov_excess_waste(t,i,kall,"upper")              = vm_excess_waste.up(i,kall);
  oq16_supply_crops(t,i,kcr,"upper")             = q16_supply_crops.up(i,kcr);
  oq16_supply_livestock(t,i,kap,"upper")         = q16_supply_livestock.up(i,kap);
  oq16_supply_secondary(t,i,ksd,"upper")         = q16_supply_secondary.up(i,ksd);
@@ -45,7 +45,7 @@
  ov_supply(t,i,kall,"lower")                    = vm_supply.lo(i,kall);
  ov16_dem_waste(t,i,kall,"lower")               = v16_dem_waste.lo(i,kall);
  ov_dem_seed(t,i,kall,"lower")                  = vm_dem_seed.lo(i,kall);
- ov16_excess_waste(t,i,kall,"lower")            = v16_excess_waste.lo(i,kall);
+ ov_excess_waste(t,i,kall,"lower")              = vm_excess_waste.lo(i,kall);
  oq16_supply_crops(t,i,kcr,"lower")             = q16_supply_crops.lo(i,kcr);
  oq16_supply_livestock(t,i,kap,"lower")         = q16_supply_livestock.lo(i,kap);
  oq16_supply_secondary(t,i,ksd,"lower")         = q16_supply_secondary.lo(i,ksd);
