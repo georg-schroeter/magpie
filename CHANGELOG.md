@@ -4,27 +4,43 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 
-## [Unreleased]
+## [4.12.0] - 2025-09-08
+
+### changed
+- **inputdata** updated input data to include new FAO food balances, allowing for a new set of past years "coup_2015", i.e. past held until 2015 instead of 2010. To be updated once LUH3 input data comes in, to 2020.
+- **readme** added detailed Windows instructions and common installation issues
+- **renv/activate.R** updated to version 1.1.5
+
+### fixed
+- **21_trade** included trade costs into exo realization
+- **62_material** fixed inconsistency for historical bioplastic substrate demand
+- **default.cfg** input data upgraded to use corrected clusters using aligned population data (rev4.120 onwards)
+
+
+## [4.11.0] - 2025-07-11
 
 ### changed
 - **15_food** add calculation of consumer margins to the postsolve for calculation in model run
-- **70_livestock** pasture feed balance flows dynamically linked to pasture demand in regions with high historical scavenged feed use
 - **53_methane** CH4 emissions from enteric fermentation are now calculated using `vm_feed_intake`
 - **55_awms** Manure excretion is now calculated using `vm_feed_intake`
-- **scenario_config** update of VLLO scenario to EAT-Lancet 2
+- **70_livestock** pasture feed balance flows dynamically linked to pasture demand in regions with high historical scavenged feed use
 - **default.cfg** input data upgraded from rev4.118 to rev4.119 (minor update population and GDP)
+- **README** added forestry to model description 
 - **readme** added setup instruction specifics for Linux/macOS
+- **scenario_config** update of VLLO scenario to EAT-Lancet 2
+- **scripts** changed setting in the 'mitigation and conservation' start script.
 
 ### added
-- **core** added unused set number_order to force number sets like maccs_steps to be ordered
 - **56_ghg_policy** added optional temporal fader for start of C prive driven afforestation
 - **70_livestock** added new interfaces `vm_feed_intake` and `vm_feed_balanceflow`
+- **core** added unused set number_order to force number sets like maccs_steps to be ordered
 - **default.cfg** added switch to control the inclusion of feed balance flows in the calculation of future feed intake
 
 ### removed
 - **main** Removed Dockerfile, as that is no longer supported/maintained
 
 ### fixed
+- **32_forestry** clean-up of switches for rotation length calculation. Removed `c32_interest_rate`. Merged with `c32_rot_calc_type`.
 - **71_disagg_lvst** added set.gms to the `off` realization to make these sets available for other modules independent of the selected realization
 
 
@@ -1180,7 +1196,9 @@ This release version is focussed on consistency between the MAgPIE setup and the
 First open source release of the framework. See [MAgPIE 4.0 paper](https://doi.org/10.5194/gmd-12-1299-2019) for more information.
 
 
-[Unreleased]: https://github.com/magpiemodel/magpie/compare/v4.10.1...develop
+[Unreleased]: https://github.com/magpiemodel/magpie/compare/v4.12.0...develop
+[4.12.0]: https://github.com/magpiemodel/magpie/compare/v4.11.0...v4.12.0
+[4.11.0]: https://github.com/magpiemodel/magpie/compare/v4.10.1...v4.11.0
 [4.10.1]: https://github.com/magpiemodel/magpie/compare/v4.10.0...v4.10.1
 [4.10.0]: https://github.com/magpiemodel/magpie/compare/v4.9.1...v4.10.0
 [4.9.1]: https://github.com/magpiemodel/magpie/compare/v4.9.0...v4.9.1
