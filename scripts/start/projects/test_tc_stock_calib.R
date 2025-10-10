@@ -27,9 +27,11 @@ source("config/default.cfg")
 
 cfg$gms$tc <- "endo_jun25_global"
 cfg$gms$landconversion <- "calib_tc_cost"
-cfg$gms$s39_ignore_calib <- 1
+cfg$recalibrate <- FALSE
+cfg$recalibrate_landconversion_cost <- TRUE
+cfg$qos <- "priority"
 
 
-cfg$title <- "tc_global_004"
+cfg$title <- "tc_global_004_recalib"
 
 start_run(cfg,codeCheck=FALSE)
