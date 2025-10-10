@@ -7,7 +7,7 @@
 
 *' @equations
 q13_rd_stock_crop(i2)..
-sum(supreg(h2,i2), vm_tau(h2,"crop")**1.0 * exp(0.25 * vm_tau(h2,"crop"))) =e= (vm_rd_stock_per_area(i2, "crop") / 200)**0.6
+sum(supreg(h2,i2), vm_tau(h2,"crop")**1.0 * exp(0.25 * (vm_tau(h2,"crop") - 1))) =e= (vm_rd_stock_per_area(i2, "crop") / 200)**0.6
                                                + (pc13_rd_stock_per_area_global("crop") / 800)**0.6;
 
 
