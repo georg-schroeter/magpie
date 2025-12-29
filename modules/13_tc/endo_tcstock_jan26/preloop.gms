@@ -31,3 +31,4 @@ m_sigmoid_time_interpol(i13_croparea_consv_fader,s13_croparea_consv_start,s13_cr
 
 m_sigmoid_time_interpol(i13_tau_croparea_consv_fader,s13_croparea_consv_start,s13_croparea_consv_target,1,s13_croparea_consv_tau_factor);
 
+p13_rd_stock_per_area(t_all, i, "crop") = 0;

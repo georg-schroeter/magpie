@@ -9,6 +9,8 @@ positive variable
  v13_tau_core(h,tautype)                   Agricultural land use intensity tau for conventional cropland (1)
  vm_tech_cost(i)                      Total Annuitized costs of TC (mio. USD17MER per yr)
  v13_cost_tc(i,tautype)               Technical change costs per region (mio. USD17MER)
+ vm_rd_stock_per_area(i,tautype)    R&D stock to drive TC for crops and pasture in curent time step (mio. USD17MER per ha)
+ v13_rd_investment(i, tautype)       R&D investment to drive TC for crops and pasture in curent time step (mio. USD17MER per yr)
  v13_tech_cost(i,tautype)             Annuitized costs of TC for crops and pasture (mio. USD17MER per yr)
  vm_tau(j,tautype)                    Overall agricultural land use intensity tau at cluster level (1)
  v13_tau_consv(h,tautype)             Tau for cropland within conservation priority areas (1)
@@ -16,14 +18,16 @@ positive variable
 
 equations
  q13_tech_cost(i, tautype)            Total annuitized costs for TC (mio. USD17MER)
- q13_cost_tc(i, tautype)              Costs for TC (mio. USD17MER per yr)
+ q13_rd_stock_crop(i)                 R&D stock to drive TC for crops in curent time step (mio. USD17MER per yr)
  q13_tech_cost_sum(i)                 Total Total annuitized costs for TC (mio. USD17MER per yr)
+ q13_rd_investment_crop(i)            R&D investment to drive TC for crops in curent time step (mio. USD17MER per yr)
  q13_tau(j, tautype)                  Overall agricultural land use intensity tau (1)
  q13_tau_consv(h, tautype)            Tau for cropland within conservation priority areas (1)
 ;
 
 parameters
  pc13_land(i, tautype)                Crop and grass land area per region (mio ha)
+ p13_rd_stock_per_area(t_all, i, tautype)  R&D stock to drive TC for crops and pasture of the previous time step (USD17MER per ha)
  pcm_tau(j, tautype)                  Tau factor of the previous time step (1)
  pc13_tau(h, tautype)                 Tau for conventional cropland  of the previous time step (1)
  pc13_tau_consv(h, tautype)           Tau for cropland within conservation priority areas of the previous time step (1)
