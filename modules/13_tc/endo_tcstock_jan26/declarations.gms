@@ -28,6 +28,7 @@ equations
 parameters
  pc13_land(i, tautype)                Crop and grass land area per region (mio ha)
  p13_rd_stock_per_area(t_all, i, tautype)  R&D stock to drive TC for crops and pasture of the previous time step (USD17MER per ha)
+ pc13_rd_stock_per_area_global(tautype) Avg global R&D stock per area
  pcm_tau(j, tautype)                  Tau factor of the previous time step (1)
  pc13_tau(h, tautype)                 Tau for conventional cropland  of the previous time step (1)
  pc13_tau_consv(h, tautype)           Tau for cropland within conservation priority areas of the previous time step (1)
