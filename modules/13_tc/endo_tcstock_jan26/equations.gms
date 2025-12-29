@@ -28,7 +28,7 @@ q13_rd_investment_crop(i2)..
 
 q13_tech_cost(i2, tautype) ..
   v13_tech_cost(i2, tautype) =e= v13_rd_investment(i2, tautype) * (1 + sum(ct, pm_interest(ct, i2)))**15 * 
-                                 * sum(ct,pm_interest(ct,i2)/(1+pm_interest(ct,i2)));
+                                 sum(ct,pm_interest(ct,i2)/(1+pm_interest(ct,i2)));
 
 
 *' The shifting is performed because investments into technological change
