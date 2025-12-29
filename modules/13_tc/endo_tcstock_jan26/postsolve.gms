@@ -15,6 +15,8 @@ pc13_tau(h, tautype) = v13_tau_core.l(h, tautype);
 pc13_tau_consv(h, tautype) = v13_tau_consv.l(h, tautype);
 pcm_tau(j, tautype) = vm_tau.l(j, tautype);
 
+p13_rd_stock_per_area(t_all, i2, "crop")[m_year(t_all) >= m_year(t)] =  p13_rd_stock_per_area(t_all, i2, "crop")[m_year(t_all) >= m_year(t)]  +
+                                   v13_rd_investment.l(i2, "crop") / pc13_land(i2, "crop");
 
 *#################### R SECTION START (OUTPUT DEFINITIONS) #####################
  ov13_tau_core(t,h,tautype,"marginal")  = v13_tau_core.m(h,tautype);
