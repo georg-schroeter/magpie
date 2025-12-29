@@ -11,7 +11,7 @@
 
 q39_cost_landcon_crop(j2) .. vm_cost_landcon(j2,"crop") =e=
   (vm_landexpansion(j2,"crop")*sum((ct,cell(i2,j2)), i39_cost_establish(ct,i2,"crop") + vm_rd_stock_per_area(i2,"crop"))
-  - vm_landreduction(j2,"crop")*sum((ct,cell(i2,j2)), i39_reward_reduction(ct,i2,"crop")))
+  - vm_landreduction(j2,"crop")*sum((ct,cell(i2,j2)), i39_reward_reduction(ct,i2,"crop") + 0.5 * vm_rd_stock_per_area(i2,"crop")))
   * sum((cell(i2,j2),ct),pm_interest(ct,i2)/(1+pm_interest(ct,i2)));
 
 q39_cost_landcon(j2,land_nocrop39) .. vm_cost_landcon(j2,land_nocrop39) =e=
