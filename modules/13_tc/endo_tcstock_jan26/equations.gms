@@ -18,7 +18,7 @@
 *' rate `pm_interest`:
 
 q13_rd_stock_crop(i2)..
-  sum(supreg(h2,i2), v13_tau_core(h2,"crop")**i13_tc_exponent(ct) / i13_tc_factor(ct)) =e= (vm_rd_stock_per_area(i2, "crop") / i13_tc_factor(ct));
+  sum((ct,supreg(h2,i2)), v13_tau_core(h2,"crop")**i13_tc_exponent(ct) / i13_tc_factor(ct)) =e= (vm_rd_stock_per_area(i2, "crop") / sum(ct, i13_tc_factor(ct)));
 
 
 q13_rd_investment_crop(i2)..
