@@ -26,10 +26,10 @@ source("config/default.cfg")
 
 
 cfg$gms$tc <- "endo_tcstock_jan26"
-# cfg$gms$landconversion <- "calib_tc_cost"
+cfg$gms$landconversion <- "calib_tc_cost"
 # cfg$gms$s39_ignore_calib <- 1
 
 
-cfg$title <- "tc_rewrite_001"
+cfg$title <- "tc_rewrite_006_glob"
 
 start_run(cfg,codeCheck=FALSE)
