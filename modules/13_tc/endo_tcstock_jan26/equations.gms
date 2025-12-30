@@ -18,8 +18,9 @@
 *' rate `pm_interest`:
 
 q13_rd_stock_crop(i2)..
-  sum((ct,supreg(h2,i2)), v13_tau_core(h2,"crop")**(i13_tc_exponent(ct)/0.6)) =e= (1-0.2) * (vm_rd_stock_per_area(i2, "crop") * sum(ct, i13_tc_exponent(ct) / i13_tc_factor(ct)))**(1/0.6) +
-                                                                                  0.2 * (pc13_rd_stock_per_area_global("crop") * sum(ct, i13_tc_exponent(ct) / i13_tc_factor(ct)))**(1/0.6);
+  sum((ct,supreg(h2,i2)), v13_tau_core(h2,"crop")**(i13_tc_exponent(ct)/0.6)) =e= 
+    (1-s13_tc_investment_global_share) * (vm_rd_stock_per_area(i2, "crop") * sum(ct, i13_tc_exponent(ct) / i13_tc_factor(ct)))**(1/0.6) +
+    s13_tc_investment_global_share * (pc13_rd_stock_per_area_global("crop") * sum(ct, i13_tc_exponent(ct) / i13_tc_factor(ct)))**(1/0.6);
 
 
 q13_rd_investment_crop(i2)..

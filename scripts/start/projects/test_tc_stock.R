@@ -28,8 +28,8 @@ source("config/default.cfg")
 cfg$gms$tc <- "endo_tcstock_jan26"
 cfg$gms$landconversion <- "calib_tc_cost"
 # cfg$gms$s39_ignore_calib <- 1
+cfg$gms$s13_tc_investment_global_share <- 0.0
 
-
-cfg$title <- "tc_rewrite_006_glob"
+cfg$title <- paste0("tc_rewrite_glob_", cfg$gms$s13_tc_investment_global_share)
 
 start_run(cfg,codeCheck=FALSE)
