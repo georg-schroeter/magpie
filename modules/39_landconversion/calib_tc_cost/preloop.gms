@@ -14,3 +14,8 @@ if(sum((t,i,type39),i39_calib(t,i,type39)) = 0 OR s39_ignore_calib = 1,
   i39_calib(t,i,"cost") = 1;
   i39_calib(t,i,"reward") = 0;
 );
+
+* only ignore reward calib
+if(s39_ignore_calib = 2,
+  i39_calib(t,i,"reward") = 0;
+);

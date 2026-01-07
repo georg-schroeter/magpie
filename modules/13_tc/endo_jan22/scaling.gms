@@ -6,5 +6,5 @@
 *** |  Contact: magpie@pik-potsdam.de
 
 vm_tech_cost.scale(i) = 10e3;
-v13_cost_tc.scale(i,tautype) = 10e6;
+v13_cost_tc.scale(i,tautype) = 10e3;
 v13_tech_cost.scale(i,tautype) = 10e3;
