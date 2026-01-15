@@ -8,18 +8,19 @@
 
 pc13_land(i,"pastr") = sum(cell(i,j),pcm_land(j,"past"));
 pc13_land(i,"crop") = sum(cell(i,j),pcm_land(j,"crop"));
-if(ord(t) > 1,
-  pc13_rd_stock_per_area_global("crop") = sum((i, ct), p13_rd_stock_per_area(ct, i, "crop") * pc13_land(i,"crop")) / sum(i, pc13_land(i,"crop"));
-  else
-  pc13_rd_stock_per_area_global("crop") = 200;
-);
+pc13_rd_stock_per_area_global("crop") = sum((i, ct), p13_rd_stock_per_area(ct, i, "crop") * pc13_land(i,"crop")) / sum(i, pc13_land(i,"crop"));
 vm_rd_stock_per_area.lo(i, "crop") = 20;
+
+pc13_interest_annuity(i) = sum(t_all,(1+pm_interest(t, i))**(-m_year(t_all)+m_year(t)) *
+                (5 * sum(delay,f13_stock_payout(delay,"%c13_payout_curve%") $ (ord(delay)-1 = m_year(t_all)-m_year(t)))));
+
 
 if (sum(sameas(t_past,t),1) = 1 AND s13_ignore_tau_historical = 0,
   v13_tau_core.lo(h,"pastr") =   f13_pastr_tau_hist(t,h);
   v13_tau_core.lo(h,"crop") =    f13_tau_historical(t,h);
 else
-  v13_tau_core.lo(h, tautype) =    pc13_tau(h, tautype);
+*  v13_tau_core.lo(h, tautype) =    pc13_tau(h, tautype);
+  v13_tau_core.lo(h, tautype) =    0.1;
 );
 
   v13_tau_core.up(h,tautype) = 2 * pc13_tau(h,tautype);
@@ -81,9 +82,10 @@ if(ord(t) = 1,
   v13_tau_consv.l(h,tautype) = pc13_tau_consv(h,tautype);
   vm_tau.l(j,tautype) = sum((cell(i,j), supreg(h,i)),(1-p13_cropland_consv_shr(t,j)) * v13_tau_core.l(h,tautype) + p13_cropland_consv_shr(t,j) * v13_tau_consv.l(h,tautype));
   pcm_tau(j,tautype) = vm_tau.l(j,tautype);
+  vm_rd_stock_per_area.lo(i, "crop") = 10;
 else
   v13_tau_core.l(h,tautype) = pc13_tau(h,tautype)*(1+pc13_tcguess(h,tautype))**m_yeardiff(t);
   v13_tau_consv.l(h,tautype) = p13_croparea_consv_tau_factor(h) * v13_tau_core.l(h,tautype);
 *  v13_rd_investment.l(i, "crop") = 0.25 * pc13_land(i, "crop") * p13_rd_stock_per_area(t, i, "crop");
-*  vm_rd_stock_per_area.l(i, "crop") = 1.25 * p13_rd_stock_per_area(t, i, "crop");
+*  vm_rd_stock_per_area.lo(i, "crop") = 1.25 * p13_rd_stock_per_area(t, i, "crop");
 );

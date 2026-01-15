@@ -13,6 +13,11 @@ sets
   tautype tc type
       / pastr, crop /
 
+  delay possible year differences
+      / 0*150 /
+
+  curve stock response curve
+      / constant, phaseout /
 ;
 
 *** EOF sets.gms ***

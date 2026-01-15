@@ -6,7 +6,7 @@
 *** |  Contact: magpie@pik-potsdam.de
 
 vm_tech_cost.scale(i) = 10e3;
-vm_rd_stock_per_area.scale(i,"crop") = 1e5;
+vm_rd_stock_per_area.scale(i,"crop") = 1e3;
 v13_cost_tc.scale(i,tautype) = 10e6;
 v13_tech_cost.scale(i,tautype) = 10e3;
-v13_rd_investment.scale(i,"crop") = 1e7;
+v13_rd_investment.scale(i,"crop") = 1e5;

@@ -18,9 +18,9 @@
 *' rate `pm_interest`:
 
 q13_rd_stock_crop(i2)..
-  sum((ct,supreg(h2,i2)), v13_tau_core(h2,"crop")**(i13_tc_exponent(ct)/1.5)) =e= 
-    (1-s13_tc_investment_global_share) * (vm_rd_stock_per_area(i2, "crop") * sum(ct, i13_tc_exponent(ct) / i13_tc_factor(ct)))**(1/1.5) +
-    s13_tc_investment_global_share * (pc13_rd_stock_per_area_global("crop") * sum(ct, i13_tc_exponent(ct) / i13_tc_factor(ct)))**(1/1.5);
+  sum((ct,supreg(h2,i2)), v13_tau_core(h2,"crop")**(i13_tc_exponent(ct)/0.85)) =e= 
+    (1-s13_tc_investment_global_share) * (vm_rd_stock_per_area(i2, "crop") * sum(ct, i13_tc_exponent(ct) / i13_tc_factor(ct)))**(1/0.85) +
+    s13_tc_investment_global_share * (pc13_rd_stock_per_area_global("crop") * sum(ct, i13_tc_exponent(ct) / i13_tc_factor(ct)))**(1/0.85);
 
 
 q13_rd_investment_crop(i2)..
@@ -29,8 +29,11 @@ q13_rd_investment_crop(i2)..
 
 
 q13_tech_cost(i2, tautype) ..
-  v13_tech_cost(i2, tautype) =e= v13_rd_investment(i2, tautype) * (1 + sum(ct, pm_interest(ct, i2)))**15 * 
-                                 sum(ct,pm_interest(ct,i2)/(1+pm_interest(ct,i2)));
+  v13_tech_cost(i2, tautype) 
+  =e= 
+  v13_rd_investment(i2, tautype) * (1 + sum(ct, pm_interest(ct, i2)))**15 / 
+  pc13_interest_annuity(i2);
+*  sum(ct,(1+pm_interest(ct, i2))/pm_interest(ct, i2));
 
 
 *' The shifting is performed because investments into technological change

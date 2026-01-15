@@ -11,7 +11,7 @@ scalars
  s39_cost_establish_past       Cost for pasture land expansion (USD17MER per hectare)    / 9840 /
  s39_cost_establish_forestry   Cost for forestry land expansion (USD17MER per hectare)    / 1230 /
  s39_cost_establish_urban      Cost for urban land expansion (USD17MER per hectare)    / 12300 /
- s39_ignore_calib        Switch for ignoring calibration factors (1) / 0 /
+ s39_ignore_calib        Switch for ignoring calibration factors (1) / 2 /
 ;
 
 $onEmpty
