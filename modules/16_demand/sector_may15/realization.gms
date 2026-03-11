@@ -18,6 +18,5 @@ $Ifi "%phase%" == "declarations" $include "./modules/16_demand/sector_may15/decl
 $Ifi "%phase%" == "input" $include "./modules/16_demand/sector_may15/input.gms"
 $Ifi "%phase%" == "equations" $include "./modules/16_demand/sector_may15/equations.gms"
 $Ifi "%phase%" == "scaling" $include "./modules/16_demand/sector_may15/scaling.gms"
-$Ifi "%phase%" == "presolve" $include "./modules/16_demand/sector_may15/presolve.gms"
 $Ifi "%phase%" == "postsolve" $include "./modules/16_demand/sector_may15/postsolve.gms"
 *######################## R SECTION END (PHASES) ###############################

@@ -181,7 +181,7 @@ $offlisting
 
 $setglobal c_timesteps  coup2100
 $setglobal c_past  till_2015
-$setglobal c_title  ipopt_linear_solver_pardisomkl
+$setglobal c_title  ipopt_muinit_1e-5_tol_1e-9_relaxbounds_1e-8
 
 scalars
 s_use_gdx   use of gdx files                                       / 0 /

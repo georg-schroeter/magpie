@@ -14,8 +14,8 @@ source("scripts/start_functions.R")
 
 #start MAgPIE run
 source("config/default.cfg")
-cfg$title <- "ipopt_constr_viol_tol_1e-6"
+cfg$title <- "ipopt_muinit_1e-5_tol_1e-9_relaxbounds_1e-7"
 cfg$gms$optimization <- "nlp_ipopt"
-cfg$gms$s80_toloptimal <- 1.0e-7
+cfg$gms$s80_toloptimal <- 1.0e-9
 # cfg$gms$c_timesteps <- 5
 start_run(cfg, codeCheck = FALSE)
