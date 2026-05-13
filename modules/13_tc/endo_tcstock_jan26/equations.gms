@@ -18,10 +18,13 @@
 *' rate `pm_interest`:
 
 q13_rd_stock_crop(i2)..
-  sum((ct,supreg(h2,i2)), v13_tau_core(h2,"crop")**(i13_tc_exponent(ct)/0.85)) =e= 
-    (1-s13_tc_investment_global_share) * (vm_rd_stock_per_area(i2, "crop") * sum(ct, i13_tc_exponent(ct) / i13_tc_factor(ct)))**(1/0.85) +
-    s13_tc_investment_global_share * (pc13_rd_stock_per_area_global("crop") * sum(ct, i13_tc_exponent(ct) / i13_tc_factor(ct)))**(1/0.85);
+  sum((ct,supreg(h2,i2)), v13_tau_core(h2,"crop")**(i13_tc_exponent(ct)*0.85)) =e= 
+    (1-s13_tc_investment_global_share) * (vm_rd_stock_per_area(i2, "crop") * sum(ct, i13_tc_exponent(ct) / i13_tc_factor(ct)))**(0.85) +
+    s13_tc_investment_global_share * (v13_rd_stock_per_area_global("crop") * sum(ct, i13_tc_exponent(ct) / i13_tc_factor(ct)))**(0.85);
 
+
+q13_rd_stock_global..
+  v13_rd_stock_per_area_global("crop") * sum(i, pc13_land(i,"crop")) =e= sum(i, vm_rd_stock_per_area(i, "crop") * pc13_land(i, "crop"));
 
 q13_rd_investment_crop(i2)..
   pc13_land(i2, "crop") * vm_rd_stock_per_area(i2, "crop") =e= pc13_land(i2, "crop") * sum(ct, p13_rd_stock_per_area(ct, i2, "crop")) +

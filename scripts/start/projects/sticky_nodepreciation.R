@@ -6,7 +6,7 @@
 # |  Contact: magpie@pik-potsdam.de
 
 # ----------------------------------------------------------
-# description: Test new TC formula with global contribution
+# description: Test effect of s38_depreciation_rate
 # ----------------------------------------------------------
 
 
@@ -25,18 +25,12 @@ source("scripts/start_functions.R")
 source("config/default.cfg")
 
 
-cfg$gms$tc <- "endo_global_may26"
-cfg$gms$landconversion <- "calib_tc_cost"
-# cfg$gms$landconversion <- "calib"
-# cfg$gms$s39_ignore_calib <- 2
 
-cfg$gms$c13_payout_curve <- "phaseout"
-
-for (glob_share in c(0.2)) {
+for (depreciation_rate in c(0.00, 0.01, 0.02, 0.03, 0.04, 0.05)) {
   
-  cfg$gms$s13_tc_investment_global_share <- glob_share
+  cfg$gms$s38_depreciation_rate <- depreciation_rate
   
-  cfg$title <- paste0("tc_rewrite_global_001", cfg$gms$s13_tc_investment_global_share)
+  cfg$title <- paste0("depreciation_rate_", cfg$gms$s38_depreciation_rate)
 
   start_run(cfg,codeCheck=FALSE)
 }

@@ -5,7 +5,7 @@
 *** |  MAgPIE License Exception, version 1.0 (see LICENSE file).
 *** |  Contact: magpie@pik-potsdam.de
 
-$setglobal c13_payout_curve phaseout
+$setglobal c13_payout_curve constant
 * options: constant, phaseout
 
 scalars
@@ -67,7 +67,7 @@ $offdelim
 
 table p13_rd_stock_per_area(t_all, i, tautype) R&D stock without investment (1)
 $ondelim
-$include "./modules/13_tc/input/f13_rd_per_area_0.0_1672_2.4_v02.csv"
+$include "./modules/13_tc/input/f13_rd_per_area_0.2_1672_2.4.csv"
 $offdelim
 ;
 
