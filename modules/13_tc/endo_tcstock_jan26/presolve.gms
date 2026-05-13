@@ -8,8 +8,8 @@
 
 pc13_land(i,"pastr") = sum(cell(i,j),pcm_land(j,"past"));
 pc13_land(i,"crop") = sum(cell(i,j),pcm_land(j,"crop"));
+pc13_rd_stock_per_area_global("crop") = sum((i, ct), p13_rd_stock_per_area(ct, i, "crop") * pc13_land(i,"crop")) / sum(i, pc13_land(i,"crop"));
 vm_rd_stock_per_area.lo(i, "crop") = 20;
-v13_rd_stock_per_area_global.lo("crop") = 20;
 
 pc13_interest_annuity(i) = sum(t_all,(1+pm_interest(t, i))**(-m_year(t_all)+m_year(t)) *
                 (5 * sum(delay,f13_stock_payout(delay,"%c13_payout_curve%") $ (ord(delay)-1 = m_year(t_all)-m_year(t)))));

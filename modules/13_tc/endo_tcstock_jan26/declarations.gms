@@ -10,7 +10,6 @@ positive variable
  vm_tech_cost(i)                      Total Annuitized costs of TC (mio. USD17MER per yr)
  v13_cost_tc(i,tautype)               Technical change costs per region (mio. USD17MER)
  vm_rd_stock_per_area(i,tautype)    R&D stock to drive TC for crops and pasture in curent time step (mio. USD17MER per ha)
- v13_rd_stock_per_area_global(tautype) Avg global R&D stock per area
  v13_rd_investment(i, tautype)       R&D investment to drive TC for crops and pasture in curent time step (mio. USD17MER per yr)
  v13_tech_cost(i,tautype)             Annuitized costs of TC for crops and pasture (mio. USD17MER per yr)
  vm_tau(j,tautype)                    Overall agricultural land use intensity tau at cluster level (1)
@@ -20,7 +19,6 @@ positive variable
 equations
  q13_tech_cost(i, tautype)            Total annuitized costs for TC (mio. USD17MER)
  q13_rd_stock_crop(i)                 R&D stock to drive TC for crops in curent time step (mio. USD17MER per yr)
- q13_rd_stock_global                  Global R&D stock (mio. USD17MER per yr)
  q13_tech_cost_sum(i)                 Total Total annuitized costs for TC (mio. USD17MER per yr)
  q13_rd_investment_crop(i)            R&D investment to drive TC for crops in curent time step (mio. USD17MER per yr)
  q13_tau(j, tautype)                  Overall agricultural land use intensity tau (1)
@@ -30,6 +28,7 @@ equations
 parameters
  pc13_land(i, tautype)                Crop and grass land area per region (mio ha)
  p13_rd_stock_per_area(t_all, i, tautype)  R&D stock to drive TC for crops and pasture of the previous time step (USD17MER per ha)
+ pc13_rd_stock_per_area_global(tautype) Avg global R&D stock per area
  pc13_interest_annuity(i)             Annuity factor
  pcm_tau(j, tautype)                  Tau factor of the previous time step (1)
  pc13_tau(h, tautype)                 Tau for conventional cropland  of the previous time step (1)
@@ -48,21 +47,19 @@ parameters
 
 *#################### R SECTION START (OUTPUT DECLARATIONS) ####################
 parameters
- ov13_tau_core(t,h,tautype,type)               Agricultural land use intensity tau for conventional cropland (1)
- ov_tech_cost(t,i,type)                        Total Annuitized costs of TC (mio. USD17MER per yr)
- ov13_cost_tc(t,i,tautype,type)                Technical change costs per region (mio. USD17MER)
- ov_rd_stock_per_area(t,i,tautype,type)        R&D stock to drive TC for crops and pasture in curent time step (mio. USD17MER per ha)
- ov13_rd_stock_per_area_global(t,tautype,type) Avg global R&D stock per area
- ov13_rd_investment(t,i,tautype,type)          R&D investment to drive TC for crops and pasture in curent time step (mio. USD17MER per yr)
- ov13_tech_cost(t,i,tautype,type)              Annuitized costs of TC for crops and pasture (mio. USD17MER per yr)
- ov_tau(t,j,tautype,type)                      Overall agricultural land use intensity tau at cluster level (1)
- ov13_tau_consv(t,h,tautype,type)              Tau for cropland within conservation priority areas (1)
- oq13_tech_cost(t,i,tautype,type)              Total annuitized costs for TC (mio. USD17MER)
- oq13_rd_stock_crop(t,i,type)                  R&D stock to drive TC for crops in curent time step (mio. USD17MER per yr)
- oq13_rd_stock_global(t,type)                  Global R&D stock (mio. USD17MER per yr)
- oq13_tech_cost_sum(t,i,type)                  Total Total annuitized costs for TC (mio. USD17MER per yr)
- oq13_rd_investment_crop(t,i,type)             R&D investment to drive TC for crops in curent time step (mio. USD17MER per yr)
- oq13_tau(t,j,tautype,type)                    Overall agricultural land use intensity tau (1)
- oq13_tau_consv(t,h,tautype,type)              Tau for cropland within conservation priority areas (1)
+ ov13_tau_core(t,h,tautype,type)        Agricultural land use intensity tau for conventional cropland (1)
+ ov_tech_cost(t,i,type)                 Total Annuitized costs of TC (mio. USD17MER per yr)
+ ov13_cost_tc(t,i,tautype,type)         Technical change costs per region (mio. USD17MER)
+ ov_rd_stock_per_area(t,i,tautype,type) R&D stock to drive TC for crops and pasture in curent time step (mio. USD17MER per ha)
+ ov13_rd_investment(t,i,tautype,type)   R&D investment to drive TC for crops and pasture in curent time step (mio. USD17MER per yr)
+ ov13_tech_cost(t,i,tautype,type)       Annuitized costs of TC for crops and pasture (mio. USD17MER per yr)
+ ov_tau(t,j,tautype,type)               Overall agricultural land use intensity tau at cluster level (1)
+ ov13_tau_consv(t,h,tautype,type)       Tau for cropland within conservation priority areas (1)
+ oq13_tech_cost(t,i,tautype,type)       Total annuitized costs for TC (mio. USD17MER)
+ oq13_rd_stock_crop(t,i,type)           R&D stock to drive TC for crops in curent time step (mio. USD17MER per yr)
+ oq13_tech_cost_sum(t,i,type)           Total Total annuitized costs for TC (mio. USD17MER per yr)
+ oq13_rd_investment_crop(t,i,type)      R&D investment to drive TC for crops in curent time step (mio. USD17MER per yr)
+ oq13_tau(t,j,tautype,type)             Overall agricultural land use intensity tau (1)
+ oq13_tau_consv(t,h,tautype,type)       Tau for cropland within conservation priority areas (1)
 ;
 *##################### R SECTION END (OUTPUT DECLARATIONS) #####################

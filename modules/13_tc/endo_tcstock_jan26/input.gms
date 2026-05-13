@@ -19,7 +19,7 @@ scalars
  s13_croparea_consv_shr_noselect         Share of crop area in which no endogeneous yield changes are allowed due to  conservation (1) / 0 /
  s13_croparea_consv_start                Croparea conservation start year        / 2025 /
  s13_croparea_consv_target               Croparea conservation target year       / 2030 /
- s13_tc_investment_global_share          Share of TC investments contributing to global pool  / 0.2 /
+ s13_tc_investment_global_share          Share of TC investments contributing to global pool  / 0 /
 ;
 
 sets
@@ -67,7 +67,7 @@ $offdelim
 
 table p13_rd_stock_per_area(t_all, i, tautype) R&D stock without investment (1)
 $ondelim
-$include "./modules/13_tc/input/f13_rd_per_area_0.2_1672_2.4.csv"
+$include "./modules/13_tc/input/f13_rd_per_area_0.0_1672_2.4_v02.csv"
 $offdelim
 ;
 
