@@ -181,7 +181,7 @@ $offlisting
 
 $setglobal c_timesteps  coup2100
 $setglobal c_past  till_2015
-$setglobal c_title  default
+$setglobal c_title  tc_rewrite_global_0010p2
 
 scalars
 s_use_gdx   use of gdx files                                       / 0 /
@@ -194,7 +194,7 @@ $setglobal drivers  aug17
 $setglobal land  landmatrix_dec18
 $setglobal costs  default
 $setglobal interest_rate  select_apr20
-$setglobal tc  endo_jan22
+$setglobal tc  endo_global_may26
 $setglobal yields  managementcalib_aug19
 
 $setglobal food  anthro_iso_jun22
@@ -221,7 +221,7 @@ $setglobal natveg  pot_forest_may24
 $setglobal employment  exo_may22
 $setglobal labor_prod  off
 $setglobal factor_costs  sticky_feb18
-$setglobal landconversion  calib
+$setglobal landconversion  calib_tc_cost
 
 $setglobal transport  gtap_nov12
 $setglobal area_equipped_for_irrigation  endo_apr13

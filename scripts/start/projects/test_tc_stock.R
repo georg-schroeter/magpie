@@ -25,18 +25,18 @@ source("scripts/start_functions.R")
 source("config/default.cfg")
 
 
-cfg$gms$tc <- "endo_tcstock_jan26"
+cfg$gms$tc <- "endo_global_may26"
 cfg$gms$landconversion <- "calib_tc_cost"
 # cfg$gms$landconversion <- "calib"
-cfg$gms$s39_ignore_calib <- 2
+# cfg$gms$s39_ignore_calib <- 2
 
 cfg$gms$c13_payout_curve <- "phaseout"
 
-for (glob_share in c(0.0)) {
+for (glob_share in c(0.2)) {
   
   cfg$gms$s13_tc_investment_global_share <- glob_share
   
-  cfg$title <- paste0("tc_rewrite_026_noreward_", cfg$gms$s13_tc_investment_global_share)
+  cfg$title <- paste0("tc_rewrite_global_001", cfg$gms$s13_tc_investment_global_share)
 
   start_run(cfg,codeCheck=FALSE)
 }
