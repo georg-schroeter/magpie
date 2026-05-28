@@ -43,6 +43,7 @@ equations
  q30_bv_ann(j,potnatveg)              Biodiversity value of annual cropland (mio. ha)
  q30_bv_per(j,potnatveg)              Biodiversity value of perennial cropland (mio. ha)
  q30_crop_reg(i)                      Total regional crop production area (mio. ha)
+ q30_prod_risk(j)                     Calculating the production risk to estimate LCB (mio. USD17MER)
 ;
 
 *#################### R SECTION START (OUTPUT DECLARATIONS) ####################
