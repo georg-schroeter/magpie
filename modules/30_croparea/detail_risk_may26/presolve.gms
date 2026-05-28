@@ -23,6 +23,10 @@ else
 );
 *' @stop
 
+* Initialize expected relative stddev of crop production as combination of constant and prior experience:
+p30_prod_stddev(j,kcr,w) = 0.1;
+p30_risk_aversity(i) = 2.0;
+
 * only activate constraints which are binding
 if (i30_implementation = 1,
   rotamax_red30(rotamax30) = yes$(i30_rotation_rules(t,rotamax30) < 1);

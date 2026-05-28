@@ -16,5 +16,6 @@
 
 *###################### R SECTION START (MODULETYPES) ##########################
 $Ifi "%croparea%" == "detail_apr24" $include "./modules/30_croparea/detail_apr24/realization.gms"
+$Ifi "%croparea%" == "detail_risk_may26" $include "./modules/30_croparea/detail_risk_may26/realization.gms"
 $Ifi "%croparea%" == "simple_apr24" $include "./modules/30_croparea/simple_apr24/realization.gms"
 *###################### R SECTION END (MODULETYPES) ############################

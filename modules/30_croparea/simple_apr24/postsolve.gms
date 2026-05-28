@@ -12,6 +12,7 @@
  ov_carbon_stock_croparea(t,j,ag_pools,"marginal") = vm_carbon_stock_croparea.m(j,ag_pools);
  ov30_betr_missing(t,j,"marginal")                 = v30_betr_missing.m(j);
  ov30_crop_area(t,i,"marginal")                    = v30_crop_area.m(i);
+ ov_prod_risk(t,j,"marginal")                      = vm_prod_risk.m(j);
  oq30_prod(t,j,kcr,"marginal")                     = q30_prod.m(j,kcr);
  oq30_betr_missing(t,j,"marginal")                 = q30_betr_missing.m(j);
  oq30_cost(t,i,"marginal")                         = q30_cost.m(i);
@@ -26,6 +27,7 @@
  ov_carbon_stock_croparea(t,j,ag_pools,"level")    = vm_carbon_stock_croparea.l(j,ag_pools);
  ov30_betr_missing(t,j,"level")                    = v30_betr_missing.l(j);
  ov30_crop_area(t,i,"level")                       = v30_crop_area.l(i);
+ ov_prod_risk(t,j,"level")                         = vm_prod_risk.l(j);
  oq30_prod(t,j,kcr,"level")                        = q30_prod.l(j,kcr);
  oq30_betr_missing(t,j,"level")                    = q30_betr_missing.l(j);
  oq30_cost(t,i,"level")                            = q30_cost.l(i);
@@ -40,6 +42,7 @@
  ov_carbon_stock_croparea(t,j,ag_pools,"upper")    = vm_carbon_stock_croparea.up(j,ag_pools);
  ov30_betr_missing(t,j,"upper")                    = v30_betr_missing.up(j);
  ov30_crop_area(t,i,"upper")                       = v30_crop_area.up(i);
+ ov_prod_risk(t,j,"upper")                         = vm_prod_risk.up(j);
  oq30_prod(t,j,kcr,"upper")                        = q30_prod.up(j,kcr);
  oq30_betr_missing(t,j,"upper")                    = q30_betr_missing.up(j);
  oq30_cost(t,i,"upper")                            = q30_cost.up(i);
@@ -54,6 +57,7 @@
  ov_carbon_stock_croparea(t,j,ag_pools,"lower")    = vm_carbon_stock_croparea.lo(j,ag_pools);
  ov30_betr_missing(t,j,"lower")                    = v30_betr_missing.lo(j);
  ov30_crop_area(t,i,"lower")                       = v30_crop_area.lo(i);
+ ov_prod_risk(t,j,"lower")                         = vm_prod_risk.lo(j);
  oq30_prod(t,j,kcr,"lower")                        = q30_prod.lo(j,kcr);
  oq30_betr_missing(t,j,"lower")                    = q30_betr_missing.lo(j);
  oq30_cost(t,i,"lower")                            = q30_cost.lo(i);

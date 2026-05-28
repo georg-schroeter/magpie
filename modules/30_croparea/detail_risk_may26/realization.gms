@@ -23,12 +23,12 @@
 *' @limitations There are currently no known limitations of this realization.
 
 *####################### R SECTION START (PHASES) ##############################
-$Ifi "%phase%" == "sets" $include "./modules/30_croparea/detail_apr24/sets.gms"
-$Ifi "%phase%" == "declarations" $include "./modules/30_croparea/detail_apr24/declarations.gms"
-$Ifi "%phase%" == "input" $include "./modules/30_croparea/detail_apr24/input.gms"
-$Ifi "%phase%" == "equations" $include "./modules/30_croparea/detail_apr24/equations.gms"
-$Ifi "%phase%" == "scaling" $include "./modules/30_croparea/detail_apr24/scaling.gms"
-$Ifi "%phase%" == "preloop" $include "./modules/30_croparea/detail_apr24/preloop.gms"
-$Ifi "%phase%" == "presolve" $include "./modules/30_croparea/detail_apr24/presolve.gms"
-$Ifi "%phase%" == "postsolve" $include "./modules/30_croparea/detail_apr24/postsolve.gms"
+$Ifi "%phase%" == "sets" $include "./modules/30_croparea/detail_risk_may26/sets.gms"
+$Ifi "%phase%" == "declarations" $include "./modules/30_croparea/detail_risk_may26/declarations.gms"
+$Ifi "%phase%" == "input" $include "./modules/30_croparea/detail_risk_may26/input.gms"
+$Ifi "%phase%" == "equations" $include "./modules/30_croparea/detail_risk_may26/equations.gms"
+$Ifi "%phase%" == "scaling" $include "./modules/30_croparea/detail_risk_may26/scaling.gms"
+$Ifi "%phase%" == "preloop" $include "./modules/30_croparea/detail_risk_may26/preloop.gms"
+$Ifi "%phase%" == "presolve" $include "./modules/30_croparea/detail_risk_may26/presolve.gms"
+$Ifi "%phase%" == "postsolve" $include "./modules/30_croparea/detail_risk_may26/postsolve.gms"
 *######################## R SECTION END (PHASES) ###############################

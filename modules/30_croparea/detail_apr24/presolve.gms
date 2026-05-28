@@ -23,6 +23,8 @@ else
 );
 *' @stop
 
+vm_prod_risk.fx(j) = 0;
+
 * only activate constraints which are binding
 if (i30_implementation = 1,
   rotamax_red30(rotamax30) = yes$(i30_rotation_rules(t,rotamax30) < 1);

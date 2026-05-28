@@ -15,6 +15,8 @@ parameters
  i30_betr_penalty(t)                    Penalty for violation of betr target (USD17MER per ha)
  p30_country_weight(i)                  Policy country weight per region (1)
  p30_country_switch(iso)                 Switch indicating whether country is affected by selected policy (1)
+ p30_prod_stddev(j,kcr,w)               Expected relative stddev of production (1)
+ p30_risk_aversity(i)                   Regional risk aversity for LCB calculation (1)
 ;
 
 positive variables
@@ -25,6 +27,7 @@ positive variables
  v30_penalty(j,rota30)                Penalty for violating rotational constraints (mio. USD17MER)
  v30_betr_missing(j)                  Missing bioenergy tree land towards target (mio. ha)
  v30_crop_area(i)                     Total regional crop production area (mio. ha)
+ vm_prod_risk(j)                      Production risk to estimate LCB (mio. USD17MER)
 ;
 
 equations
@@ -51,6 +54,7 @@ parameters
  ov30_penalty(t,j,rota30,type)               Penalty for violating rotational constraints (mio. USD17MER)
  ov30_betr_missing(t,j,type)                 Missing bioenergy tree land towards target (mio. ha)
  ov30_crop_area(t,i,type)                    Total regional crop production area (mio. ha)
+ ov_prod_risk(t,j,type)                      Production risk to estimate LCB (mio. USD17MER)
  oq30_prod(t,j,kcr,type)                     Production of cropped products (mio. tDM)
  oq30_betr_missing(t,j,type)                 Missing bioenergy tree land towards target (mio. ha)
  oq30_rotation_penalty(t,i,type)             Total penalty for rotational constraint violations (mio. USD17MER)

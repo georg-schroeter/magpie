@@ -75,7 +75,7 @@ $endif
 
 table fm_croparea(t_all,j,w,kcr) Different croparea type areas (mio. ha)
 $ondelim
-$include "./modules/30_croparea/detail_apr24/input/f30_croparea_w_initialisation.cs3"
+$include "./modules/30_croparea/detail_risk_may26/input/f30_croparea_w_initialisation.cs3"
 $offdelim
 ;
 m_fillmissingyears(fm_croparea,"j,w,kcr");
@@ -84,13 +84,13 @@ m_fillmissingyears(fm_croparea,"j,w,kcr");
 
 table f30_rotation_incentives(rota30,incentscen30) penalties for violating rotation rules (USD17MER)
 $ondelim
-$include "./modules/30_croparea/detail_apr24/input/f30_rotation_incentives.csv"
+$include "./modules/30_croparea/detail_risk_may26/input/f30_rotation_incentives.csv"
 $offdelim
 ;
 
 table f30_rotation_rules(rota30,rotascen30) Rotation min or max shares (1)
 $ondelim
-$include "./modules/30_croparea/detail_apr24/input/f30_rotation_rules.csv"
+$include "./modules/30_croparea/detail_risk_may26/input/f30_rotation_rules.csv"
 $offdelim
 ;
 

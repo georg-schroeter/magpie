@@ -14,6 +14,11 @@
   q30_prod(j2,kcr) ..
     vm_prod(j2,kcr) =e= sum(w, vm_area(j2,kcr,w) * vm_yld(j2,kcr,w));
 
+*' Risk aversity incentivizes a mix of crops and irrigation strategies.
+
+  q30_prod_risk(j2) ..
+    vm_prod_risk(j2) =e= sum(cell(i2,j2), p30_risk_aversity(i2)) * sqrt(sum((kcr,w), (vm_area(j2,kcr,w) * vm_yld(j2,kcr,w) * fm_prices_initial(kcr) * p30_prod_stddev(j2,kcr,w))**2));
+
 *' A penalty is applied for the violation of bioenergy tree (betr) rules.
 *' The penalty applies to the missing bioenergy tree land, i.e. where bioenergy tree land 
 *' is lower than a certain fraction of total cropland.
