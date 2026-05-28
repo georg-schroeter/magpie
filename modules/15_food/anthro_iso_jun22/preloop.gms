@@ -137,7 +137,7 @@ else
 );
 
 * initial prices in $US per Kcal
-i15_prices_initial_kcal(iso,kfo)$(fm_nutrition_attributes("y1995",kfo,"kcal")>0) = f15_prices_initial(kfo)
+i15_prices_initial_kcal(iso,kfo)$(fm_nutrition_attributes("y1995",kfo,"kcal")>0) = fm_prices_initial(kfo)
                                                                                     / (fm_nutrition_attributes("y1995",kfo,"kcal")*10**6);
 
 p15_tax_recycling(t,iso) = 0;
