@@ -13,7 +13,7 @@
 *' production costs of different production activities.
 
  q11_cost_reg(i2) .. v11_cost_reg(i2) =e= sum(factors,vm_cost_prod_crop(i2,factors))
-                   + sum(cell(i2,j2),vm_prod_risk(j2))
+                   + vm_prod_risk_reg(i2)
                    + sum(kres,vm_cost_prod_kres(i2,kres))
                    + vm_cost_prod_past(i2)
                    + vm_cost_prod_fish(i2)

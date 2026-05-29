@@ -181,7 +181,7 @@ $offlisting
 
 $setglobal c_timesteps  coup2100
 $setglobal c_past  till_2015
-$setglobal c_title  default
+$setglobal c_title  riskaversity_0p1
 
 scalars
 s_use_gdx   use of gdx files                                       / 0 /
@@ -210,7 +210,7 @@ $setglobal land_conservation  area_based_apr22
 $setglobal ageclass  oct24
 
 $setglobal cropland  detail_apr24
-$setglobal croparea  simple_apr24
+$setglobal croparea  simple_risk_may26
 $setglobal past  endo_jun13
 
 $setglobal forestry  dynamic_may24

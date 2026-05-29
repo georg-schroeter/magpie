@@ -27,7 +27,8 @@ positive variables
  v30_penalty(j,rota30)                Penalty for violating rotational constraints (mio. USD17MER)
  v30_betr_missing(j)                  Missing bioenergy tree land towards target (mio. ha)
  v30_crop_area(i)                     Total regional crop production area (mio. ha)
- vm_prod_risk(j)                      Production risk to estimate LCB (mio. USD17MER)
+ v30_prod_risk(j)                      Production risk to estimate LCB (mio. USD17MER)
+ vm_prod_risk_reg(i)                  Production risk to estimate LCB (mio. USD17MER)
 ;
 
 equations
@@ -44,6 +45,7 @@ equations
  q30_bv_per(j,potnatveg)              Biodiversity value of perennial cropland (mio. ha)
  q30_crop_reg(i)                      Total regional crop production area (mio. ha)
  q30_prod_risk(j)                     Calculating the production risk to estimate LCB (mio. USD17MER)
+ q30_prod_risk_reg(i)                 Calculating the production risk to estimate LCB (mio. USD17MER)
 ;
 
 *#################### R SECTION START (OUTPUT DECLARATIONS) ####################
@@ -55,7 +57,8 @@ parameters
  ov30_penalty(t,j,rota30,type)               Penalty for violating rotational constraints (mio. USD17MER)
  ov30_betr_missing(t,j,type)                 Missing bioenergy tree land towards target (mio. ha)
  ov30_crop_area(t,i,type)                    Total regional crop production area (mio. ha)
- ov_prod_risk(t,j,type)                      Production risk to estimate LCB (mio. USD17MER)
+ ov30_prod_risk(t,j,type)                    Production risk to estimate LCB (mio. USD17MER)
+ ov_prod_risk_reg(t,i,type)                  Production risk to estimate LCB (mio. USD17MER)
  oq30_prod(t,j,kcr,type)                     Production of cropped products (mio. tDM)
  oq30_betr_missing(t,j,type)                 Missing bioenergy tree land towards target (mio. ha)
  oq30_rotation_penalty(t,i,type)             Total penalty for rotational constraint violations (mio. USD17MER)
@@ -68,6 +71,8 @@ parameters
  oq30_bv_ann(t,j,potnatveg,type)             Biodiversity value of annual cropland (mio. ha)
  oq30_bv_per(t,j,potnatveg,type)             Biodiversity value of perennial cropland (mio. ha)
  oq30_crop_reg(t,i,type)                     Total regional crop production area (mio. ha)
+ oq30_prod_risk(t,j,type)                    Calculating the production risk to estimate LCB (mio. USD17MER)
+ oq30_prod_risk_reg(t,i,type)                Calculating the production risk to estimate LCB (mio. USD17MER)
 ;
 *##################### R SECTION END (OUTPUT DECLARATIONS) #####################
 
