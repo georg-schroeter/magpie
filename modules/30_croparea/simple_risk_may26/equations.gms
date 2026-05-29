@@ -15,9 +15,11 @@
   vm_prod(j2,kcr) =e= sum(w, vm_area(j2,kcr,w) * vm_yld(j2,kcr,w));
 
 *' Risk aversity incentivizes a mix of crops and irrigation strategies.
+  q30_prod_risk_aux(j2) ..
+    v30_prod_risk_aux(j2) =e= sum((kcr,w), (vm_area(j2,kcr,w) * vm_yld(j2,kcr,w) * fm_prices_initial(kcr) * p30_prod_stddev(j2,kcr,w))**2);
 
   q30_prod_risk(j2) ..
-    v30_prod_risk(j2) =e= sum(cell(i2,j2), p30_risk_aversity(i2)) * sqrt(sum((kcr,w), (vm_area(j2,kcr,w) * vm_yld(j2,kcr,w) * fm_prices_initial(kcr) * p30_prod_stddev(j2,kcr,w))**2));
+    v30_prod_risk(j2) =e= sum(cell(i2,j2), p30_risk_aversity(i2)) * sqrt(v30_prod_risk_aux(j2));
 
   q30_prod_risk_reg(i2) ..
     vm_prod_risk_reg(i2) =e= sum(cell(i2,j2), v30_prod_risk(j2));

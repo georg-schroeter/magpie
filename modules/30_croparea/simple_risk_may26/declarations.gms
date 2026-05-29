@@ -22,8 +22,9 @@ positive variables
  vm_carbon_stock_croparea(j,ag_pools)   Carbon stock in croparea (tC)
  v30_betr_missing(j)                    Missing bioenergy tree land towards target (mio. ha)
  v30_crop_area(i)                       Total regional crop production area (mio. ha)
- v30_prod_risk(j)                      Production risk to estimate LCB (mio. USD17MER)
- vm_prod_risk_reg(i)                  Production risk to estimate LCB (mio. USD17MER)
+ v30_prod_risk(j)                       Production risk to estimate LCB (mio. USD17MER)
+ v30_prod_risk_aux(j)                   Auxiliary variable for the production risk calculation ((mio. ha)²)
+ vm_prod_risk_reg(i)                    Production risk to estimate LCB (mio. USD17MER)
 ;
 
 equations
@@ -37,6 +38,7 @@ equations
  q30_bv_per(j,potnatveg)            Biodiversity value of perennial cropland (mio. ha)
  q30_crop_reg(i)                    Total regional crop production area (mio. ha)
  q30_prod_risk(j)                   Calculating the production risk to estimate LCB (mio. USD17MER)
+ q30_prod_risk_aux(j)               Auxiliary equation for the production risk calculation ((mio. ha)²)
  q30_prod_risk_reg(i)               Calculating the production risk to estimate LCB (mio. USD17MER)
 ;
 
