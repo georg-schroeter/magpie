@@ -50,6 +50,7 @@ parameters
  ov30_betr_missing(t,j,type)                 Missing bioenergy tree land towards target (mio. ha)
  ov30_crop_area(t,i,type)                    Total regional crop production area (mio. ha)
  ov30_prod_risk(t,j,type)                    Production risk to estimate LCB (mio. USD17MER)
+ ov30_prod_risk_aux(t,j,type)                Auxiliary variable for the production risk calculation ((mio. ha)²)
  ov_prod_risk_reg(t,i,type)                  Production risk to estimate LCB (mio. USD17MER)
  oq30_prod(t,j,kcr,type)                     Production of cropped products (mio. tDM)
  oq30_betr_missing(t,j,type)                 Missing bioenergy tree land towards target (mio. ha)
@@ -61,6 +62,7 @@ parameters
  oq30_bv_per(t,j,potnatveg,type)             Biodiversity value of perennial cropland (mio. ha)
  oq30_crop_reg(t,i,type)                     Total regional crop production area (mio. ha)
  oq30_prod_risk(t,j,type)                    Calculating the production risk to estimate LCB (mio. USD17MER)
+ oq30_prod_risk_aux(t,j,type)                Auxiliary equation for the production risk calculation ((mio. ha)²)
  oq30_prod_risk_reg(t,i,type)                Calculating the production risk to estimate LCB (mio. USD17MER)
 ;
 *##################### R SECTION END (OUTPUT DECLARATIONS) #####################

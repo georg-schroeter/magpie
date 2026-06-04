@@ -22,7 +22,7 @@ else
 
 * Initialize expected relative stddev of crop production as combination of constant and prior experience:
 p30_prod_stddev(j,kcr,w) = 0.1;
-p30_risk_aversity(i) = 1.0;
+p30_risk_aversity(i) = 3.0;
 
 crpmax30(crp30) = yes$(f30_rotation_max_shr(crp30) < 1);
 crpmin30(crp30) = yes$(f30_rotation_min_shr(crp30) > 0);
