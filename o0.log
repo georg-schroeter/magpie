@@ -1,0 +1,14 @@
+Global .Rprofile loaded! (R version 4.3.2 (2023-10-31))
+Loading required package: GDPuc
+Loading required package: madrat
+Loading required package: magclass
+Loading required package: mrcommons
+Loading required package: mrdrivers
+Loading required package: mrfaocore
+Loading required package: mstools
+Loading required package: mrlandcore
+Loading required package: mrfactors
+
+Run calcOutput(type = "AvlCropland", aggregate = FALSE, file = "output_quartdeg_batch.mz", resolution = 0.25)
+~  - loading cache calcAvlCropland-F1e13dcfb.rds
+Exit calcOutput(type = "AvlCropland", aggregate = FALSE, file = "output_quartdeg_batch.mz", resolution = 0.25) in 2.55 seconds

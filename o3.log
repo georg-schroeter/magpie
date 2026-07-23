@@ -1,0 +1,36 @@
+Global .Rprofile loaded! (R version 4.3.2 (2023-10-31))
+Loading required package: GDPuc
+Loading required package: madrat
+Loading required package: magclass
+Loading required package: mrcommons
+Loading required package: mrdrivers
+Loading required package: mrfaocore
+Loading required package: mstools
+Loading required package: mrlandcore
+Loading required package: mrfactors
+
+Run calcOutput(type = "AvlCropland", file = "output_quartdeg_batch.mz", resolution = 0.25)
+~ Run calcOutput(type = "LUH2v2", aggregate = FALSE, years = "y1995", landuse_types = "magpie", cellular = TRUE, cells = "lpjcell", irrigation = FALSE, resolution = 0.25)
+~~  - loading cache calcLUH2v2-Fe09f9679-47a338f1.rds
+~ Exit calcOutput(type = "LUH2v2", aggregate = FALSE, years = "y1995", landuse_types = "magpie", cellular = TRUE, cells = "lpjcell", irrigation = FALSE, resolution = 0.25) in 2.58 seconds
+~ Run readSource(type = "Zabel2014", subtype = "all_marginal:rainfed_and_irrigated", convert = "onlycorrect")
+~~  - done writing cache readZabel2014-Fd6d31162.rds
+~~ NOTE: 42.8774768990365 % of data points with is.na(x) set to 0 .
+~~  - done writing cache correctZabel2014-Fd6d31162.rds
+~ Exit readSource(type = "Zabel2014", subtype = "all_marginal:rainfed_and_irrigated", convert = "onlycorrect") in 107.9 seconds
+~ Run readSource(type = "Zabel2014", subtype = "q33_marginal:rainfed_and_irrigated", convert = "onlycorrect")
+~~  - done writing cache readZabel2014-Fd6d31162-fab16dbc.rds
+~~ NOTE: 48.1149845864647 % of data points with is.na(x) set to 0 .
+~~  - done writing cache correctZabel2014-Fd6d31162-fab16dbc.rds
+~ Exit readSource(type = "Zabel2014", subtype = "q33_marginal:rainfed_and_irrigated", convert = "onlycorrect") in 105.44 seconds
+~ Run readSource(type = "Zabel2014", subtype = "no_marginal:rainfed_and_irrigated", convert = "onlycorrect")
+~~  - done writing cache readZabel2014-Fd6d31162-8ae7b241.rds
+~~ NOTE: 57.9080912357517 % of data points with is.na(x) set to 0 .
+~~  - done writing cache correctZabel2014-Fd6d31162-8ae7b241.rds
+~ Exit readSource(type = "Zabel2014", subtype = "no_marginal:rainfed_and_irrigated", convert = "onlycorrect") in 106.01 seconds
+~  - done writing cache calcAvlCropland-F1e13dcfb.rds
+Error in .getMapping(aggregate, type, x$x) : 
+  Cannot aggregate to regions as mapping is missing!
+Calls: calcOutput -> .getMapping
+Exit calcOutput(type = "AvlCropland", file = "output_quartdeg_batch.mz", resolution = 0.25) in 332.67 seconds
+Execution halted

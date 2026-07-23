@@ -181,11 +181,7 @@ $offlisting
 
 $setglobal c_timesteps  coup2100
 $setglobal c_past  till_2015
-<<<<<<< HEAD
 $setglobal c_title  tc_rewrite_global_0010p2
-=======
-$setglobal c_title  tc_rewrite_global_0010p2
->>>>>>> 55c231c1e (uncomitted changes)
 
 scalars
 s_use_gdx   use of gdx files                                       / 0 /
