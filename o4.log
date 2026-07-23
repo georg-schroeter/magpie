@@ -1,0 +1,18 @@
+Global .Rprofile loaded! (R version 4.3.2 (2023-10-31))
+Loading required package: GDPuc
+Loading required package: madrat
+Loading required package: magclass
+Loading required package: mrcommons
+Loading required package: mrdrivers
+Loading required package: mrfaocore
+Loading required package: mstools
+Loading required package: mrlandcore
+Loading required package: mrfactors
+
+Run calcOutput(type = "AvlCropland", file = "output_quartdeg_batch.mz", resolution = 0.25)
+~  - loading cache calcAvlCropland-F1e13dcfb.rds
+Error in .getMapping(aggregate, type, x$x) : 
+  Cannot aggregate to regions as mapping is missing!
+Calls: calcOutput -> .getMapping
+Exit calcOutput(type = "AvlCropland", file = "output_quartdeg_batch.mz", resolution = 0.25) in 2.35 seconds
+Execution halted
