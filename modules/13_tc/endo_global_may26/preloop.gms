@@ -38,7 +38,7 @@ pc13_land(i,"crop") = sum(cell(i,j),pcm_land(j,"crop"));
 v13_tau_init.fx(t_all, i) = 0;
 v13_tau_init.up(t_past, i) = Inf;
 
-solve m13_ USING nlp MINIMIZING v13_init_approximation_error;
+solve m13_rd_stock_init USING nlp MINIMIZING v13_init_approximation_error;
 
 
 
