@@ -77,8 +77,8 @@ q13_tau_consv(h2,tautype)$(c13_croparea_consv_tau_increase = 1 OR sum(ct, m_year
 
 q13_tech_cost_init(t_past, i2)..
     (sum(supreg(h2,i2),v13_tau_init(t_past, h2)))**(i13_tc_exponent("y1995")/0.85) =e= 
-    (1-s13_tc_investment_global_share) * (v13_rd_stock_per_area_init(t_past, i2) * sum(ct, i13_tc_exponent("y1995") / i13_tc_factor("y1995")))**(1/0.85) +
-    s13_tc_investment_global_share * (v13_rd_stock_per_area_global_init(t_past) * sum(ct, i13_tc_exponent("y1995") / i13_tc_factor("y1995")))**(1/0.85);
+    (1-s13_tc_investment_global_share) * (v13_rd_stock_per_area_init(t_past, i2) * i13_tc_exponent("y1995") / i13_tc_factor("y1995"))**(1/0.85) +
+    s13_tc_investment_global_share * (v13_rd_stock_per_area_global_init(t_past) * i13_tc_exponent("y1995") / i13_tc_factor("y1995"))**(1/0.85);
 
 q13_rd_stock_crop_init(t_all, i2)..
     v13_rd_stock_per_area_init(t_all, i2) =e= sum(t_past, v13_rd_investment_init(t_past, i2)
