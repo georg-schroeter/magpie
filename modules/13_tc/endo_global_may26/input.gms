@@ -65,11 +65,11 @@ $include "./modules/13_tc/input/f13_tcguess.cs4"
 $offdelim
 /;
 
-table p13_rd_stock_per_area(t_all, i, tautype) R&D stock without investment (1)
-$ondelim
-$include "./modules/13_tc/input/f13_rd_per_area_0.2_1672_2.4.csv"
-$offdelim
-;
+* table p13_rd_stock_per_area(t_all, i, tautype) R&D stock without investment (1)
+* $ondelim
+* $include "./modules/13_tc/input/f13_rd_per_area_0.2_1672_2.4.csv"
+* $offdelim
+* ;
 
 table f13_stock_payout(delay,curve) Stock payout curve for R&D investment (1)
 $ondelim
