@@ -35,8 +35,8 @@ m_sigmoid_time_interpol(i13_tau_croparea_consv_fader,s13_croparea_consv_start,s1
 pc13_land(i,"pastr") = sum(cell(i,j),pcm_land(j,"past"));
 pc13_land(i,"crop") = sum(cell(i,j),pcm_land(j,"crop"));
 
-v13_tau_init.fx(t_all, i) = 0;
-v13_tau_init.up(t_past, i) = Inf;
+* v13_tau_init.fx(t_all, i) = 0;
+* v13_tau_init.up(t_past, i) = Inf;
 
 solve m13_rd_stock_init USING nlp MINIMIZING v13_init_approximation_error;
 
