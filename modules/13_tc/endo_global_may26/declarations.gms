@@ -46,6 +46,43 @@ parameters
  p13_country_wght_supreg(h)           Policy country weight per super region (1)
 ;
 
+*** #### R&D Stock initialization model
+equations
+ q13_tech_cost_init(t_all, i)            Total annuitized costs for TC (mio. USD17MER)
+ q13_rd_stock_crop_init(t_all, i)                 R&D stock to drive TC for crops in curent time step (mio. USD17MER per yr)
+ q13_rd_stock_global_init(t_all)                  Calculation of current average R&D stock (mio. USD17MER)
+ q13_init_approximation_error                     Total approximation error of historical tau over all timesteps (1)
+;
+
+positive variables
+ v13_rd_investment_init(t_past,i)                 Init R&D investments per area (USD17MER per ha)
+ v13_rd_stock_per_area_init(t_all, i)             Init R&D stock per area (USD17MER per ha)
+ v13_rd_stock_per_area_global_init(t_all, i)      Init global R&D stock per area (USD17MER per ha)
+ v13_tau_init(t_past,h)                           Init tau (1)
+; 
+
+variables
+ v13_init_approximation_error                     Approximation error of tau initialization (1)
+;
+
+*' @code
+*' The R&D stock initialization model consists of the following equations, which are not
+*' part of MAgPIE.
+model m13_rd_stock_init /
+
+ q13_tech_cost_init,
+ q13_rd_stock_crop_init,
+ q13_rd_stock_global_init,
+ q13_init_approximation_error
+  /;
+
+*' @stop
+
+m13_rd_stock_init.optfile   = 0 ;
+m13_rd_stock_init.scaleopt  = 1 ;
+m13_rd_stock_init.solprint  = 0 ;
+m13_rd_stock_init.holdfixed = 1 ;
+
 *#################### R SECTION START (OUTPUT DECLARATIONS) ####################
 parameters
  ov13_tau_core(t,h,tautype,type)               Agricultural land use intensity tau for conventional cropland (1)
