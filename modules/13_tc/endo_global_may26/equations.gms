@@ -85,8 +85,8 @@ q13_rd_stock_crop_init(t_all, i2)..
                                    * sum(delay,f13_stock_payout(delay,"%c13_payout_curve%") $ (ord(delay)-1 = m_year(t_all)-m_year(t_past))));
 
 
-q13_rd_stock_global_init(t_all)..
-  v13_rd_stock_per_area_global_init(t_all) * sum(i2, pc13_land(i2,"crop")) =e= sum(i2, v13_rd_stock_per_area_init(t_all, i2) * pc13_land(i2,"crop"));
+q13_rd_stock_global_init(t_past)..
+  v13_rd_stock_per_area_global_init(t_past) * sum(i2, pc13_land(i2,"crop")) =e= sum(i2, v13_rd_stock_per_area_init(t_past, i2) * pc13_land(i2,"crop"));
 
 q13_init_approximation_error..
   v13_init_approximation_error =&= sum((t_past, h2), (v13_tau_init(t_past, h2) - f13_tau_historical(t_past, h2))**2);

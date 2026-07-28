@@ -57,7 +57,7 @@ equations
 positive variables
  v13_rd_investment_init(t_past,i)                 Init R&D investments per area (USD17MER per ha)
  v13_rd_stock_per_area_init(t_all, i)             Init R&D stock per area (USD17MER per ha)
- v13_rd_stock_per_area_global_init(t_all, i)      Init global R&D stock per area (USD17MER per ha)
+ v13_rd_stock_per_area_global_init(t_past, i)     Init global R&D stock per area (USD17MER per ha)
  v13_tau_init(t_past,h)                           Init tau (1)
 ; 
 
