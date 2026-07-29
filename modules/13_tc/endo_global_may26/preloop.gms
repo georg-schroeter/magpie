@@ -45,7 +45,7 @@ solve m13_rd_stock_init USING nlp MINIMIZING v13_init_approximation_error;
 display "R&D Stock Initialization run finished with modelstat ";
 display m13_rd_stock_init.modelstat;
 display "Reconstructed tau in 1995 ";
-display v13_tau_init.l("y1995",i);
+display v13_tau_init.l("y1995",h);
 
 if(m13_rd_stock_init.modelstat > 2 AND m13_rd_stock_init.modelstat ne 7,
   m13_rd_stock_init.solprint = 1
