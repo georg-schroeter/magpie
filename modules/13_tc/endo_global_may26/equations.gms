@@ -89,4 +89,4 @@ q13_rd_stock_global_init(t_past)..
   v13_rd_stock_per_area_global_init(t_past) * sum(i2, pc13_land(i2,"crop")) =e= sum(i2, v13_rd_stock_per_area_init(t_past, i2) * pc13_land(i2,"crop"));
 
 q13_init_approximation_error..
-  v13_init_approximation_error =e= sum((t_past, h2), sqr(v13_tau_init(t_past, h2) - f13_tau_historical(t_past, h2))$(m_year(t_past) >= 1990));
+  v13_init_approximation_error =e= sum((t_past, h2), sqr(v13_tau_init(t_past, h2) - f13_tau_historical(t_past, h2))$(m_year(t_past) > 1970 AND f13_tau_historical(t_past, h2) > 0));
