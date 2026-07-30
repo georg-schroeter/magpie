@@ -22,38 +22,44 @@ library(magclass)
 source("scripts/start_functions.R")
 
 
+for (s60_biodem_scaler in c(100, 200, 300)) {
 
-for (mode in c("default", "constant", "phaseout")) {
-  source("config/default.cfg")
+  for (mode in c("phaseout")) {
+    source("config/default.cfg")
 
-  cfg$gms$s14_yld_past_switch <- 0.0
-  cfg$gms$c60_2ndgen_biodem <- "emulator"
-  cfg$gms$c60_biodem_level <- 0
-  cfg$gms$s60_biodem_scaler <- 300
+    cfg$gms$s13_max_gdp_shr <- 0.002
 
-  if (mode != "default") {
-    cfg$gms$tc <- "endo_global_may26"
-    cfg$gms$landconversion <- "calib_tc_cost"
-    # cfg$gms$landconversion <- "calib"
-    # cfg$gms$s39_ignore_calib <- 2
-    glob_share <- 0.0
-    cfg$gms$s13_tc_investment_global_share <- glob_share
+    cfg$gms$s14_yld_past_switch <- 0.0
+    cfg$gms$c60_2ndgen_biodem <- "emulator"
+    cfg$gms$c60_biodem_level <- 0
+    cfg$gms$s60_biodem_scaler <- s60_biodem_scaler
 
-    cfg$gms$c13_payout_curve <- mode
-  }
-  
-  for (be in c("slow", "fast")) {
+    if (mode != "default") {
+      cfg$gms$tc <- "endo_global_may26"
+      cfg$gms$landconversion <- "calib_tc_cost"
+      # cfg$gms$landconversion <- "calib"
+      # cfg$gms$s39_ignore_calib <- 2
+      glob_share <- 0.0
+      cfg$gms$s13_tc_investment_global_share <- glob_share
+
+      cfg$gms$c13_payout_curve <- mode
+    }
     
-    file.copy(paste0("./glo.2ndgen_bioenergy_demand_",be,".csv"), "./modules/60_bioenergy/input/glo.2ndgen_bioenergy_demand.csv", overwrite = TRUE)
+    for (s30_kbe_rotation_max_shr in c(0.1, 0.2)) {
 
-    
-    cfg$title <- paste0("tauspill0_be_", be, "_", cfg$gms$s60_biodem_scaler, "EJ", "_tc_", mode)
+      cfg$gms$s30_kbe_rotation_max_shr <- s30_kbe_rotation_max_shr
+      for (be in c("slow", "medium")) {
+        
+        file.copy(paste0("./glo.2ndgen_bioenergy_demand_",be,".csv"), "./modules/60_bioenergy/input/glo.2ndgen_bioenergy_demand.csv", overwrite = TRUE)
 
-    start_run(cfg,codeCheck=FALSE)
+        
+        cfg$title <- paste0("be_", be, "_", cfg$gms$s60_biodem_scaler, "EJ", "_tc_", mode, "_beshare_", 100 * cfg$gms$s30_kbe_rotation_max_shr, "_cap")
+
+        start_run(cfg,codeCheck=FALSE)
+      }
+
+    }
   }
-
 
 }
-
-
 
