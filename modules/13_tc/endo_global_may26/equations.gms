@@ -70,3 +70,23 @@ q13_tau(j2,tautype)..
 
 q13_tau_consv(h2,tautype)$(c13_croparea_consv_tau_increase = 1 OR sum(ct, m_year(ct)) < s13_croparea_consv_start)..
  v13_tau_consv(h2,tautype) =e= p13_croparea_consv_tau_factor(h2) * v13_tau_core(h2,tautype);
+
+
+*' The subsequent equations belong to the standalone stock initialization model, which is
+*' executed before MAgPIE. They are excluded from the run of MAgPIE itself.
+
+q13_tech_cost_init(t_past, i2)..
+    (sum(supreg(h2,i2),v13_tau_init(t_past, h2)))**(i13_tc_exponent("y1995")/0.85) =e= 
+    (1-s13_tc_investment_global_share) * (v13_rd_stock_per_area_init(t_past, i2) * i13_tc_exponent("y1995") / i13_tc_factor("y1995"))**(1/0.85) +
+    s13_tc_investment_global_share * (v13_rd_stock_per_area_global_init(t_past) * i13_tc_exponent("y1995") / i13_tc_factor("y1995"))**(1/0.85);
+
+q13_rd_stock_crop_init(t_all, i2)..
+    v13_rd_stock_per_area_init(t_all, i2) =e= sum(t_past, v13_rd_investment_init(t_past, i2)
+                                   * sum(delay,f13_stock_payout(delay,"%c13_payout_curve%") $ (ord(delay)-1 = m_year(t_all)-m_year(t_past))));
+
+
+q13_rd_stock_global_init(t_past)..
+  v13_rd_stock_per_area_global_init(t_past) * sum(i2, pc13_land(i2,"crop")) =e= sum(i2, v13_rd_stock_per_area_init(t_past, i2) * pc13_land(i2,"crop"));
+
+q13_init_approximation_error..
+  v13_init_approximation_error =e= sum((t_past, h2), sqr(v13_tau_init(t_past, h2) - f13_tau_historical(t_past, h2))$(m_year(t_past) > 1970 AND f13_tau_historical(t_past, h2) > 0));

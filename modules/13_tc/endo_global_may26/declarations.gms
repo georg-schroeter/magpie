@@ -46,23 +46,69 @@ parameters
  p13_country_wght_supreg(h)           Policy country weight per super region (1)
 ;
 
+*** #### R&D Stock initialization model
+equations
+ q13_tech_cost_init(t_all, i)            Total annuitized costs for TC (mio. USD17MER)
+ q13_rd_stock_crop_init(t_all, i)                 R&D stock to drive TC for crops in curent time step (mio. USD17MER per yr)
+ q13_rd_stock_global_init(t_all)                  Calculation of current average R&D stock (mio. USD17MER)
+ q13_init_approximation_error                     Total approximation error of historical tau over all timesteps (1)
+;
+
+positive variables
+ v13_rd_investment_init(t_past,i)                 Init R&D investments per area (USD17MER per ha)
+ v13_rd_stock_per_area_init(t_all, i)             Init R&D stock per area (USD17MER per ha)
+ v13_rd_stock_per_area_global_init(t_past)        Init global R&D stock per area (USD17MER per ha)
+ v13_tau_init(t_past,h)                           Init tau (1)
+; 
+
+variables
+ v13_init_approximation_error                     Approximation error of tau initialization (1)
+;
+
+*' @code
+*' The R&D stock initialization model consists of the following equations, which are not
+*' part of MAgPIE.
+model m13_rd_stock_init /
+
+ q13_tech_cost_init,
+ q13_rd_stock_crop_init,
+ q13_rd_stock_global_init,
+ q13_init_approximation_error
+  /;
+
+*' @stop
+
+m13_rd_stock_init.optfile   = 0 ;
+m13_rd_stock_init.scaleopt  = 1 ;
+m13_rd_stock_init.solprint  = 0 ;
+m13_rd_stock_init.holdfixed = 1 ;
+
 *#################### R SECTION START (OUTPUT DECLARATIONS) ####################
 parameters
- ov13_tau_core(t,h,tautype,type)               Agricultural land use intensity tau for conventional cropland (1)
- ov_tech_cost(t,i,type)                        Total Annuitized costs of TC (mio. USD17MER per yr)
- ov13_cost_tc(t,i,tautype,type)                Technical change costs per region (mio. USD17MER)
- ov_rd_stock_per_area(t,i,tautype,type)        R&D stock to drive TC for crops and pasture in curent time step (mio. USD17MER per ha)
- ov13_rd_investment(t,i,tautype,type)          R&D investment to drive TC for crops and pasture in curent time step (mio. USD17MER per yr)
- ov13_tech_cost(t,i,tautype,type)              Annuitized costs of TC for crops and pasture (mio. USD17MER per yr)
- ov_tau(t,j,tautype,type)                      Overall agricultural land use intensity tau at cluster level (1)
- ov13_tau_consv(t,h,tautype,type)              Tau for cropland within conservation priority areas (1)
- ov13_rd_stock_per_area_global(t,tautype,type) Avg global R&D stock per area
- oq13_tech_cost(t,i,tautype,type)              Total annuitized costs for TC (mio. USD17MER)
- oq13_rd_stock_crop(t,i,type)                  R&D stock to drive TC for crops in curent time step (mio. USD17MER per yr)
- oq13_tech_cost_sum(t,i,type)                  Total Total annuitized costs for TC (mio. USD17MER per yr)
- oq13_rd_investment_crop(t,i,type)             R&D investment to drive TC for crops in curent time step (mio. USD17MER per yr)
- oq13_tau(t,j,tautype,type)                    Overall agricultural land use intensity tau (1)
- oq13_tau_consv(t,h,tautype,type)              Tau for cropland within conservation priority areas (1)
- oq13_rd_stock_global(t,type)                  Calculation of current average R&D stock (mio. USD17MER)
+ ov13_tau_core(t,h,tautype,type)                   Agricultural land use intensity tau for conventional cropland (1)
+ ov_tech_cost(t,i,type)                            Total Annuitized costs of TC (mio. USD17MER per yr)
+ ov13_cost_tc(t,i,tautype,type)                    Technical change costs per region (mio. USD17MER)
+ ov_rd_stock_per_area(t,i,tautype,type)            R&D stock to drive TC for crops and pasture in curent time step (mio. USD17MER per ha)
+ ov13_rd_investment(t,i,tautype,type)              R&D investment to drive TC for crops and pasture in curent time step (mio. USD17MER per yr)
+ ov13_tech_cost(t,i,tautype,type)                  Annuitized costs of TC for crops and pasture (mio. USD17MER per yr)
+ ov_tau(t,j,tautype,type)                          Overall agricultural land use intensity tau at cluster level (1)
+ ov13_tau_consv(t,h,tautype,type)                  Tau for cropland within conservation priority areas (1)
+ ov13_rd_stock_per_area_global(t,tautype,type)     Avg global R&D stock per area
+ ov13_rd_investment_init(t,t_past,i,type)          Init R&D investments per area (USD17MER per ha)
+ ov13_rd_stock_per_area_init(t,t_all,i,type)       Init R&D stock per area (USD17MER per ha)
+ ov13_rd_stock_per_area_global_init(t,t_past,type) Init global R&D stock per area (USD17MER per ha)
+ ov13_tau_init(t,t_past,h,type)                    Init tau (1)
+ ov13_init_approximation_error(t,type)             Approximation error of tau initialization (1)
+ oq13_tech_cost(t,i,tautype,type)                  Total annuitized costs for TC (mio. USD17MER)
+ oq13_rd_stock_crop(t,i,type)                      R&D stock to drive TC for crops in curent time step (mio. USD17MER per yr)
+ oq13_tech_cost_sum(t,i,type)                      Total Total annuitized costs for TC (mio. USD17MER per yr)
+ oq13_rd_investment_crop(t,i,type)                 R&D investment to drive TC for crops in curent time step (mio. USD17MER per yr)
+ oq13_tau(t,j,tautype,type)                        Overall agricultural land use intensity tau (1)
+ oq13_tau_consv(t,h,tautype,type)                  Tau for cropland within conservation priority areas (1)
+ oq13_rd_stock_global(t,type)                      Calculation of current average R&D stock (mio. USD17MER)
+ oq13_tech_cost_init(t,t_all,i,type)               Total annuitized costs for TC (mio. USD17MER)
+ oq13_rd_stock_crop_init(t,t_all,i,type)           R&D stock to drive TC for crops in curent time step (mio. USD17MER per yr)
+ oq13_rd_stock_global_init(t,t_all,type)           Calculation of current average R&D stock (mio. USD17MER)
+ oq13_init_approximation_error(t,type)             Total approximation error of historical tau over all timesteps (1)
 ;
 *##################### R SECTION END (OUTPUT DECLARATIONS) #####################
