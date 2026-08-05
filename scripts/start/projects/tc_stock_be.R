@@ -48,12 +48,13 @@ for (s60_biodem_scaler in c(100, 200, 300)) {
     for (s30_kbe_rotation_max_shr in c(0.1, 0.2)) {
 
       cfg$gms$s30_kbe_rotation_max_shr <- s30_kbe_rotation_max_shr
-      for (be in c("slow", "medium")) {
+      for (be in c("medslow")) {
         
         file.copy(paste0("./glo.2ndgen_bioenergy_demand_",be,".csv"), "./modules/60_bioenergy/input/glo.2ndgen_bioenergy_demand.csv", overwrite = TRUE)
 
         
-        cfg$title <- paste0("be_", be, "_", cfg$gms$s60_biodem_scaler, "EJ", "_tc_", mode, "_beshare_", 100 * cfg$gms$s30_kbe_rotation_max_shr, "_cap")
+        cfg$title <- paste0("be_", be, "_", cfg$gms$s60_biodem_scaler, "EJ", "_tc_", mode, "_beshare_", 100 * cfg$gms$s30_kbe_rotation_max_shr, "_capfx")
+        # cfg$title <- paste0("be_", be, "_", cfg$gms$s60_biodem_scaler, "EJ", "_tc_", mode, "_beshare_", 100 * cfg$gms$s30_kbe_rotation_max_shr)
 
         start_run(cfg,codeCheck=FALSE)
       }

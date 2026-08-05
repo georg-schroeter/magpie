@@ -36,7 +36,7 @@ for (glob_share in c(0.2)) {
   
   cfg$gms$s13_tc_investment_global_share <- glob_share
   
-  cfg$title <- paste0("tc_rewrite_global_001", cfg$gms$s13_tc_investment_global_share)
+  cfg$title <- paste0("tc_rewrite_test_", cfg$gms$s13_tc_investment_global_share)
 
   start_run(cfg,codeCheck=FALSE)
 }
