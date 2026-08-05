@@ -16,11 +16,15 @@
 *' regional crop areas `pc13_land` (taken from previous time step) and shifted
 *' 15 years into the future using the region specific interest
 *' rate `pm_interest`:
+*' 
+*' Scaling the stock by `s13_tc_exponent` accounts for the different
+*' cost definitions in `endo_jan22` and `endo_global_may26` and allows using the same
+*' factor and exponent values.
 
 q13_rd_stock_crop(i2)..
-  sum((ct,supreg(h2,i2)), v13_tau_core(h2,"crop")**(i13_tc_exponent(ct)/0.85)) =e= 
-    (1-s13_tc_investment_global_share) * (vm_rd_stock_per_area(i2, "crop") * sum(ct, i13_tc_exponent(ct) / i13_tc_factor(ct)))**(1/0.85) +
-    s13_tc_investment_global_share * (v13_rd_stock_per_area_global("crop") * sum(ct, i13_tc_exponent(ct) / i13_tc_factor(ct)))**(1/0.85);
+  sum(supreg(h2,i2), v13_tau_core(h2,"crop")**(s13_tc_exponent * s13_glob_mix_sharpness)) =e= 
+    (1-s13_tc_investment_global_share) * (vm_rd_stock_per_area(i2, "crop") * s13_tc_exponent / s13_tc_factor)**(s13_glob_mix_sharpness) +
+    s13_tc_investment_global_share * (v13_rd_stock_per_area_global("crop") * s13_tc_exponent / s13_tc_factor)**(s13_glob_mix_sharpness);
 
 
 q13_rd_investment_crop(i2)..
@@ -76,9 +80,9 @@ q13_tau_consv(h2,tautype)$(c13_croparea_consv_tau_increase = 1 OR sum(ct, m_year
 *' executed before MAgPIE. They are excluded from the run of MAgPIE itself.
 
 q13_tech_cost_init(t_past, i2)..
-    (sum(supreg(h2,i2),v13_tau_init(t_past, h2)))**(i13_tc_exponent("y1995")/0.85) =e= 
-    (1-s13_tc_investment_global_share) * (v13_rd_stock_per_area_init(t_past, i2) * i13_tc_exponent("y1995") / i13_tc_factor("y1995"))**(1/0.85) +
-    s13_tc_investment_global_share * (v13_rd_stock_per_area_global_init(t_past) * i13_tc_exponent("y1995") / i13_tc_factor("y1995"))**(1/0.85);
+    (sum(supreg(h2,i2),v13_tau_init(t_past, h2)))**(s13_tc_exponent * s13_glob_mix_sharpness) =e= 
+    (1-s13_tc_investment_global_share) * (v13_rd_stock_per_area_init(t_past, i2) * s13_tc_exponent / s13_tc_factor)**(s13_glob_mix_sharpness) +
+    s13_tc_investment_global_share * (v13_rd_stock_per_area_global_init(t_past) * s13_tc_exponent / s13_tc_factor)**(s13_glob_mix_sharpness);
 
 q13_rd_stock_crop_init(t_all, i2)..
     v13_rd_stock_per_area_init(t_all, i2) =e= sum(t_past, v13_rd_investment_init(t_past, i2)
@@ -88,5 +92,8 @@ q13_rd_stock_crop_init(t_all, i2)..
 q13_rd_stock_global_init(t_past)..
   v13_rd_stock_per_area_global_init(t_past) * sum(i2, pc13_land(i2,"crop")) =e= sum(i2, v13_rd_stock_per_area_init(t_past, i2) * pc13_land(i2,"crop"));
 
+*' To initialize the TC R&D stock, historical investments to reproduce the historical tau values are estimated.
+*' In order to get accurate estimates in the relevant range (1995 and after), an expected initial overshoot of investments
+*' from 0 investments before 1965 is allowed by excluding 1965 and 1970 from the loss calculation.
 q13_init_approximation_error..
   v13_init_approximation_error =e= sum((t_past, h2), sqr(v13_tau_init(t_past, h2) - f13_tau_historical(t_past, h2))$(m_year(t_past) > 1970 AND f13_tau_historical(t_past, h2) > 0));

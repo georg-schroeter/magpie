@@ -31,24 +31,23 @@ m_sigmoid_time_interpol(i13_croparea_consv_fader,s13_croparea_consv_start,s13_cr
 
 m_sigmoid_time_interpol(i13_tau_croparea_consv_fader,s13_croparea_consv_start,s13_croparea_consv_target,1,s13_croparea_consv_tau_factor);
 
-* p13_rd_stock_per_area(t_all, i, "crop") = 0;
 pc13_land(i,"pastr") = sum(cell(i,j),pcm_land(j,"past"));
 pc13_land(i,"crop") = sum(cell(i,j),pcm_land(j,"crop"));
 
-* v13_tau_init.fx(t_all, i) = 0;
-* v13_tau_init.up(t_past, i) = Inf;
-
+* Positive lower bound is needed since tau**exponent shouldn't encounter tau = 0.
 v13_tau_init.lo(t_past, h) = 0.1;
 v13_rd_investment_init.fx(t_past, i)$(sum(supreg(h,i), f13_tau_historical(t_past, h)) = 0) = 0;
 
 solve m13_rd_stock_init USING nlp MINIMIZING v13_init_approximation_error;
 
-
-
+* Display reconstructed tau and initial R&D stock in full.lst
 display "R&D Stock Initialization run finished with modelstat ";
 display m13_rd_stock_init.modelstat;
-display "Reconstructed tau in 1995 ";
+display "Reconstructed tau in historical period ";
 display v13_tau_init.l;
+display "Initial R&D Stock ";
+display v13_rd_stock_per_area_init.l;
+display "Reconstructed investments in historical period ";
 display v13_rd_investment_init.l;
 
 if(m13_rd_stock_init.modelstat > 2 AND m13_rd_stock_init.modelstat ne 7,
@@ -57,5 +56,5 @@ if(m13_rd_stock_init.modelstat > 2 AND m13_rd_stock_init.modelstat ne 7,
   abort "R&D Stock initialization Model became infeasible already during initialisation run. Stop run.";
 );
 
+* Use the result from the `m13_rd_stock_init` model to initialize the R&D stock.
 p13_rd_stock_per_area(t_all, i, "crop") = v13_rd_stock_per_area_init.l(t_all, i);
-

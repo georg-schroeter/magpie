@@ -25,7 +25,7 @@ scalars
  s30_betr_target_noselect        Share of bioenergy land on total cropland in target year (1) / 0 /
  s30_betr_penalty                Penalty for violation of betr target (USD17MER per ha) / 2460 /
  s30_annual_max_growth           Max annual cropland growth as share of previous cropland (1) / Inf /
- s30_kbe_rotation_max_shr        Maximum combined area share of betr+begr per cluster (1) / 0.2 /
+ s30_kbe_rotation_max_shr        Maximum combined area share of betr+begr per cluster (1) / 1 /
 ;
 
 * Set-switch for countries affected by certain policies

@@ -10,6 +10,7 @@ pc13_land(i,"pastr") = sum(cell(i,j),pcm_land(j,"past"));
 pc13_land(i,"crop") = sum(cell(i,j),pcm_land(j,"crop"));
 vm_rd_stock_per_area.lo(i, "crop") = 20;
 
+* 
 pc13_interest_annuity(i) = sum(t_all,(1+pm_interest(t, i))**(-m_year(t_all)+m_year(t)) *
                 (5 * sum(delay,f13_stock_payout(delay,"%c13_payout_curve%") $ (ord(delay)-1 = m_year(t_all)-m_year(t)))));
 
@@ -19,6 +20,7 @@ if (sum(sameas(t_past,t),1) = 1 AND s13_ignore_tau_historical = 0,
   v13_tau_core.lo(h,"crop") =    f13_tau_historical(t,h);
 else
 *  v13_tau_core.lo(h, tautype) =    pc13_tau(h, tautype);
+* Positive lower bound is needed since tau**exponent shouldn't encounter tau = 0.
   v13_tau_core.lo(h, tautype) =    0.1;
 );
 
@@ -27,9 +29,10 @@ else
 if(m_year(t) > sm_fix_SSP2 AND s13_max_gdp_shr <> Inf,
 
 * We constrain tech cost to a defined share of regional GDP to avoid unrealistically
-* high endogenous tech investments
+* high endogenous tech investments. Since `vm_tech_cost` is the total accumulated investment
+* from the previous timestep, the annual constraint needs to be scaled with m_timestep_length.
   vm_tech_cost.up(i) =
-    sum((i_to_iso(i,iso),ct), im_gdp_pc_ppp_iso(ct,iso) * im_pop_iso(ct,iso)) * s13_max_gdp_shr;
+    sum((i_to_iso(i,iso),ct), im_gdp_pc_ppp_iso(ct,iso) * im_pop_iso(ct,iso)) * s13_max_gdp_shr * m_timestep_length;
 
 * We set the initial solving basis for the tech cost to its upper bound to support the solver in finding
 * a proper solution. Without such initial values, the model leave tech cost at 0 and as such ignore tau
