@@ -55,6 +55,8 @@ parameters
  oq30_bv_ann(t,j,potnatveg,type)             Biodiversity value of annual cropland (mio. ha)
  oq30_bv_per(t,j,potnatveg,type)             Biodiversity value of perennial cropland (mio. ha)
  oq30_crop_reg(t,i,type)                     Total regional crop production area (mio. ha)
+ oq30_rotation_sticky_max(t,j,kcr,w,type)    Sticky rotation constraint max (mio. ha)
+ oq30_rotation_sticky_min(t,j,kcr,w,type)    Sticky rotation constraint min (mio. ha)
 ;
 *##################### R SECTION END (OUTPUT DECLARATIONS) #####################
 

@@ -6,7 +6,7 @@
 # |  Contact: magpie@pik-potsdam.de
 
 # ----------------------------------------------------------
-# description: Test new TC formula with global contribution
+# description: Test sticky cropmix rotation constraints
 # ----------------------------------------------------------
 
 
@@ -28,7 +28,7 @@ source("config/default.cfg")
 cfg$gms$croparea <- "sticky"
 
 
-for (rate in c(0.03)) {
+for (rate in c(0.01, 0.02, 0.03, 0.05)) {
   
   s30_annual_cropshare_change_limit <- rate
   cfg$title <- paste0("cropmix_sticky_test001_rate_", cfg$gms$s30_annual_cropshare_change_limit)
