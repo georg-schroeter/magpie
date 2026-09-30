@@ -22,6 +22,7 @@ positive variables
  vm_carbon_stock_croparea(j,ag_pools)   Carbon stock in croparea (tC)
  v30_betr_missing(j)                    Missing bioenergy tree land towards target (mio. ha)
  v30_crop_area(i)                       Total regional crop production area (mio. ha)
+ v30_crop_area_cluster(j)               Total cluster crop production area (mio. ha)
 ;
 
 equations

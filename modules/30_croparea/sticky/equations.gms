@@ -44,21 +44,24 @@
      sum(kcr, vm_area(j2,kcr,w)) * f30_rotation_min_shr(crpmin30);
 
 
+ q30_crop_area_cluster(j2) ..
+   v30_crop_area_cluster(j2) =e= sum((kcr,w), vm_area(j2,kcr,w));
+
  q30_rotation_sticky_max(j2,kcr,w)$(pc30_cropshare_factor(j2,kcr,w) > 0.01) ..
    vm_area(j2,kcr,w) * (1 + pc30_cropshare_factor(j2,kcr,w)) =l= 
      (1 + s30_annual_cropshare_change_limit)**m_timestep_length *
-     sum((kcr,w), vm_area(j2,kcr,w)) * pc30_cropshare_factor(j2,kcr,w);
+     v30_crop_area_cluster(j2) * pc30_cropshare_factor(j2,kcr,w);
 
  q30_rotation_sticky_max(j2,kcr,w)$(pc30_cropshare_factor(j2,kcr,w) <= 0.01) ..
    vm_area(j2,kcr,w) * (1 + 0.01) =l= 
      (1 + s30_annual_cropshare_change_limit)**m_timestep_length *
-     sum((kcr,w), vm_area(j2,kcr,w)) * 0.01;
+     v30_crop_area_cluster(j2) * 0.01;
 
 
  q30_rotation_sticky_min(j2,kcr,w) ..
    vm_area(j2,kcr,w) * (1 + pc30_cropshare_factor(j2,kcr,w)) =g= 
      (1 + s30_annual_cropshare_change_limit)**(-m_timestep_length) *
-     sum((kcr,w), vm_area(j2,kcr,w)) * pc30_cropshare_factor(j2,kcr,w);
+     v30_crop_area_cluster(j2) * pc30_cropshare_factor(j2,kcr,w);
 
 
 
