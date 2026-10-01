@@ -54,4 +54,4 @@ else
   v30_crop_area.up(i) = v30_crop_area.l(i) * (1 + s30_annual_max_growth) ** m_yeardiff(t);
 );
 
-pc30_cropshare_factor(j,kcr,w) = pc30_cropshare(j,kcr,w) / (1 - pc30_cropshare(j,kcr,w));
+pc30_cropshare_factor(j,kcr,w) = pc30_cropshare(j,kcr,w) / (1 + 1e-7 - pc30_cropshare(j,kcr,w));

@@ -28,9 +28,9 @@ source("config/default.cfg")
 cfg$gms$croparea <- "sticky"
 
 
-for (rate in c(0.01, 0.02, 0.03, 0.05)) {
+for (rate in c(0.1, 0.3, 0.5, 1.0)) {
   
-  s30_annual_cropshare_change_limit <- rate
+  cfg$gms$s30_annual_cropshare_change_limit <- rate
   cfg$title <- paste0("cropmix_sticky_test001_rate_", cfg$gms$s30_annual_cropshare_change_limit)
 
   start_run(cfg,codeCheck=FALSE)

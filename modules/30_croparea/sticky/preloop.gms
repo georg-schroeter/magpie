@@ -33,5 +33,6 @@ vm_bv.l(j,"crop_per",potnatveg) =
   sum((crop_per30,w), fm_croparea("y1995",j,w,crop_per30)) * fm_bii_coeff("crop_per",potnatveg) 
   * fm_luh2_side_layers(j,potnatveg);
 
-pc30_cropshare(j,kcr,w) = 0.05;
-pc30_cropshare(j,kcr,w)$(sum((kcr,w), fm_croparea("y1995",j,w,kcr)) > 0) = (fm_croparea("y1995",j,w,kcr) / sum((kcr,w), fm_croparea("y1995",j,w,kcr)));
+p30_crop_area_cluster_init(j) = sum((kcr,w), fm_croparea("y1995",j,w,kcr));
+pc30_cropshare(j,kcr,w) = 0.03;
+pc30_cropshare(j,kcr,w)$(p30_crop_area_cluster_init(j) > 0) = fm_croparea("y1995",j,w,kcr) / p30_crop_area_cluster_init(j);

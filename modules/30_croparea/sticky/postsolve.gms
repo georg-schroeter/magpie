@@ -5,8 +5,8 @@
 *** |  MAgPIE License Exception, version 1.0 (see LICENSE file).
 *** |  Contact: magpie@pik-potsdam.de
 
-pc30_cropshare(j2,kcr,w) = 0.05;
-pc30_cropshare(j2,kcr,w)$(sum((kcr,w),vm_area(j2,kcr,w)) > 0) = (vm_area(j2,kcr,w) / sum((kcr,w),vm_area(j2,kcr,w)));
+pc30_cropshare(j2,kcr,w) = 0.03;
+pc30_cropshare(j2,kcr,w)$(v30_crop_area_cluster.l(j2) > 0) = (vm_area.l(j2,kcr,w) / v30_crop_area_cluster.l(j2));
 
 
 *#################### R SECTION START (OUTPUT DEFINITIONS) #####################
@@ -15,6 +15,7 @@ pc30_cropshare(j2,kcr,w)$(sum((kcr,w),vm_area(j2,kcr,w)) > 0) = (vm_area(j2,kcr,
  ov_carbon_stock_croparea(t,j,ag_pools,"marginal") = vm_carbon_stock_croparea.m(j,ag_pools);
  ov30_betr_missing(t,j,"marginal")                 = v30_betr_missing.m(j);
  ov30_crop_area(t,i,"marginal")                    = v30_crop_area.m(i);
+ ov30_crop_area_cluster(t,j,"marginal")            = v30_crop_area_cluster.m(j);
  oq30_prod(t,j,kcr,"marginal")                     = q30_prod.m(j,kcr);
  oq30_betr_missing(t,j,"marginal")                 = q30_betr_missing.m(j);
  oq30_cost(t,i,"marginal")                         = q30_cost.m(i);
@@ -24,13 +25,16 @@ pc30_cropshare(j2,kcr,w)$(sum((kcr,w),vm_area(j2,kcr,w)) > 0) = (vm_area(j2,kcr,
  oq30_bv_ann(t,j,potnatveg,"marginal")             = q30_bv_ann.m(j,potnatveg);
  oq30_bv_per(t,j,potnatveg,"marginal")             = q30_bv_per.m(j,potnatveg);
  oq30_crop_reg(t,i,"marginal")                     = q30_crop_reg.m(i);
+ oq30_crop_area_cluster(t,j,"marginal")            = q30_crop_area_cluster.m(j);
  oq30_rotation_sticky_max(t,j,kcr,w,"marginal")    = q30_rotation_sticky_max.m(j,kcr,w);
+ oq30_rotation_sticky_max2(t,j,kcr,w,"marginal")   = q30_rotation_sticky_max2.m(j,kcr,w);
  oq30_rotation_sticky_min(t,j,kcr,w,"marginal")    = q30_rotation_sticky_min.m(j,kcr,w);
  ov_area(t,j,kcr,w,"level")                        = vm_area.l(j,kcr,w);
  ov_rotation_penalty(t,i,"level")                  = vm_rotation_penalty.l(i);
  ov_carbon_stock_croparea(t,j,ag_pools,"level")    = vm_carbon_stock_croparea.l(j,ag_pools);
  ov30_betr_missing(t,j,"level")                    = v30_betr_missing.l(j);
  ov30_crop_area(t,i,"level")                       = v30_crop_area.l(i);
+ ov30_crop_area_cluster(t,j,"level")               = v30_crop_area_cluster.l(j);
  oq30_prod(t,j,kcr,"level")                        = q30_prod.l(j,kcr);
  oq30_betr_missing(t,j,"level")                    = q30_betr_missing.l(j);
  oq30_cost(t,i,"level")                            = q30_cost.l(i);
@@ -40,13 +44,16 @@ pc30_cropshare(j2,kcr,w)$(sum((kcr,w),vm_area(j2,kcr,w)) > 0) = (vm_area(j2,kcr,
  oq30_bv_ann(t,j,potnatveg,"level")                = q30_bv_ann.l(j,potnatveg);
  oq30_bv_per(t,j,potnatveg,"level")                = q30_bv_per.l(j,potnatveg);
  oq30_crop_reg(t,i,"level")                        = q30_crop_reg.l(i);
+ oq30_crop_area_cluster(t,j,"level")               = q30_crop_area_cluster.l(j);
  oq30_rotation_sticky_max(t,j,kcr,w,"level")       = q30_rotation_sticky_max.l(j,kcr,w);
+ oq30_rotation_sticky_max2(t,j,kcr,w,"level")      = q30_rotation_sticky_max2.l(j,kcr,w);
  oq30_rotation_sticky_min(t,j,kcr,w,"level")       = q30_rotation_sticky_min.l(j,kcr,w);
  ov_area(t,j,kcr,w,"upper")                        = vm_area.up(j,kcr,w);
  ov_rotation_penalty(t,i,"upper")                  = vm_rotation_penalty.up(i);
  ov_carbon_stock_croparea(t,j,ag_pools,"upper")    = vm_carbon_stock_croparea.up(j,ag_pools);
  ov30_betr_missing(t,j,"upper")                    = v30_betr_missing.up(j);
  ov30_crop_area(t,i,"upper")                       = v30_crop_area.up(i);
+ ov30_crop_area_cluster(t,j,"upper")               = v30_crop_area_cluster.up(j);
  oq30_prod(t,j,kcr,"upper")                        = q30_prod.up(j,kcr);
  oq30_betr_missing(t,j,"upper")                    = q30_betr_missing.up(j);
  oq30_cost(t,i,"upper")                            = q30_cost.up(i);
@@ -56,13 +63,16 @@ pc30_cropshare(j2,kcr,w)$(sum((kcr,w),vm_area(j2,kcr,w)) > 0) = (vm_area(j2,kcr,
  oq30_bv_ann(t,j,potnatveg,"upper")                = q30_bv_ann.up(j,potnatveg);
  oq30_bv_per(t,j,potnatveg,"upper")                = q30_bv_per.up(j,potnatveg);
  oq30_crop_reg(t,i,"upper")                        = q30_crop_reg.up(i);
+ oq30_crop_area_cluster(t,j,"upper")               = q30_crop_area_cluster.up(j);
  oq30_rotation_sticky_max(t,j,kcr,w,"upper")       = q30_rotation_sticky_max.up(j,kcr,w);
+ oq30_rotation_sticky_max2(t,j,kcr,w,"upper")      = q30_rotation_sticky_max2.up(j,kcr,w);
  oq30_rotation_sticky_min(t,j,kcr,w,"upper")       = q30_rotation_sticky_min.up(j,kcr,w);
  ov_area(t,j,kcr,w,"lower")                        = vm_area.lo(j,kcr,w);
  ov_rotation_penalty(t,i,"lower")                  = vm_rotation_penalty.lo(i);
  ov_carbon_stock_croparea(t,j,ag_pools,"lower")    = vm_carbon_stock_croparea.lo(j,ag_pools);
  ov30_betr_missing(t,j,"lower")                    = v30_betr_missing.lo(j);
  ov30_crop_area(t,i,"lower")                       = v30_crop_area.lo(i);
+ ov30_crop_area_cluster(t,j,"lower")               = v30_crop_area_cluster.lo(j);
  oq30_prod(t,j,kcr,"lower")                        = q30_prod.lo(j,kcr);
  oq30_betr_missing(t,j,"lower")                    = q30_betr_missing.lo(j);
  oq30_cost(t,i,"lower")                            = q30_cost.lo(i);
@@ -72,6 +82,8 @@ pc30_cropshare(j2,kcr,w)$(sum((kcr,w),vm_area(j2,kcr,w)) > 0) = (vm_area(j2,kcr,
  oq30_bv_ann(t,j,potnatveg,"lower")                = q30_bv_ann.lo(j,potnatveg);
  oq30_bv_per(t,j,potnatveg,"lower")                = q30_bv_per.lo(j,potnatveg);
  oq30_crop_reg(t,i,"lower")                        = q30_crop_reg.lo(i);
+ oq30_crop_area_cluster(t,j,"lower")               = q30_crop_area_cluster.lo(j);
  oq30_rotation_sticky_max(t,j,kcr,w,"lower")       = q30_rotation_sticky_max.lo(j,kcr,w);
+ oq30_rotation_sticky_max2(t,j,kcr,w,"lower")      = q30_rotation_sticky_max2.lo(j,kcr,w);
  oq30_rotation_sticky_min(t,j,kcr,w,"lower")       = q30_rotation_sticky_min.lo(j,kcr,w);
 *##################### R SECTION END (OUTPUT DEFINITIONS) ######################
