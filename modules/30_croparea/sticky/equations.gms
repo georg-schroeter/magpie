@@ -24,7 +24,8 @@
 
   q30_cost(i2) ..
     vm_rotation_penalty(i2) =g=
-      sum(cell(i2,j2), v30_betr_missing(j2) * sum(ct, i30_betr_penalty(ct)));
+      sum(cell(i2,j2), v30_betr_missing(j2) * sum(ct, i30_betr_penalty(ct))) +
+      s30_sticky_penalty * sum((cell(i2,j2),kcr,w), v30_penalty_crop_max(j2,kcr,w) + v30_penalty_crop_min(j2,kcr,w));
 
 *' As additional constraints minimum and maximum rotational constraints limit
 *' the placing of crops. On the one hand, these rotational constraints reflect
@@ -44,25 +45,24 @@
      sum(kcr, vm_area(j2,kcr,w)) * f30_rotation_min_shr(crpmin30);
 
 
- q30_crop_area_cluster(j2) ..
-   v30_crop_area_cluster(j2) =e= sum((kcr,w), vm_area(j2,kcr,w));
+ q30_crop_area_cluster(j2, w)$(sum(ct, m_year(ct)) < 1995) ..
+   v30_crop_area_cluster(j2, w) =e= sum((kcr), vm_area(j2,kcr,w));
 
- q30_rotation_sticky_max(j2,kcr,w)$(pc30_cropshare_factor(j2,kcr,w) > 0.01) ..
-   vm_area(j2,kcr,w) * (1 + pc30_cropshare_factor(j2,kcr,w)) =l= 
+ q30_rotation_sticky_max(j2,kcr,w)$(sum(ct, m_year(ct)) >= 1995 AND pc30_cropshare_factor(j2,kcr,w) > 0.01) ..
+   vm_area(j2,kcr,w) - v30_penalty_crop_max(j2,kcr,w) =l= 
      (1 + s30_annual_cropshare_change_limit)**m_timestep_length *
-     v30_crop_area_cluster(j2) * pc30_cropshare_factor(j2,kcr,w);
+     v30_crop_area_cluster(j2, w) * pc30_cropshare_factor(j2,kcr,w);
 
- q30_rotation_sticky_max2(j2,kcr,w)$(pc30_cropshare_factor(j2,kcr,w) <= 0.01) ..
-   vm_area(j2,kcr,w) * (1 + 0.01) =l= 
+ q30_rotation_sticky_max2(j2,kcr,w)$(sum(ct, m_year(ct)) >= 1995 AND pc30_cropshare_factor(j2,kcr,w) <= 0.01) ..
+   vm_area(j2,kcr,w) - v30_penalty_crop_max(j2,kcr,w) =l= 
      (1 + s30_annual_cropshare_change_limit)**m_timestep_length *
-     v30_crop_area_cluster(j2) * 0.01;
+     v30_crop_area_cluster(j2, w) * 0.01;
 
 
- q30_rotation_sticky_min(j2,kcr,w) ..
-   vm_area(j2,kcr,w) * (1 + pc30_cropshare_factor(j2,kcr,w)) =g= 
+ q30_rotation_sticky_min(j2,kcr,w)$(sum(ct, m_year(ct)) >= 1995) ..
+   vm_area(j2,kcr,w) + v30_penalty_crop_min(j2,kcr,w) =g= 
      (1 + s30_annual_cropshare_change_limit)**(-m_timestep_length) *
-     v30_crop_area_cluster(j2) * pc30_cropshare_factor(j2,kcr,w);
-
+     v30_crop_area_cluster(j2, w) * pc30_cropshare_factor(j2,kcr,w);
 
 
 *' The carbon stocks of the above ground carbon pools are calculated based on croparea and related carbon density.

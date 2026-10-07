@@ -14,7 +14,8 @@ parameters
  p30_country_switch(iso)                 Switch indicating whether country is affected by selected policy (1)
  pc30_cropshare(j,kcr,w)                Share of specific crop and irrigation in the previous time step (1)
  pc30_cropshare_factor(j,kcr,w)         Auxiliary variable for cropshare sticky (1)
- p30_crop_area_cluster_init(j)              Auxiliary variable for cropshare sticky (mio. ha)
+ p30_crop_area_cluster_init(j,w)              Auxiliary variable for cropshare sticky (mio. ha)
+ pc30_crop_area_cluster(j,w)            Croparea per cluster in previous time step (mio. ha)
 ;
 
 positive variables
@@ -23,7 +24,9 @@ positive variables
  vm_carbon_stock_croparea(j,ag_pools)   Carbon stock in croparea (tC)
  v30_betr_missing(j)                    Missing bioenergy tree land towards target (mio. ha)
  v30_crop_area(i)                       Total regional crop production area (mio. ha)
- v30_crop_area_cluster(j)               Total cluster crop production area (mio. ha)
+ v30_crop_area_cluster(j,w)               Total cluster crop production area (mio. ha)
+ v30_penalty_crop_max(j,kcr,w)          Penalty for violating the cropshare max (mio. USD17MER)
+ v30_penalty_crop_min(j,kcr,w)          Penalty for violating the cropshare min (mio. USD17MER)
 ;
 
 equations
@@ -36,7 +39,7 @@ equations
  q30_bv_ann(j,potnatveg)            Biodiversity value of annual cropland (mio. ha)
  q30_bv_per(j,potnatveg)            Biodiversity value of perennial cropland (mio. ha)
  q30_crop_reg(i)                    Total regional crop production area (mio. ha)
- q30_crop_area_cluster(j)           Total cluster crop production area (mio. ha)
+ q30_crop_area_cluster(j,w)           Total cluster crop production area (mio. ha)
  q30_rotation_sticky_max(j,kcr,w)   Sticky rotation constraint max (mio. ha)
  q30_rotation_sticky_max2(j,kcr,w)   Sticky rotation constraint max (mio. ha)
  q30_rotation_sticky_min(j,kcr,w)   Sticky rotation constraint min (mio. ha)
@@ -49,7 +52,9 @@ parameters
  ov_carbon_stock_croparea(t,j,ag_pools,type) Carbon stock in croparea (tC)
  ov30_betr_missing(t,j,type)                 Missing bioenergy tree land towards target (mio. ha)
  ov30_crop_area(t,i,type)                    Total regional crop production area (mio. ha)
- ov30_crop_area_cluster(t,j,type)            Total cluster crop production area (mio. ha)
+ ov30_crop_area_cluster(t,j,w,type)          Total cluster crop production area (mio. ha)
+ ov30_penalty_crop_max(t,j,kcr,w,type)       Penalty for violating the cropshare max (mio. USD17MER)
+ ov30_penalty_crop_min(t,j,kcr,w,type)       Penalty for violating the cropshare min (mio. USD17MER)
  oq30_prod(t,j,kcr,type)                     Production of cropped products (mio. tDM)
  oq30_betr_missing(t,j,type)                 Missing bioenergy tree land towards target (mio. ha)
  oq30_cost(t,i,type)                         Cost (mio. USD17MER)
@@ -59,7 +64,7 @@ parameters
  oq30_bv_ann(t,j,potnatveg,type)             Biodiversity value of annual cropland (mio. ha)
  oq30_bv_per(t,j,potnatveg,type)             Biodiversity value of perennial cropland (mio. ha)
  oq30_crop_reg(t,i,type)                     Total regional crop production area (mio. ha)
- oq30_crop_area_cluster(t,j,type)            Total cluster crop production area (mio. ha)
+ oq30_crop_area_cluster(t,j,w,type)          Total cluster crop production area (mio. ha)
  oq30_rotation_sticky_max(t,j,kcr,w,type)    Sticky rotation constraint max (mio. ha)
  oq30_rotation_sticky_max2(t,j,kcr,w,type)   Sticky rotation constraint max (mio. ha)
  oq30_rotation_sticky_min(t,j,kcr,w,type)    Sticky rotation constraint min (mio. ha)
