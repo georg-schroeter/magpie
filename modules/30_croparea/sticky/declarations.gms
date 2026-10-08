@@ -25,8 +25,9 @@ positive variables
  v30_betr_missing(j)                    Missing bioenergy tree land towards target (mio. ha)
  v30_crop_area(i)                       Total regional crop production area (mio. ha)
  v30_crop_area_cluster(j,w)               Total cluster crop production area (mio. ha)
- v30_penalty_crop_max(j,kcr,w)          Penalty for violating the cropshare max (mio. USD17MER)
- v30_penalty_crop_min(j,kcr,w)          Penalty for violating the cropshare min (mio. USD17MER)
+ v30_penalty_crop_max(j,kcr,w)          Penalty for violating the cropshare max (mio. ha)
+ v30_penalty_crop_min(j,kcr,w)          Penalty for violating the cropshare min (mio. ha)
+ v30_penalty_cluster(j)                 Aggregated penalty on cluster level (mio. ha)
 ;
 
 equations
@@ -43,6 +44,7 @@ equations
  q30_rotation_sticky_max(j,kcr,w)   Sticky rotation constraint max (mio. ha)
  q30_rotation_sticky_max2(j,kcr,w)   Sticky rotation constraint max (mio. ha)
  q30_rotation_sticky_min(j,kcr,w)   Sticky rotation constraint min (mio. ha)
+ q30_rotation_sticky_cluster(j)     Accumulated rotation constraint (mio. ha)
 ;
 
 *#################### R SECTION START (OUTPUT DECLARATIONS) ####################
@@ -53,8 +55,9 @@ parameters
  ov30_betr_missing(t,j,type)                 Missing bioenergy tree land towards target (mio. ha)
  ov30_crop_area(t,i,type)                    Total regional crop production area (mio. ha)
  ov30_crop_area_cluster(t,j,w,type)          Total cluster crop production area (mio. ha)
- ov30_penalty_crop_max(t,j,kcr,w,type)       Penalty for violating the cropshare max (mio. USD17MER)
- ov30_penalty_crop_min(t,j,kcr,w,type)       Penalty for violating the cropshare min (mio. USD17MER)
+ ov30_penalty_crop_max(t,j,kcr,w,type)       Penalty for violating the cropshare max (mio. ha)
+ ov30_penalty_crop_min(t,j,kcr,w,type)       Penalty for violating the cropshare min (mio. ha)
+ ov30_penalty_cluster(t,j,type)              Aggregated penalty on cluster level (mio. ha)
  oq30_prod(t,j,kcr,type)                     Production of cropped products (mio. tDM)
  oq30_betr_missing(t,j,type)                 Missing bioenergy tree land towards target (mio. ha)
  oq30_cost(t,i,type)                         Cost (mio. USD17MER)
@@ -68,6 +71,7 @@ parameters
  oq30_rotation_sticky_max(t,j,kcr,w,type)    Sticky rotation constraint max (mio. ha)
  oq30_rotation_sticky_max2(t,j,kcr,w,type)   Sticky rotation constraint max (mio. ha)
  oq30_rotation_sticky_min(t,j,kcr,w,type)    Sticky rotation constraint min (mio. ha)
+ oq30_rotation_sticky_cluster(t,j,type)      Accumulated rotation constraint (mio. ha)
 ;
 *##################### R SECTION END (OUTPUT DECLARATIONS) #####################
 
