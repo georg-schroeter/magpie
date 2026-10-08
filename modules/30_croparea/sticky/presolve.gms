@@ -34,7 +34,7 @@ i30_betr_target(t,j) = (1-i30_betr_scenario_fader(t)) *
 if (m_year(t) <= s30_betr_scenario_start,
   i30_betr_penalty(t) = 0;
   v30_betr_missing.fx(j) = 0;
-  vm_rotation_penalty.fx(i) = 0;
+*  vm_rotation_penalty.fx(i) = 0;
 else
   i30_betr_penalty(t) = s30_betr_penalty;
   if (i30_betr_penalty(t) > 0,
@@ -44,7 +44,7 @@ else
     v30_betr_missing.fx(j) = 0;
   );
   v30_betr_missing.fx(j)$(i30_betr_target(t,j) = 0) = 0;
-  vm_rotation_penalty.fx(i)$(sum(cell(i,j),i30_betr_target(t,j)) = 0) = 0;
+*  vm_rotation_penalty.fx(i)$(sum(cell(i,j),i30_betr_target(t,j)) = 0) = 0;
 );
 
 *' Cropland growth constraint after SSP2 fix
@@ -56,4 +56,4 @@ else
 
 pc30_cropshare_factor(j,kcr,w) = pc30_cropshare(j,kcr,w);
 
-v30_crop_area_cluster.fx(j2, w) = pc30_crop_area_cluster(j2, w);
+* v30_crop_area_cluster.fx(j2, w) = pc30_crop_area_cluster(j2, w);
