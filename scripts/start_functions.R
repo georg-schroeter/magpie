@@ -487,9 +487,9 @@ start_run <- function(cfg, scenario = NULL, codeCheck = TRUE, lock_model = TRUE,
     cat("Yield calibration factor calculated!\n")
   }
 
-  land_calib_file <- "modules/39_landconversion/input/f39_calib.csv"
-  land_calib_file_past <- "modules/39_landconversion/input/f39_calib_past.csv"
-  source("scripts/calibration/landconversion_cost.R")
+  land_calib_file <- "modules/39_landconversion/input/f39_calib_cluster.csv"
+  land_calib_file_past <- "modules/39_landconversion/input/f39_calib_past_cluster.csv"
+  source("scripts/calibration/landconversion_cost_cluster.R")
   if(cfg$recalibrate_landconversion_cost=="ifneeded") {
     # recalibrate if the cropland file is missing; if pasture calibration is switched on
     # (calib_pasture_landconversion_cost = TRUE), also recalibrate if its file is missing; if
