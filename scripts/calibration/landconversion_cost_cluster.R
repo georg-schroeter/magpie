@@ -157,37 +157,59 @@ getCalibFactor <- function(gdxFile, mode, histData, landType = "crop") {
   return(magpiesort(out))
 }
 
-timeSeriesCost <- function(calibFactor) {
-  out2 <- new.magpie(getCells(calibFactor), years = c(seq(1995, 2015, by = 5), seq(2050, 2150, by = 5)), fill = 1)
-  out2[, getYears(calibFactor), ] <- calibFactor
-  out2050 <- setYears(calibFactor[,"y2015",],NULL)
-  out2050[out2050 < 1] <- 1
-  out2[, seq(2050, 2150, by = 5), ] <- out2050
-  out2 <- time_interpolate(out2, seq(2020, 2050, by = 5), integrate_interpolated_years = T)
-  return(out2)
+# The cluster calibration file has no time axis (module 39 reads a static factor
+# per cluster: table f39_calib_cluster(j,type39)). Collapse per-year calibration
+# factors to that single static factor by taking the y2015 value, which is the
+# factor that produced the calibrated 2015 land area in the last run. Values stay
+# within [costMin, costMax] / [0, rewardMax] as enforced in updateCalib(); no
+# additional >= 1 floor is applied (unlike the old time-series file, whose factors
+# after 2050 were floored at 1).
+collapseToStatic <- function(calibFactor) {
+  require(magclass)
+  return(setYears(calibFactor[, "y2015", ], NULL))
 }
 
-timeSeriesReward <- function(calibFactor) {
-  out2 <- new.magpie(getCells(calibFactor), years = c(seq(1995, 2015, by = 5), seq(2050, 2150, by = 5)), fill = 0)
-  out2[, getYears(calibFactor), ] <- calibFactor
-  out2 <- time_interpolate(out2, seq(2020, 2050, by = 5), integrate_interpolated_years = T)
-  return(out2)
+# Write/read the static cluster calibration file as a plain csv
+# ("dummy,cost,reward" header + one "cluster,cost,reward" row per cluster), i.e.
+# exactly the layout module 39's table f39_calib_cluster(j,type39) expects.
+# write.magpie/read.magpie are deliberately not used for these files: magclass'
+# csv writer truncates dimnames to 3 characters (its legacy region-code
+# convention) which mangles cluster labels like "1;CAZ" to "1;C", and its csv
+# reader misinterprets the label x name layout of this file format.
+writeClusterCalib <- function(calibFull, calibFile, comment = NULL) {
+  require(magclass)
+  cellNames <- paste0('"', getCells(calibFull), '"') # quote: cluster labels contain ";" which GAMS delimited mode would otherwise treat as record end
+  values <- matrix(NA_real_, nrow = length(cellNames), ncol = ndata(calibFull))
+  for (k in seq_len(ndata(calibFull))) values[, k] <- round(as.numeric(calibFull[, , k]), 3)
+  con <- file(calibFile, open = "w")
+  on.exit(close(con))
+  if (!is.null(comment)) writeLines(paste("*", comment), con)
+  writeLines(paste("dummy", paste(getNames(calibFull), collapse = ","), sep = ","), con)
+  utils::write.table(cbind(cellNames, values), file = con, sep = ",",
+                     row.names = FALSE, col.names = FALSE, quote = FALSE)
+}
+
+readClusterCalib <- function(calibFile) {
+  require(magclass)
+  data <- utils::read.csv(calibFile, header = TRUE, check.names = FALSE, comment.char = "*")
+  out <- new.magpie(cells_and_regions = as.character(data[[1]]), years = NULL,
+                    names = names(data)[-1], fill = NA)
+  out[, , ] <- as.matrix(data[, -1, drop = FALSE])
+  return(out)
 }
 
 # Write a "neutral" pasture calibration file: cost = 1 (no adjustment) and reward = 0 (no reward)
-# for every region and year. This reproduces the legacy behavior for the given
+# for every cluster, as a static file without time axis (matching table f39_calib_past_cluster(j,type39)).
+# This reproduces the legacy behavior for the given
 # land type -- its conversion cost is governed purely by the flat global constant
-# (s39_cost_establish_crop / s39_cost_establish_past), with no regional calibration at all.
+# (s39_cost_establish_crop / s39_cost_establish_past), with no calibration at all.
 # Used when a land type's calibration is switched off (see calibratePasture in
 # calibrateLandconversion()) so the input file module 39 reads still exists and is
 # well-formed, it just has no effect.
-writeNeutralCalib <- function(calibFile, regions, landType) {
+writeNeutralCalib <- function(calibFile, cells, landType) {
   require(magclass)
-  years <- c(seq(1995, 2015, by = 5), seq(2050, 2150, by = 5))
-  neutralCost   <- new.magpie(regions, years = paste0("y", years), fill = 1)
-  neutralReward <- new.magpie(regions, years = paste0("y", years), fill = 0)
-  neutralCost   <- time_interpolate(neutralCost, seq(2020, 2050, by = 5), integrate_interpolated_years = TRUE)
-  neutralReward <- time_interpolate(neutralReward, seq(2020, 2050, by = 5), integrate_interpolated_years = TRUE)
+  neutralCost   <- new.magpie(cells, years = NULL, fill = 1)
+  neutralReward <- new.magpie(cells, years = NULL, fill = 0)
 
   neutralFull <- mbind(
     add_dimension(neutralCost, dim = 3.1, nm = "cost"),
@@ -195,17 +217,16 @@ writeNeutralCalib <- function(calibFile, regions, landType) {
   )
 
   comment <- c(
-    paste0(" description: Regional land conversion cost calibration file (landType = ", landType, ")"),
+    paste0(" description: Cluster land conversion cost calibration file (landType = ", landType, ")"),
     " unit: -",
     " note: NEUTRAL/legacy file -- calibration for this land type is switched off",
     " (cfg$calib_pasture_landconversion_cost <- FALSE). cost = 1 and reward = 0 for every",
-    " region and year, reproducing the pre-Phase-1 behavior where this land type's",
-    " conversion cost is governed only by the flat global constant, with no regional",
-    " calibration.",
-    " origin: scripts/calibration/landconversion_cost.R (path relative to model main directory)",
+    " cluster, reproducing the pre-Phase-1 behavior where this land type's",
+    " conversion cost is governed only by the flat global constant, with no calibration.",
+    " origin: scripts/calibration/landconversion_cost_cluster.R (path relative to model main directory)",
     paste0(" creation date: ", date())
   )
-  write.magpie(round(neutralFull, 3), calibFile, comment = comment)
+  writeClusterCalib(neutralFull, calibFile, comment = comment)
   cat(paste0(">>> Wrote neutral (legacy) calibration file for landType = ", landType, ": ", calibFile, "\n"))
 }
 
@@ -217,7 +238,7 @@ writeNeutralCalib <- function(calibFile, regions, landType) {
 isNeutralCalib <- function(calibFile) {
   require(magclass)
   if (!file.exists(calibFile)) return(TRUE)
-  x <- tryCatch(read.magpie(calibFile), error = function(e) NULL)
+  x <- tryCatch(readClusterCalib(calibFile), error = function(e) NULL)
   if (is.null(x) || !all(c("cost", "reward") %in% getNames(x))) return(FALSE)
   isTRUE(all(x[, , "cost"] == 1) && all(x[, , "reward"] == 0))
 }
@@ -256,7 +277,11 @@ updateCalib <- function(gdxFile, calibAccuracy, calibFile, costMax, costMin, rew
   ### -> in case it is the first step, it forces the initial factors to be equal to 1
   if (file.exists(calibFile)) {
     cat(">>> Starting with existing calibration file\n")
-    oldCalib <- magpiesort(read.magpie(calibFile))[,getYears(calibDivergence),]
+    # the cluster calibration file is static (no time axis) -> replicate its factors
+    # over all calibration years before updating them
+    staticCalib <- readClusterCalib(calibFile)
+    oldCalib <- new.magpie(cells_and_regions = getCells(staticCalib), years = getYears(calibDivergence), names = getNames(staticCalib))
+    oldCalib[, getYears(calibDivergence), ] <- staticCalib
   } else {
     cat(">>> First iteration - initializing calibration factors (cost=1 for expanding countries, cost=2.5 for contracting, reward=0)\n")
     oldCalib <- new.magpie(cells_and_regions = getCells(calibDivergence), years = getYears(calibDivergence), names = c("cost", "reward"), fill = NA)
@@ -347,8 +372,8 @@ updateCalib <- function(gdxFile, calibAccuracy, calibFile, costMax, costMin, rew
       writeLog(calibCostBest,   paste0(putfolder, "/land_conversion_cost_best_calib_factor_",   landType, ".cs3"), calibrationStep)
       writeLog(calibRewardBest, paste0(putfolder, "/land_conversion_reward_best_calib_factor_", landType, ".cs3"), calibrationStep)
   
-      calibCostBest <- timeSeriesCost(calibCostBest)
-      calibRewardBest <- timeSeriesReward(calibRewardBest)
+      calibCostBest <- collapseToStatic(calibCostBest)
+      calibRewardBest <- collapseToStatic(calibRewardBest)
   
       calibBestFull <- mbind(
         add_dimension(calibCostBest, dim = 3.1, nm = "cost"),
@@ -357,14 +382,14 @@ updateCalib <- function(gdxFile, calibAccuracy, calibFile, costMax, costMin, rew
       calibBestFull[is.na(calibBestFull)] <- 1
 
       comment <- c(
-        paste0(" description: Regional land conversion cost calibration file (landType = ", landType, ")"),
+        paste0(" description: Cluster land conversion cost calibration file (landType = ", landType, ")"),
         " unit: -",
         paste0(" note: Best calibration factor from the run"),
-        " origin: scripts/calibration/landconversion_cost.R (path relative to model main directory)",
+        " origin: scripts/calibration/landconversion_cost_cluster.R (path relative to model main directory)",
         paste(" Calibration settings:",  "calibAccuracy=", calibAccuracy, "costMax=", costMax, "costMin=", costMin, "rewardMax=", rewardMax, "nMaxcalib=",nMaxcalib, "bestCalib=",bestCalib, "histData=",histData),
         paste0(" creation date: ", date())
       )
-      write.magpie(round(calibBestFull, 3), calibFile, comment = comment)
+      writeClusterCalib(calibBestFull, calibFile, comment = comment)
 
 
       ####
@@ -374,8 +399,8 @@ updateCalib <- function(gdxFile, calibAccuracy, calibFile, costMax, costMin, rew
     }
   } else {
     cat("Adjust calibration factors for next iteration \n")
-    calibFactorCost <- timeSeriesCost(calibFactorCost)
-    calibFactorReward <- timeSeriesReward(calibFactorReward)
+    calibFactorCost <- collapseToStatic(calibFactorCost)
+    calibFactorReward <- collapseToStatic(calibFactorReward)
 
     calibFull <- mbind(
       add_dimension(calibFactorCost, dim = 3.1, nm = "cost"),
@@ -384,15 +409,15 @@ updateCalib <- function(gdxFile, calibAccuracy, calibFile, costMax, costMin, rew
     calibFull[is.na(calibFull)] <- 1
 
     comment <- c(
-      paste0(" description: Regional land conversion cost calibration file (landType = ", landType, ")"),
+      paste0(" description: Cluster land conversion cost calibration file (landType = ", landType, ")"),
       " unit: -",
       paste0(" note: Calibration step ", calibrationStep),
-      " origin: scripts/calibration/landconversion_cost.R (path relative to model main directory)",
+      " origin: scripts/calibration/landconversion_cost_cluster.R (path relative to model main directory)",
       paste(" Calibration settings:",  "calibAccuracy=", calibAccuracy, "costMax=", costMax, "costMin=", costMin, "rewardMax=", rewardMax, "nMaxcalib=", nMaxcalib, "bestCalib=", bestCalib, "histData=", histData),
       paste0(" creation date: ", date())
     )
 
-    write.magpie(round(calibFull, 3), calibFile, comment = comment)
+    writeClusterCalib(calibFull, calibFile, comment = comment)
     return(FALSE)
   }
 }

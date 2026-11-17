@@ -21,7 +21,7 @@ cfg$results_folder <- "output/:title:"
 cfg$gms$landconversion <- "calib_cluster"
 cfg$cost_calib_hist_data <- "MAgPIEown"
 cfg$recalibrate <- FALSE
-cfg$recalibrate_landconversion_cost <- TRUE
+# cfg$recalibrate_landconversion_cost <- TRUE
 cfg$title <- "calib_run_cluster"
 cfg$output <- c("rds_report")
 cfg$force_replace <- TRUE
