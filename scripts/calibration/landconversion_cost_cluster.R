@@ -96,7 +96,7 @@ getValData <- function(histData, gdxFile, landType = "crop") {
     } else {
       val <- read.report("input/validation.mif", as.list = FALSE)
       faoVar <- paste0("historical.FAO_crop_past.Resources|Land Cover|+|", faoLandCoverName[[landType]], " (million ha)")
-      val <- val[getRegions(magpie),getYears(magpie),faoVar]
+      val <- val[getCells(magpie),getYears(magpie),faoVar]
       names(dimnames(val)) <- names(dimnames(magpie))
       getNames(val) <- landType
       saveRDS(val, file = rdsFile)
@@ -105,7 +105,7 @@ getValData <- function(histData, gdxFile, landType = "crop") {
   } else {
     stop("unkown histData")
   }
-  if (nregions(magpie) != nregions(valdata) || !all(getRegions(magpie) %in% getRegions(valdata))) {
+  if (nregions(magpie) != nregions(valdata) || !all(getCells(magpie) %in% getCells(valdata))) {
     stop("Regions in MAgPIE do not agree with regions in reference calibration area data set!")
   }
   cat("=== validation data retrieved ===\n")
@@ -158,7 +158,7 @@ getCalibFactor <- function(gdxFile, mode, histData, landType = "crop") {
 }
 
 timeSeriesCost <- function(calibFactor) {
-  out2 <- new.magpie(getRegions(calibFactor), years = c(seq(1995, 2015, by = 5), seq(2050, 2150, by = 5)), fill = 1)
+  out2 <- new.magpie(getCells(calibFactor), years = c(seq(1995, 2015, by = 5), seq(2050, 2150, by = 5)), fill = 1)
   out2[, getYears(calibFactor), ] <- calibFactor
   out2050 <- setYears(calibFactor[,"y2015",],NULL)
   out2050[out2050 < 1] <- 1
@@ -168,7 +168,7 @@ timeSeriesCost <- function(calibFactor) {
 }
 
 timeSeriesReward <- function(calibFactor) {
-  out2 <- new.magpie(getRegions(calibFactor), years = c(seq(1995, 2015, by = 5), seq(2050, 2150, by = 5)), fill = 0)
+  out2 <- new.magpie(getCells(calibFactor), years = c(seq(1995, 2015, by = 5), seq(2050, 2150, by = 5)), fill = 0)
   out2[, getYears(calibFactor), ] <- calibFactor
   out2 <- time_interpolate(out2, seq(2020, 2050, by = 5), integrate_interpolated_years = T)
   return(out2)
@@ -332,7 +332,7 @@ updateCalib <- function(gdxFile, calibAccuracy, calibFile, costMax, costMin, rew
       # The best iteration is chosen for each region as the calibration factors where the sum of divergence over all timesteps is minimal.
       # In case multiple iterations have the same value, the first value is returned by which.min
       calibCostBest <- calibRewardBest <- factors_cost[,,1] * 0
-      for(i in getRegions(divergenceData)) {
+      for(i in getCells(divergenceData)) {
         # use sum(log(divergenceData+1) as divergenceData is (magpie/data-1), and relative divergence should be equally punished in both directions
         bestIteration <- which.min(dimSums(abs(log(divergenceData[i, , ])), dim = 2))
         bestName      <- getNames(divergenceData)[bestIteration]
@@ -483,8 +483,8 @@ calibrateLandconversion <- function(nMaxcalib = 20,
         # depends only on crop's own convergence.
         if (!isNeutralCalib(calibFilePast)) {
           require(magpie4)
-          pastureRegions <- getRegions(land("fulldata.gdx"))
-          writeNeutralCalib(calibFilePast, pastureRegions, landType = "past")
+          pastureCells <- getCells(land("fulldata.gdx"))
+          writeNeutralCalib(calibFilePast, pastureCells, landType = "past")
         }
         donePast <- TRUE
       }

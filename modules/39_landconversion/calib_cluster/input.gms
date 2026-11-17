@@ -25,9 +25,9 @@ $offdelim
 $offEmpty
 
 $onEmpty
-table f39_calib_cluster_past(j,type39) Calibration factor for costs of pasture expansion (1)
+table f39_calib_past_cluster(j,type39) Calibration factor for costs of pasture expansion (1)
 $ondelim
-$if exist "./modules/39_landconversion/input/f39_calib_cluster_past.csv" $include "./modules/39_landconversion/input/f39_calib_cluster_past.csv"
+$if exist "./modules/39_landconversion/input/f39_calib_past_cluster.csv" $include "./modules/39_landconversion/input/f39_calib_past_cluster.csv"
 $offdelim
 ;
 $offEmpty
