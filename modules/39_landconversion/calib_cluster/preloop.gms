@@ -15,7 +15,7 @@ if(sum((j,type39),i39_calib(j,type39)) = 0 OR s39_ignore_calib = 1,
   i39_calib(j,"reward") = 0;
 );
 
-i39_calib_past(j,type39) = f39_calib_cluster_past(j,type39);
+i39_calib_past(j,type39) = f39_calib_past_cluster(j,type39);
 * set default values in case of missing input file or s39_ignore_calib_past = 1
 if(sum((j,type39),i39_calib_past(j,type39)) = 0 OR s39_ignore_calib_past = 1,
   i39_calib_past(j,"cost") = 1;
