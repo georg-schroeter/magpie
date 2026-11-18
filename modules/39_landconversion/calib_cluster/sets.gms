@@ -6,6 +6,6 @@
 *** |  Contact: magpie@pik-potsdam.de
 
 sets
-  type39 Cost type
-    / cost, reward /
+  type39 Shared calibration factor dimension (GAMS tables need >= 2 dimensions)
+    / factor /
 ;

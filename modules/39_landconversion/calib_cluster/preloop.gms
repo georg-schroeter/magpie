@@ -8,16 +8,14 @@
 i39_cost_establish(j,land) = 0;
 i39_reward_reduction(j,land) = 0;
 
-i39_calib(j,type39) = f39_calib_cluster(j,type39);
+i39_calib(j) = f39_calib_cluster(j,"factor");
 * set default values in case of missing input file or s39_ignore_calib = 1
-if(sum((j,type39),i39_calib(j,type39)) = 0 OR s39_ignore_calib = 1,
-  i39_calib(j,"cost") = 1;
-  i39_calib(j,"reward") = 0;
+if(sum(j,i39_calib(j)) = 0 OR s39_ignore_calib = 1,
+  i39_calib(j) = 1;
 );
 
-i39_calib_past(j,type39) = f39_calib_past_cluster(j,type39);
+i39_calib_past(j) = f39_calib_past_cluster(j,"factor");
 * set default values in case of missing input file or s39_ignore_calib_past = 1
-if(sum((j,type39),i39_calib_past(j,type39)) = 0 OR s39_ignore_calib_past = 1,
-  i39_calib_past(j,"cost") = 1;
-  i39_calib_past(j,"reward") = 0;
+if(sum(j,i39_calib_past(j)) = 0 OR s39_ignore_calib_past = 1,
+  i39_calib_past(j) = 1;
 );

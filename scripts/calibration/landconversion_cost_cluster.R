@@ -6,8 +6,9 @@
 # |  Contact: magpie@pik-potsdam.de
 
 # *********************************************************************
-# ***    This script calculates a regional calibration factor       ***
-# ***              based on a pre run of magpie                     ***
+# ***    This script calculates per-cluster calibration factors       ***
+# ***   (one shared factor for expansion cost and reduction reward,   ***
+# ***    without time axis) based on a pre run of magpie              ***
 # *********************************************************************
 
 # Wrapper function that executes code with comprehensive logging
@@ -85,7 +86,7 @@ getValData <- function(histData, gdxFile, landType = "crop") {
   require(gdx2)
   cat(paste0("=== retrieve validation data (landType = ", landType, ") ===\n"))
   y <- readGDX(gdxFile,"t")
-  magpie <- land(gdxFile)[, y, landType]
+  magpie <- land(gdxFile, level = "cell")[, y, landType]
   if (histData == "MAgPIEown") {
     hist <- readGDX(gdxFile, "f10_land")[, , landType]
     valdata <- hist[, y, landType]
@@ -132,7 +133,7 @@ getCalibFactor <- function(gdxFile, mode, histData, landType = "crop") {
   cat(paste0("Mode: ", mode, ", histData: ", histData, ", landType: ", landType, "\n"))
 
   valdata <- getValData(histData = histData, gdxFile = gdxFile, landType = landType)
-  magpie <- land(gdxFile)[, getYears(valdata), landType]
+  magpie <- land(gdxFile, level = "cell")[, getYears(valdata), landType]
 
   if (mode == "gradient") {
     cat(">>> gradient calibration \n")
@@ -150,6 +151,10 @@ getCalibFactor <- function(gdxFile, mode, histData, landType = "crop") {
     cat(">>> timestep calibration \n")
     out <- magpie / valdata
   }
+  # clusters with no reference land (or no reference land in the previous timestep) have no
+  # calibration signal: magpie/valdata -> 0/0 and the gradient ratios -> NaN/Inf. Set those
+  # factors to neutral 1 so they neither diverge nor crash the convergence check.
+  out[!is.finite(out)] <- 1
   getNames(out) <- NULL
   out[out <= 0.1] <- 0.1 # make sure the multiplier doesnt drop to 0, as this could not be reverted in future iterations. 
   # expert guess: 10% of the original land conversion cost estimates seems a reasonable lower limit, as land expansion should also not be free of costs.
@@ -161,24 +166,24 @@ getCalibFactor <- function(gdxFile, mode, histData, landType = "crop") {
 # per cluster: table f39_calib_cluster(j,type39)). Collapse per-year calibration
 # factors to that single static factor by taking the y2015 value, which is the
 # factor that produced the calibrated 2015 land area in the last run. Values stay
-# within [costMin, costMax] / [0, rewardMax] as enforced in updateCalib(); no
-# additional >= 1 floor is applied (unlike the old time-series file, whose factors
-# after 2050 were floored at 1).
+# within [costMin, costMax] as enforced in updateCalib(); no
+# additional >= 1 floor is applied.
 collapseToStatic <- function(calibFactor) {
   require(magclass)
   return(setYears(calibFactor[, "y2015", ], NULL))
 }
 
 # Write/read the static cluster calibration file as a plain csv
-# ("dummy,cost,reward" header + one "cluster,cost,reward" row per cluster), i.e.
-# exactly the layout module 39's table f39_calib_cluster(j,type39) expects.
+# ("dummy,factor" header + one "cluster,factor" row per cluster, e.g. "CAZ_1,1.2"),
+# i.e. exactly the layout module 39's table f39_calib_cluster(j,type39) expects.
 # write.magpie/read.magpie are deliberately not used for these files: magclass'
-# csv writer truncates dimnames to 3 characters (its legacy region-code
-# convention) which mangles cluster labels like "1;CAZ" to "1;C", and its csv
-# reader misinterprets the label x name layout of this file format.
+# csv writer prints the spatial column as substring(dimname, 1, 3) (its legacy
+# region-code convention), which would collapse all clusters of one region
+# (CAZ_1*CAZ_5 -> "CAZ"), and its csv reader misinterprets the label x name
+# layout of this file format.
 writeClusterCalib <- function(calibFull, calibFile, comment = NULL) {
   require(magclass)
-  cellNames <- paste0('"', getCells(calibFull), '"') # quote: cluster labels contain ";" which GAMS delimited mode would otherwise treat as record end
+  cellNames <- getCells(calibFull)
   values <- matrix(NA_real_, nrow = length(cellNames), ncol = ndata(calibFull))
   for (k in seq_len(ndata(calibFull))) values[, k] <- round(as.numeric(calibFull[, , k]), 3)
   con <- file(calibFile, open = "w")
@@ -198,31 +203,66 @@ readClusterCalib <- function(calibFile) {
   return(out)
 }
 
-# Write a "neutral" pasture calibration file: cost = 1 (no adjustment) and reward = 0 (no reward)
-# for every cluster, as a static file without time axis (matching table f39_calib_past_cluster(j,type39)).
+# Write/append one iteration of a cells x years magpie as a long csv with columns
+# cell,year,iter1,iter2,... and read it back as a cells x years x iterations magpie.
+# These replace magclass' cs3 logging (write.magpie append + read.magpie), which
+# does not round-trip cellular (per-cluster) data of any label style reliably in
+# magclass 7: appending fails with mbind dimension errors and reading back merges
+# cells into the data dimension.
+writeLogCsv <- function(x, file, calibrationStep) {
+  require(magclass)
+  cellNames <- getCells(x)
+  yearNames <- getYears(x)
+  values <- matrix(as.numeric(x), nrow = length(cellNames), ncol = length(yearNames))
+  df <- data.frame(cell = rep(cellNames, times = length(yearNames)),
+                   year = rep(yearNames, each = length(cellNames)),
+                   value = as.vector(values),
+                   stringsAsFactors = FALSE)
+  if (file.exists(file)) {
+    old <- utils::read.csv(file, check.names = FALSE)
+    old[[paste0("iter", calibrationStep)]] <-
+      df$value[match(paste(old$cell, old$year), paste(df$cell, df$year))]
+    utils::write.table(old, file, sep = ",", row.names = FALSE, quote = 2)
+  } else {
+    names(df)[names(df) == "value"] <- paste0("iter", calibrationStep)
+    utils::write.table(df, file, sep = ",", row.names = FALSE, quote = 2)
+  }
+}
+
+readLogCsv <- function(file) {
+  require(magclass)
+  data <- utils::read.csv(file, check.names = FALSE)
+  iterations <- grep("^iter[0-9]+$", names(data), value = TRUE)
+  cellNames <- unique(as.character(data$cell))
+  yearNames <- unique(as.character(data$year))
+  out <- new.magpie(cells_and_regions = cellNames, years = yearNames, names = iterations, fill = NA)
+  key <- paste(rep(cellNames, times = length(yearNames)), rep(yearNames, each = length(cellNames)))
+  for (it in iterations) {
+    out[, , it] <- matrix(data[[it]][match(key, paste(data$cell, data$year))],
+                          nrow = length(cellNames), ncol = length(yearNames))
+  }
+  return(out)
+}
+
+# Write a "neutral" pasture calibration file: shared calibration factor = 1 for every
+# cluster, as a static file without time axis (matching table f39_calib_past_cluster(j,type39)).
 # This reproduces the legacy behavior for the given
-# land type -- its conversion cost is governed purely by the flat global constant
-# (s39_cost_establish_crop / s39_cost_establish_past), with no calibration at all.
+# land type -- its conversion costs and reduction rewards are governed purely by the flat
+# global constants (s39_cost_establish_past / s39_reward_past_reduction), with no calibration at all.
 # Used when a land type's calibration is switched off (see calibratePasture in
 # calibrateLandconversion()) so the input file module 39 reads still exists and is
 # well-formed, it just has no effect.
 writeNeutralCalib <- function(calibFile, cells, landType) {
   require(magclass)
-  neutralCost   <- new.magpie(cells, years = NULL, fill = 1)
-  neutralReward <- new.magpie(cells, years = NULL, fill = 0)
-
-  neutralFull <- mbind(
-    add_dimension(neutralCost, dim = 3.1, nm = "cost"),
-    add_dimension(neutralReward, dim = 3.1, nm = "reward")
-  )
+  neutralFull <- new.magpie(cells, years = NULL, names = "factor", fill = 1)
 
   comment <- c(
-    paste0(" description: Cluster land conversion cost calibration file (landType = ", landType, ")"),
+    paste0(" description: Cluster land conversion calibration file with one shared cost/reward factor (landType = ", landType, ")"),
     " unit: -",
     " note: NEUTRAL/legacy file -- calibration for this land type is switched off",
-    " (cfg$calib_pasture_landconversion_cost <- FALSE). cost = 1 and reward = 0 for every",
-    " cluster, reproducing the pre-Phase-1 behavior where this land type's",
-    " conversion cost is governed only by the flat global constant, with no calibration.",
+    " (cfg$calib_pasture_landconversion_cost <- FALSE). factor = 1 for every",
+    " cluster, reproducing the pre-calibration behavior where this land type's",
+    " conversion cost and reduction reward are governed only by the flat global constants.",
     " origin: scripts/calibration/landconversion_cost_cluster.R (path relative to model main directory)",
     paste0(" creation date: ", date())
   )
@@ -239,12 +279,12 @@ isNeutralCalib <- function(calibFile) {
   require(magclass)
   if (!file.exists(calibFile)) return(TRUE)
   x <- tryCatch(readClusterCalib(calibFile), error = function(e) NULL)
-  if (is.null(x) || !all(c("cost", "reward") %in% getNames(x))) return(FALSE)
-  isTRUE(all(x[, , "cost"] == 1) && all(x[, , "reward"] == 0))
+  if (is.null(x) || !("factor" %in% getNames(x))) return(FALSE)
+  isTRUE(all(x[, , "factor"] == 1))
 }
 
 # Calculate the correction factor and save it
-updateCalib <- function(gdxFile, calibAccuracy, calibFile, costMax, costMin, rewardMax = costMax, calibrationStep, nMaxcalib, bestCalib, histData, putfolder, levelGradientMix, landType = "crop") {
+updateCalib <- function(gdxFile, calibAccuracy, calibFile, costMax, costMin, calibrationStep, nMaxcalib, bestCalib, histData, putfolder, levelGradientMix, landType = "crop") {
   require(magclass)
   require(magpie4)
   require(gdx2)
@@ -283,10 +323,9 @@ updateCalib <- function(gdxFile, calibAccuracy, calibFile, costMax, costMin, rew
     oldCalib <- new.magpie(cells_and_regions = getCells(staticCalib), years = getYears(calibDivergence), names = getNames(staticCalib))
     oldCalib[, getYears(calibDivergence), ] <- staticCalib
   } else {
-    cat(">>> First iteration - initializing calibration factors (cost=1 for expanding countries, cost=2.5 for contracting, reward=0)\n")
-    oldCalib <- new.magpie(cells_and_regions = getCells(calibDivergence), years = getYears(calibDivergence), names = c("cost", "reward"), fill = NA)
-    oldCalib[,,"cost"] <- (expandHist(getValData(histData = histData, gdxFile = gdxFile, landType = landType)) < 0) * (costMax - 1) + 1
-    oldCalib[,,"reward"] <- 0
+    cat(">>> First iteration - initializing calibration factors (1 for expanding clusters, costMax for contracting)\n")
+    oldCalib <- new.magpie(cells_and_regions = getCells(calibDivergence), years = getYears(calibDivergence), names = "factor", fill = NA)
+    oldCalib[,,"factor"] <- (expandHist(getValData(histData = histData, gdxFile = gdxFile, landType = landType)) < 0) * (costMax - 1) + 1
   }
 
   ### use first steps to calibrate stronger, such that calibration factors can also achieve low/high levels
@@ -299,50 +338,37 @@ updateCalib <- function(gdxFile, calibAccuracy, calibFile, costMax, costMin, rew
   } 
   
   cat(">>> Calib factors are adjusted where needed\n")
-  calibFactorCost <- setNames(oldCalib[, , "cost"], NULL) * calib_correction ^ reinforcement
-  calibFactorReward <- setNames(oldCalib[, , "reward"], NULL) + (calib_correction - 1) * reinforcement
-  # no rewards in case that validation data shows no contraction
-  calibFactorReward[expandHist(getValData(histData = histData, gdxFile = gdxFile, landType = landType)) >= 0] <- 0
-  calibFactorReward[calibFactorReward < 0] <- 0
+  # one shared factor per cluster multiplies both expansion cost and reduction reward:
+  # clusters with no need for change converge to factor = 1, i.e. the economic equilibrium
+  # defined by the global cost and reward constants.
+  calibFactor <- setNames(oldCalib[, , "factor"], NULL) * calib_correction ^ reinforcement
 
-  cat(">>> Account for costMax, costMin and rewardMax\n")
+  cat(">>> Account for costMax and costMin\n")
   if (!is.null(costMax)) {
-    aboveLimit <- (calibFactorCost >= costMax)
-    calibFactorCost[aboveLimit] <- costMax
+    aboveLimit <- (calibFactor >= costMax)
+    calibFactor[aboveLimit] <- costMax
   }
 
   if (!is.null(costMin)) {
-    belowLimit <- (calibFactorCost <= costMin)
-    calibFactorCost[belowLimit] <- costMin
-  }
-
-  # reward had no upper bound previously and could grow unboundedly across iterations
-  # (oldCalib[,,"reward"] accumulates the increment each step) -- cap it the same way cost is
-  # capped, defaulting to costMax so reward and cost stay on a comparable scale unless a
-  # dedicated rewardMax is supplied.
-  if (!is.null(rewardMax)) {
-    aboveLimitReward <- (calibFactorReward >= rewardMax)
-    calibFactorReward[aboveLimitReward] <- rewardMax
+    belowLimit <- (calibFactor <= costMin)
+    calibFactor[belowLimit] <- costMin
   }
 
   cat(">>> write down current calib factors (and area_factors) for tracking\n")
   writeLog <- function(x, file, calibrationStep) {
-    x <- add_dimension(x, dim = 3.1, add = "iteration", nm = paste0("iter", calibrationStep))
-    try(write.magpie(round(x, 3), file, append = (calibrationStep != 1)))
+    try(writeLogCsv(round(x, 3), file, calibrationStep))
   }
 
-  writeLog(calibDivergenceLevel, paste0(putfolder, "/land_conversion_divergence_level_", landType, ".cs3"), calibrationStep)
-  writeLog(calibDivergenceGradient, paste0(putfolder,  "/land_conversion_divergence_gradient_", landType, ".cs3"), calibrationStep)
-  writeLog(calibDivergence, paste0(putfolder,  "/land_conversion_divergence_", landType, ".cs3"), calibrationStep)
-  writeLog(calibFactorCost, paste0(putfolder,  "/land_conversion_cost_next_calib_factor_", landType, ".cs3"), calibrationStep)
-  writeLog(calibFactorReward, paste0(putfolder,  "/land_conversion_reward_next_calib_factor_", landType, ".cs3"), calibrationStep)
-  writeLog(setNames(oldCalib[, , "reward"], NULL), paste0(putfolder,  "/land_conversion_reward_current_calib_factor_", landType, ".cs3"), calibrationStep)
-  writeLog(setNames(oldCalib[, , "cost"], NULL), paste0(putfolder,  "/land_conversion_cost_current_calib_factor_", landType, ".cs3"), calibrationStep)
+  writeLog(calibDivergenceLevel, paste0(putfolder, "/land_conversion_divergence_level_", landType, ".csv"), calibrationStep)
+  writeLog(calibDivergenceGradient, paste0(putfolder,  "/land_conversion_divergence_gradient_", landType, ".csv"), calibrationStep)
+  writeLog(calibDivergence, paste0(putfolder,  "/land_conversion_divergence_", landType, ".csv"), calibrationStep)
+  writeLog(calibFactor, paste0(putfolder,  "/land_conversion_next_calib_factor_", landType, ".csv"), calibrationStep)
+  writeLog(setNames(oldCalib[, , "factor"], NULL), paste0(putfolder,  "/land_conversion_current_calib_factor_", landType, ".csv"), calibrationStep)
 
   # in case of sufficient convergence, stop here (no additional update of calibration factors!)
   # also stop in case there is no convergence, e.g. because the calib factors are at upper or lower bounds.
   convergenceReached <- abs(calibDivergence - 1) <= calibAccuracy
-  noConvergence <- (calibFactorCost == oldCalib[, , "cost"]) & (calibFactorReward == oldCalib[, , "reward"])
+  noConvergence <- (calibFactor == setNames(oldCalib[, , "factor"], NULL))
 
   if (all(convergenceReached | noConvergence) || calibrationStep == nMaxcalib) {
 
@@ -351,42 +377,32 @@ updateCalib <- function(gdxFile, calibAccuracy, calibFile, costMax, costMin, rew
     # or the "best" based on the iteration value with the lowest standard deviation of regional divergence.
     if (bestCalib == TRUE) {
       cat("Choosing the best calibration...\n")
-      divergenceData <- read.magpie(paste0(putfolder, "/land_conversion_divergence_", landType, ".cs3"))
-      factors_cost <- read.magpie( paste0(putfolder, "/land_conversion_cost_current_calib_factor_", landType, ".cs3"))
-      factors_reward <- read.magpie( paste0(putfolder, "/land_conversion_reward_current_calib_factor_", landType, ".cs3"))
-      # The best iteration is chosen for each region as the calibration factors where the sum of divergence over all timesteps is minimal.
+      divergenceData <- readLogCsv(paste0(putfolder, "/land_conversion_divergence_", landType, ".csv"))
+      factors <- readLogCsv( paste0(putfolder, "/land_conversion_current_calib_factor_", landType, ".csv"))
+      # The best iteration is chosen for each cluster as the calibration factor where the sum of divergence over all timesteps is minimal.
       # In case multiple iterations have the same value, the first value is returned by which.min
-      calibCostBest <- calibRewardBest <- factors_cost[,,1] * 0
+      calibBest <- factors[,,1] * 0
       for(i in getCells(divergenceData)) {
         # use sum(log(divergenceData+1) as divergenceData is (magpie/data-1), and relative divergence should be equally punished in both directions
         bestIteration <- which.min(dimSums(abs(log(divergenceData[i, , ])), dim = 2))
         bestName      <- getNames(divergenceData)[bestIteration]
-        calibCostBest[i, , ]   <- factors_cost[i, , bestName]
-        calibRewardBest[i, , ] <- factors_reward[i, , bestName]
+        calibBest[i, , ] <- factors[i, , bestName]
       }
-      getNames(calibCostBest) <- NULL
-      getNames(calibRewardBest) <- NULL
+      getNames(calibBest) <- NULL
  
       # tag with the iteration at which "best" was determined (rather than a fixed "best" literal), since this
       # branch may run again on a later iteration while a concurrently-calibrated land type has not yet converged
-      writeLog(calibCostBest,   paste0(putfolder, "/land_conversion_cost_best_calib_factor_",   landType, ".cs3"), calibrationStep)
-      writeLog(calibRewardBest, paste0(putfolder, "/land_conversion_reward_best_calib_factor_", landType, ".cs3"), calibrationStep)
-  
-      calibCostBest <- collapseToStatic(calibCostBest)
-      calibRewardBest <- collapseToStatic(calibRewardBest)
-  
-      calibBestFull <- mbind(
-        add_dimension(calibCostBest, dim = 3.1, nm = "cost"),
-        add_dimension(calibRewardBest, dim = 3.1, nm = "reward")
-      )
+      writeLog(calibBest, paste0(putfolder, "/land_conversion_best_calib_factor_", landType, ".csv"), calibrationStep)
+   
+      calibBestFull <- add_dimension(collapseToStatic(calibBest), dim = 3.1, nm = "factor")
       calibBestFull[is.na(calibBestFull)] <- 1
 
       comment <- c(
-        paste0(" description: Cluster land conversion cost calibration file (landType = ", landType, ")"),
+        paste0(" description: Cluster land conversion calibration file with one shared cost/reward factor (landType = ", landType, ")"),
         " unit: -",
         paste0(" note: Best calibration factor from the run"),
         " origin: scripts/calibration/landconversion_cost_cluster.R (path relative to model main directory)",
-        paste(" Calibration settings:",  "calibAccuracy=", calibAccuracy, "costMax=", costMax, "costMin=", costMin, "rewardMax=", rewardMax, "nMaxcalib=",nMaxcalib, "bestCalib=",bestCalib, "histData=",histData),
+        paste(" Calibration settings:",  "calibAccuracy=", calibAccuracy, "costMax=", costMax, "costMin=", costMin, "nMaxcalib=",nMaxcalib, "bestCalib=",bestCalib, "histData=",histData),
         paste0(" creation date: ", date())
       )
       writeClusterCalib(calibBestFull, calibFile, comment = comment)
@@ -399,21 +415,15 @@ updateCalib <- function(gdxFile, calibAccuracy, calibFile, costMax, costMin, rew
     }
   } else {
     cat("Adjust calibration factors for next iteration \n")
-    calibFactorCost <- collapseToStatic(calibFactorCost)
-    calibFactorReward <- collapseToStatic(calibFactorReward)
-
-    calibFull <- mbind(
-      add_dimension(calibFactorCost, dim = 3.1, nm = "cost"),
-      add_dimension(calibFactorReward, dim = 3.1, nm = "reward")
-    )
+    calibFull <- add_dimension(collapseToStatic(calibFactor), dim = 3.1, nm = "factor")
     calibFull[is.na(calibFull)] <- 1
 
     comment <- c(
-      paste0(" description: Cluster land conversion cost calibration file (landType = ", landType, ")"),
+      paste0(" description: Cluster land conversion calibration file with one shared cost/reward factor (landType = ", landType, ")"),
       " unit: -",
       paste0(" note: Calibration step ", calibrationStep),
       " origin: scripts/calibration/landconversion_cost_cluster.R (path relative to model main directory)",
-      paste(" Calibration settings:",  "calibAccuracy=", calibAccuracy, "costMax=", costMax, "costMin=", costMin, "rewardMax=", rewardMax, "nMaxcalib=", nMaxcalib, "bestCalib=", bestCalib, "histData=", histData),
+      paste(" Calibration settings:",  "calibAccuracy=", calibAccuracy, "costMax=", costMax, "costMin=", costMin, "nMaxcalib=", nMaxcalib, "bestCalib=", bestCalib, "histData=", histData),
       paste0(" creation date: ", date())
     )
 
@@ -430,14 +440,12 @@ calibrateLandconversion <- function(nMaxcalib = 20,
                              calibAccuracy = 0.01,
                              costMax = 2.5,
                              costMin = 0.2,
-                             rewardMax = costMax,
                              calibMagpieName = "magpie_calib",
-                             calibFile = "modules/39_landconversion/input/f39_calib.csv",
-                             calibFilePast = "modules/39_landconversion/input/f39_calib_past.csv",
+                             calibFile = "modules/39_landconversion/input/f39_calib_cluster.csv",
+                             calibFilePast = "modules/39_landconversion/input/f39_calib_past_cluster.csv",
                              calibAccuracyPast = calibAccuracy,
                              costMaxPast = costMax,
                              costMinPast = costMin,
-                             rewardMaxPast = costMaxPast,
                              putfolder = "land_conversion_cost_calib_run",
                              dataWorkspace = NULL,
                              logoption = 3,
@@ -493,12 +501,12 @@ calibrateLandconversion <- function(nMaxcalib = 20,
       # crop and pasture are calibrated concurrently from the same solve: crop and pasture compete for
       # land, so calibrating them sequentially (crop first, then pasture) would shift the land allocation
       # before pasture is calibrated, causing oscillation between iterations.
-      doneCrop <- updateCalib(gdxFile = "fulldata.gdx", calibAccuracy = calibAccuracy, costMax = costMax, costMin = costMin, rewardMax = rewardMax,
+      doneCrop <- updateCalib(gdxFile = "fulldata.gdx", calibAccuracy = calibAccuracy, costMax = costMax, costMin = costMin,
                            calibFile = calibFile, calibrationStep = i, nMaxcalib = nMaxcalib, bestCalib = bestCalib, histData = histData,
                            putfolder = putfolder, levelGradientMix = levelGradientMix, landType = "crop")
 
       if (calibratePasture) {
-        donePast <- updateCalib(gdxFile = "fulldata.gdx", calibAccuracy = calibAccuracyPast, costMax = costMaxPast, costMin = costMinPast, rewardMax = rewardMaxPast,
+        donePast <- updateCalib(gdxFile = "fulldata.gdx", calibAccuracy = calibAccuracyPast, costMax = costMaxPast, costMin = costMinPast,
                              calibFile = calibFilePast, calibrationStep = i, nMaxcalib = nMaxcalib, bestCalib = bestCalib, histData = histData,
                              putfolder = putfolder, levelGradientMix = levelGradientMix, landType = "past")
       } else {
@@ -508,7 +516,7 @@ calibrateLandconversion <- function(nMaxcalib = 20,
         # depends only on crop's own convergence.
         if (!isNeutralCalib(calibFilePast)) {
           require(magpie4)
-          pastureCells <- getCells(land("fulldata.gdx"))
+          pastureCells <- getCells(land("fulldata.gdx", level = "cell"))
           writeNeutralCalib(calibFilePast, pastureCells, landType = "past")
         }
         donePast <- TRUE

@@ -17,7 +17,7 @@ scalars
 ;
 
 $onEmpty
-table f39_calib_cluster(j,type39) Calibration factor for costs of cropland expansion (1)
+table f39_calib_cluster(j,type39) Shared calibration factor for cropland expansion costs and reduction rewards (1)
 $ondelim
 $if exist "./modules/39_landconversion/input/f39_calib_cluster.csv" $include "./modules/39_landconversion/input/f39_calib_cluster.csv"
 $offdelim
@@ -25,7 +25,7 @@ $offdelim
 $offEmpty
 
 $onEmpty
-table f39_calib_past_cluster(j,type39) Calibration factor for costs of pasture expansion (1)
+table f39_calib_past_cluster(j,type39) Shared calibration factor for pasture expansion costs and reduction rewards (1)
 $ondelim
 $if exist "./modules/39_landconversion/input/f39_calib_past_cluster.csv" $include "./modules/39_landconversion/input/f39_calib_past_cluster.csv"
 $offdelim
