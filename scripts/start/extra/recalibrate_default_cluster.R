@@ -20,6 +20,9 @@ source("config/default.cfg")
 cfg$results_folder <- "output/:title:"
 cfg$gms$landconversion <- "calib_cluster"
 cfg$cost_calib_hist_data <- "MAgPIEown"
+# allow calibration factors in [0.1, 10.0] (lower bound 0.1 comes from default.cfg)
+cfg$cost_calib_max_landconversion_cost      <- 10
+cfg$cost_calib_max_landconversion_cost_past <- 10
 cfg$recalibrate <- FALSE
 # cfg$recalibrate_landconversion_cost <- TRUE
 cfg$title <- "calib_run_cluster"
