@@ -183,7 +183,10 @@ collapseToStatic <- function(calibFactor) {
 # layout of this file format.
 writeClusterCalib <- function(calibFull, calibFile, comment = NULL) {
   require(magclass)
-  cellNames <- getCells(calibFull)
+  # magclass/GDX cell labels use a dot (CAZ.1) but the GAMS set j uses an underscore
+  # (CAZ_1); write the GAMS spelling so module 39's table f39_calib_cluster(j,type39)
+  # can read the included file without domain violations. readClusterCalib maps back.
+  cellNames <- gsub(".", "_", getCells(calibFull), fixed = TRUE)
   values <- matrix(NA_real_, nrow = length(cellNames), ncol = ndata(calibFull))
   for (k in seq_len(ndata(calibFull))) values[, k] <- round(as.numeric(calibFull[, , k]), 3)
   con <- file(calibFile, open = "w")
@@ -197,7 +200,10 @@ writeClusterCalib <- function(calibFull, calibFile, comment = NULL) {
 readClusterCalib <- function(calibFile) {
   require(magclass)
   data <- utils::read.csv(calibFile, header = TRUE, check.names = FALSE, comment.char = "*")
-  out <- new.magpie(cells_and_regions = as.character(data[[1]]), years = NULL,
+  # restore the magclass/GDX dot spelling (CAZ_1 -> CAZ.1) from the GAMS label written by
+  # writeClusterCalib, so cells match those read from the GDX (e.g. getCalibFactor's output).
+  cells <- gsub("_", ".", as.character(data[[1]]), fixed = TRUE)
+  out <- new.magpie(cells_and_regions = cells, years = NULL,
                     names = names(data)[-1], fill = NA)
   out[, , ] <- as.matrix(data[, -1, drop = FALSE])
   return(out)

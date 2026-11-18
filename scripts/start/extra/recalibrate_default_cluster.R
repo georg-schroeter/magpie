@@ -24,7 +24,7 @@ cfg$cost_calib_hist_data <- "MAgPIEown"
 cfg$cost_calib_max_landconversion_cost      <- 10
 cfg$cost_calib_max_landconversion_cost_past <- 10
 cfg$recalibrate <- FALSE
-# cfg$recalibrate_landconversion_cost <- TRUE
+cfg$recalibrate_landconversion_cost <- TRUE
 cfg$title <- "calib_run_cluster"
 cfg$output <- c("rds_report")
 cfg$force_replace <- TRUE
